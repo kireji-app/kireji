@@ -1,1 +1,4 @@
-.vscode
+.git/
+.vscode/
+**/Icon
+**/.DS_Store

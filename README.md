@@ -1,75 +1,62 @@
-# kireji: Entropy-Perfect Multi-Origin Web Applications
-**kireji** is a web framework that maximally compresses data models using minimal perfect hash functions (MPHFs).
-It achieves the information-theoretic lower bound, creating the smallest possible collision-free, duplicate-free and gap-free hashes for arbitrary data.
+> ### NOTE
+> This node package is currently an empty placeholder for a web framework under development.
+>
+> Visit the working demo project [here](https://github.com/kireji-app/demo#readme).
+>
+> Read this documentation to get an idea of the framework's intent and features.
+>
+> Check back later to see if the package has been populated.
 
-Any group of applications powered by kireji can have its entire group state stored in a tight place - like a single URL or even a DNS TXT record.
-Model data is recovered instantly from a hash and vice-versa.
-This gives applications deterministic, lossless deep linking, state bookmarking, historical replay and peer-to-peer sharing (via simple URL sharing) without users interacting with a central server.
-## Entropy-Perfect Encoding
+# **kireji:**<br><sup><sub>Entropy-perfect web apps</sub></sup>
+kireji is a reactive full-stack web framework that uses minimal perfect hash functions (MPHFs) to achieve the information-theoretic lower bound of data compression.
 
-Each application state is assigned a unique variable-length base64 hash, derived from a bijective minimal perfect hash function.
-This makes them as compact and expressive as is mathematically possible.
+An MPFH is a collision-free, duplicate-free and gap-free hash function that provides a compression solution specialized for a given data model. It assigns a unique integer to every state in the model.
 
-kireji provides a compression solution that is uniquely built for the given data model and can represent every state in that model.
+Rich model data is recovered instantly from a hash and vice versa, with hashes compact enough to fit in URLs or DNS TXT records.
 
-All kireji hashes are inherently integers (implemented using the `bigint` primitive in JavaScript).
-Because the hash function has no gaps, no duplicates, and no collisions, it is not possible to achieve a smaller lossless hash of a given data model than this.
-
-If there are 10,000,000,000,000,000,000,000,000,000,000,000,000,000,000 possible ways to populate your application's data model, then kireji produces a hash integer that is always between 0 and 9,999,999,999,999,999,999,999,999,999,999,999,999,999,999.
-kireji can then instantly hash any instance of the data model and instantly recover one from any integer in that range.
-
-An example use-case of this is embedding rich state information in places with limited space, such as a URL or DNS TXT record, without the syntactical overhead of query parameters,JSON objects, or delimiters.
-
-```
-https://www.ejaugust.com/0.126.3/4lb5kAsH_R0Dv_UHg/
-```
-
-### Further Reading
-* [Entropy-Perfect Encoding](https://www.ejaugust.com/0.126.4/4lb5kAh4PhZXOKxrM/)
+Applications powered by kireji feature state-complete deep linking, enabling session bookmarking, peer-to-peer data sharing without a central server, and cross-origin communication via URL.
 
 ## MVC + MPHF Architecture
 
-kireji can also be used as a complete front-end framework.
-Its minimal perfect hash function is highly reactive with a built-in event system
-It instantly reflects per-component tweaks to a given model with an extensible model-view-controller (MVC) architecture.
+kireji integrates minimal perfect hash functions (MPHFs) with the model-view-controller (MVC) paradigm by using hashes as a canonical data model.
 
-* Each controller is a stateful component (called a <strong>part</strong>) with its own cardinality.
-* Parts assemble like LEGO® bricks, with a root part producing a hash representing its entire hierarchy.
-* JavaScript's prototype chain enables compositional inheritance between parts.
+* Each controller is a stateful component (called a <strong>part</strong>) with a dedicated hash function.
+* Parts assemble like LEGO® bricks, each assembly producing a new hash function derived from its subparts.
+* JavaScript's prototype chain powers compositional inheritance between parts.
 
 ## DNS-Based Namespacing
 
-When used as a web application front-end framework, each part in a kireji model can be assigned a name that follows DNS semantics so that a web application's URL (such as [www.ejaugust.com](https://www.ejaugust.com)) can be quickly discerned from a runtime reference to one of its parts, such as:
+<h3><a href="https://www.ejaugust.com/0.131.3/4lbHaxsKnzRXOKxrM/"><img src="https://raw.githubusercontent.com/kireji-app/demo/refs/heads/main/src/com/ejaugust/note/part.png" style="width:1.25em" alt="part icon" />&nbsp;&nbsp;<sup>Why DNS?<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sup>⟍&nbsp;</sup><sub>Further Reading</sub></sup></a></h3>
+
+Parts in kireji are assigned unique names following DNS semantics, relating a web application's origin (e.g., www.ejaugust.com) to its individual components, for example:
 
 ```js
-_.app.kireji.www.editor.selected
+_.com.ejaugust
+_.com.ejaugust.scroller
+_.com.ejaugust.www
+_.com.ejaugust.www.home
+_.com.ejaugust.www.notes
 ```
 
-The root part is represented by `_` and is the only global object.
-This prevents polluting the global namespace and allows all parts to make absolute reference to each other.
+The root part, represented by `_`, is the only global object. This allows parts to reference each other without polluting the global namespace.
 
-The framework stores its MVC abstracts and MPHF arithmetic under the domain name `"core.parts"`, allowing them to be reached like so:
+The framework provides a set of premade parts like MVC abstracts and MPHF arithmetic under the domain "core.parts":
 
 ```js
-_.parts.core
+_.parts.core.mix
+_.parts.core.match
+_.parts.core.clip
 ```
 
 You can explore this organization in action by going to [www.kireji.app](https://www.kireji.app).
 
-### Further Reading
-* [Why DNS?](https://www.ejaugust.com/0.126.4/4lbHaxsKnzRXOKxrM/)
+## Made with Vanilla JS
+
+kireji does not import any third-party libraries, frameworks, or packages so that it can be reasoned about end-to-end as a self-contained and self-descriptive system.
 
 ## Live Applications
 
-kireji is in alpha.
-To see the technology in action, check out the [demo](https://github.com/kireji-app/demo) repo.
-
-### **Zero Dependencies: A Simpler Equation**
-
-kireji is written entirely with vanilla JavaScript, CSS, and HTML.
-No libraries, frameworks, or third-party packages are imported.
-This choice was made to preserve full control over the performance of the framework, align as closely as possible with web standards, reduce dependency resolution for applications using kireji, and to offer an opportunity to simplify the equation that defines the system's behavior.
-By encoding its own components within its data model, kireji and its surrounding data model can be reasoned about end-to-end, as a self-contained and self-descriptive system.
+kireji is in alpha. To see the technology in action, check out the [demo](https://github.com/kireji-app/demo) repo.
 <!--
 ## **Current Status**
 
