@@ -1,100 +1,68 @@
-> ### NOTE
-> This node package is currently an empty placeholder for a web framework under development.
->
-> Visit the working demo project [here](https://github.com/kireji-app/demo#readme).
->
-> Read this documentation to get an idea of the framework's intent and features.
->
-> Check back later to see if the package has been populated.
+# Kireji - *Web Framework*
+**Part of the Kireji Project**
+> *An application is the state it's in.*
+## Overview
+The Kireji Web Framework is a reactive full-stack web framework that uses the MPHF Coordinate System and the MVC paradigm to build multi-origin web app ecosystems. It offers a routing system that achieves the information-theoretic lower bound of data compression, enabling comprehensive deep linking, session bookmarking without user accounts or local storage, peer-to-peer data sharing without uploads or accounts, and cross-origin communication without cookies or CORS.
+## The Kireji Project
+The Kireji Project poses a question: **What if we could treat all functional software as points in a single, mathematically mapped, and traversable space?**
+| Repo | Purpose
+| ---- | -------
+| [MPHF](https://github.com/kireji-app/mphf#readme) | [Coordinate System<br><sub>Provides the bijective coordinate system</sub>](https://github.com/kireji-app/mphf#readme)
+| **Kireji** | **Web Framework - ★ You are here<br><sub>Uses MPHF to encode app state in URLs and manage cross-origin traversal</sub>**
+| [Demo](https://github.com/kireji-app/demo#readme) | [App Ecosystem<br><sub>Demonstrates practical applications of the Kireji Project</sub>](https://github.com/kireji-app/demo#readme)
+## Implementation
 
-# **kireji:**<br><sup><sub>Entropy-perfect web apps</sub></sup>
-kireji is a reactive full-stack web framework that uses minimal perfect hash functions (MPHFs) to achieve the information-theoretic lower bound of data compression.
+> <sub>Note: This is currently an empty placeholder for the framework that powers the [Demo App Ecosystem](https://github.com/kireji-app/demo#readme). Check back later to see if the package has been populated.</sub>
 
-An MPFH is a collision-free, duplicate-free and gap-free hash function that provides a compression solution specialized for a given data model. It assigns a unique integer to every state in the model.
+This framework uses the **MPHF Coordinate System** to assign a unique, gap-free coordinate to every valid point in a space constrained by its component definitions. It uses the **MVC paradigm** to efficiently update the DOM. It uses a **packing mechanism** to create single-artifact builds. It provides a library of **premade components** including a **web server** and **service worker** to bootstrap the development process.
 
-Rich model data is recovered instantly from a hash and vice versa, with hashes compact enough to fit in URLs or DNS TXT records.
+### Components
+Components act to refine the "Total Software Space" into a manageable set of **algebraically constrained, functional applications.**
 
-Applications powered by kireji feature state-complete deep linking, enabling session bookmarking, peer-to-peer data sharing without a central server, and cross-origin communication via URL.
+This refinement is designed to provide:
+- **Guaranteed Functionality:** Ensuring every coordinate represents a stable, working application (no "one sandal, one stiletto" combinations).
+- **Comprehensive Deep Linking:** Allowing every coordinate to be bookmarked and shared, retaining a full, multi-origin session state in the most compressed URL possible without reliance on cookies, servers, or user tracking.
+- **Component Encapsulation:** Defining all applications as assemblies of stateful components (called **parts**) built on the MPHF-MVC backbone. Parts then assemble like LEGO® bricks, each assembly representing its own configuration space.
+- **Reactive Navigation:** Ensuring navigation from one coordinate to another changes only the page elements that need to change to reflect the new position.
 
-## MVC + MPHF Architecture
-
-kireji integrates minimal perfect hash functions (MPHFs) with the model-view-controller (MVC) paradigm by using hashes as a canonical data model.
-
-* Each controller is a stateful component (called a <strong>part</strong>) with a dedicated hash function.
-* Parts assemble like LEGO® bricks, each assembly producing a new hash function derived from its subparts.
-* JavaScript's prototype chain powers compositional inheritance between parts.
-
-## DNS-Based Namespacing
-
-<h3><a href="https://www.ejaugust.com/0.131.3/4lbHaxsKnzRXOKxrM/"><img src="https://raw.githubusercontent.com/kireji-app/demo/refs/heads/main/src/com/ejaugust/note/part.png" style="width:1.25em" alt="part icon" />&nbsp;&nbsp;<sup>Why DNS?<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<sup>⟍&nbsp;</sup><sub>Further Reading</sub></sup></a></h3>
+### Namespacing
 
 Parts in kireji are assigned unique names following DNS semantics, relating a web application's origin (e.g., www.ejaugust.com) to its individual components, for example:
 
 ```js
-_.com.ejaugust
-_.com.ejaugust.scroller
-_.com.ejaugust.www
-_.com.ejaugust.www.home
-_.com.ejaugust.www.notes
+_.com.example
+_.com.example.scroller
+_.com.example.www.home
+_.com.example.www.blog
 ```
 
-The root part, represented by `_`, is the only global object. This allows parts to reference each other without polluting the global namespace.
-
-The framework provides a set of premade parts like MVC abstracts and MPHF arithmetic under the domain "core.parts":
+### Premade Components
+The framework provides MVC abstracts and MPHF arithmetic under the domain "core.parts":
 
 ```js
 _.parts.core.mix
 _.parts.core.match
 _.parts.core.clip
+...
 ```
 
-You can explore this organization in action by going to [www.kireji.app](https://www.kireji.app).
+It provides bootstrapping and full-stack functionality under the domain "desktop.parts":
+```js
+_.parts.desktop.server
+_.parts.desktop.client
+_.parts.desktop.worker
+_.parts.desktop.addressBar
+...
+```
 
-## Made with Vanilla JS
+## Tech Stack
 
-kireji does not import any third-party libraries, frameworks, or packages so that it can be reasoned about end-to-end as a self-contained and self-descriptive system.
+The Kireji Web Framework does not import any third-party libraries, frameworks, or packages so that it can be reasoned about end-to-end as a self-contained and self-descriptive system.
 
-## Live Applications
-
-kireji is in alpha. To see the technology in action, check out the [demo](https://github.com/kireji-app/demo) repo.
-<!--
-## **Current Status**
-
-The following milestones completed:
-
-* Core framework functionality
-* CI/CD pipeline
-* MPFH for stateless deep linking and data compression
-* Reactive front-end framework via MVC + MPFH
-* Domain-named architecture ready for DNS integration
-* In-platform part inspector
-* Node.js server built-in
-* Local debugging and development at localhost:3000
-* Desktop operating system preview
-* Ready-made stateful components with HTML and CSS, such as
-  - Scroller with custom scroll-bar implementation (more customizable than the native scrollbar)
-  - Color mode management that automatically computes shades from a given color palette
-  - Additive parts for mutually exclusive variable assignments
-  - Multiplicative parts for independent variables
-  - Movie clip part for animating data models with a dedicated hash for every frame
-  - Notebook - a blog template
-
-### **Roadmap**
-
-| Phase                                    | Status      |
-| ---------------------------------------- | ----------- |
-| **Minimal Perfect Hashing For Any Data** | Completed   |
-| **Reacting MVC Framework**               | Completed   |
-| **CI/CD Pipeline**                       | Completed   |
-| **Model LTS and Versioning Strategy**    | Completed   |
-| **NPM Packages and Project Generation**  | In Progress |
-| **Debug Tools, Docs**                    | In Progress |
-| **Operating System Concept**             | In Progress |
-| **Transfinite State Space**              | Planned     |
-| **Advanced DNS Integration**             | Planned     |
-| **Integrated Development Environment**   | Planned     |
--->
 ## Status and License
+The Kireji Web Framework is in **Alpha**.\
+The Kireji Project is in **early research and development**.
+
 [![kireji on npm](https://img.shields.io/npm/v/kireji?style=for-the-badge&labelColor=CB3837&logo=npm&logoColor=white&label=NPM+package&color=212121)](https://www.npmjs.com/kireji)
 <br>[![Project Status: Alpha](https://img.shields.io/badge/status-alpha-212121?style=for-the-badge&labelColor=181717&logo=github&logoColor=white)](https://www.repostatus.org/#alpha)
 <br>[![Commits](https://img.shields.io/github/commit-activity/t/kireji-app/kireji?style=for-the-badge&labelColor=181717&color=212121&logo=github&logoColor=white)](https://github.com/kireji-app/demo/commits/)
