@@ -1,15 +1,16 @@
 # Kireji - *Web Framework*
-**Part of the Kireji Project**
-> *An application is the state it's in.*
-## Overview
-The Kireji Web Framework is a reactive full-stack web framework that uses the MPHF Coordinate System and the MVC paradigm to build multi-origin web app ecosystems. It offers a routing system that achieves the information-theoretic lower bound of data compression, enabling comprehensive deep linking, session bookmarking without user accounts or local storage, peer-to-peer data sharing without uploads or accounts, and cross-origin communication without cookies or CORS.
+> **<sub>Part of the Kireji Project</sub>**<br><sup><i>omnia ex una linea</i></sup>
+
+The **Kireji Web Framework** is a reactive full-stack web framework that uses the MPHF Coordinate System and the MVC paradigm to build multi-origin web app ecosystems. It offers a routing system that achieves the information-theoretic lower bound of data compression, enabling comprehensive deep linking, session bookmarking without user accounts or local storage, peer-to-peer data sharing without uploads or accounts, and cross-origin communication without cookies or CORS.
 ## The Kireji Project
-The Kireji Project poses a question: **What if we could treat all functional software as points in a single, mathematically mapped, and traversable space?**
+The Kireji Project poses a question: **What if we could treat every web page as a point in a unified, mathematically mapped space?**
+
 | Repo | Purpose
 | ---- | -------
-| [MPHF](https://github.com/kireji-app/mphf#readme) | [Coordinate System<br><sub>Provides the bijective coordinate system</sub>](https://github.com/kireji-app/mphf#readme)
-| **Kireji** | **Web Framework - ★ You are here<br><sub>Uses MPHF to encode app state in URLs and manage cross-origin traversal</sub>**
-| [Demo](https://github.com/kireji-app/demo#readme) | [App Ecosystem<br><sub>Demonstrates practical applications of the Kireji Project</sub>](https://github.com/kireji-app/demo#readme)
+| [MPHF](https://github.com/kireji-app/mphf#readme) | [Coordinate System<br><sup>A bijective coordinate system for hashing structured data</sup>](https://github.com/kireji-app/mphf#readme)
+| **Kireji** | **Web Framework - ★ You are here<br><sup>A reactive web framework with MPHF routing</sup>**
+| [Demo](https://github.com/kireji-app/demo#readme) | [App Ecosystem<br><sup>An example app ecosystem demonstrating the project](https://github.com/kireji-app/demo#readme)</sup>
+
 ## Implementation
 
 > <sub>Note: This is currently an empty placeholder for the framework that powers the [Demo App Ecosystem](https://github.com/kireji-app/demo#readme). Check back later to see if the package has been populated.</sub>
@@ -27,7 +28,7 @@ This refinement is designed to provide:
 
 ### Namespacing
 
-Parts in kireji are assigned unique names following DNS semantics, relating a web application's origin (e.g., www.ejaugust.com) to its individual components, for example:
+Parts are assigned a unique namespace relating a web application's origin, for example:
 
 ```js
 _.com.example
@@ -36,8 +37,12 @@ _.com.example.www.home
 _.com.example.www.blog
 ```
 
-### Premade Components
-The framework provides MVC abstracts and MPHF arithmetic under the domain "core.parts":
+### Built-in Parts
+
+The framework's main part is the root part, a global object identified by `_`. This part is the root of the application component hierarchy, hosting both built-in and user-defined components.
+
+#### Core Components
+These parts are provided by the framework to act as MVC abstracts that handle MPHF arithmetic under the hood:
 
 ```js
 _.parts.core.mix
@@ -46,8 +51,10 @@ _.parts.core.clip
 ...
 ```
 
-It provides bootstrapping and full-stack functionality under the domain "desktop.parts":
+#### Desktop Components
+These parts are a collection of parts for bootstrapping, a Node.js server, server- and client-side rendering, a service worker and other functionality:
 ```js
+_
 _.parts.desktop.server
 _.parts.desktop.client
 _.parts.desktop.worker
@@ -60,7 +67,8 @@ _.parts.desktop.addressBar
 The Kireji Web Framework does not import any third-party libraries, frameworks, or packages so that it can be reasoned about end-to-end as a self-contained and self-descriptive system.
 
 ## Status and License
-The Kireji Web Framework is in **Alpha**.\
+The Kireji Web Framework is in **Alpha**.
+
 The Kireji Project is in **early research and development**.
 
 [![kireji on npm](https://img.shields.io/npm/v/kireji?style=for-the-badge&labelColor=CB3837&logo=npm&logoColor=white&label=NPM+package&color=212121)](https://www.npmjs.com/kireji)
