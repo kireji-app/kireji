@@ -321,6 +321,11 @@ function ƒ(_) {
 
     readRecursive("", __dirname, resolve(__dirname, "../../../src"), _, 0)
 
+    // TODO: Evaluate the timing of this action.
+    const configPath = resolve(__dirname, "../../../src/kireji.json")
+    if (exists(configPath))
+     Object.assign(_, require(configPath))
+
     if (batchedLogs.length)
      archiveLog(batchedLogs.join("\n") + "\n")
 
@@ -800,7 +805,7 @@ function ƒ(_) {
 }
 
 ƒ({
- verbosity: 100,
+ verbosity: 1,
  // TODO: Fix source mapping bugs.
  mapping: false,
  change: "major",
