@@ -1,0 +1,1 @@
+return sidebar["header.html"] + sidebar.view["part.html"]

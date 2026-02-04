@@ -1,0 +1,1 @@
+return part[".."]?.indexOf(part) ?? -1

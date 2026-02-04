@@ -1,0 +1,1 @@
+_.setRoute(location.href)

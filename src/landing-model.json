@@ -1,0 +1,40 @@
+{
+ "app": {
+  "kireji": {
+   "editor": {
+    "tab-group": {
+     "activeTabIndex": 0,
+     "previewTabIndex": 0,
+     "openTabs": [
+      {
+       "host": "kireji.app"
+      }
+     ]
+    },
+    "sections": {
+     "about": true
+    }
+   },
+   "sidebar": {
+    "outliner-domains": {
+     "folders": [
+      ""
+     ]
+    },
+    "outliner-types": {
+     "folders": [
+      "part.abstract.parts"
+     ]
+    },
+    "width": "_"
+   },
+   "tool-bar": "outliner-domains"
+  }
+ },
+ "parts": {
+  "desktop": {
+   "color": "light",
+   "era": "modern"
+  }
+ }
+}

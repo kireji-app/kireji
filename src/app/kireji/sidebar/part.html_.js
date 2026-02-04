@@ -1,0 +1,1 @@
+return (sidebar.open.routeID === 0n ? "" : `<side-bar>${sidebar["view.html"]}</side-bar>`) + sidebar.width["part.html"]

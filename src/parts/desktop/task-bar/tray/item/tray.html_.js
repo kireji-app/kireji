@@ -1,0 +1,1 @@
+return `<button ${trayItem.pointAttr()} title="${trayItem.tooltip}" id=${trayItem.key}-tray-item>${trayItem["button.html"]}</button>`

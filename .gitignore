@@ -1,4 +1,9 @@
-.git/
+## Don't track the node package itself.
+*.tgz
+
+## Don't track IDE configuration.
 .vscode/
+
+## Don't track OS-generated files.
 **/Icon
 **/.DS_Store

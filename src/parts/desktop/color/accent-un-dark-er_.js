@@ -1,0 +1,1 @@
+return "#" + color.blendHex(color.unAccent.slice(1), "9f9f9f", "multiply")

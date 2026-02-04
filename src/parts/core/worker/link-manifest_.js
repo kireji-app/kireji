@@ -1,0 +1,1 @@
+return environment === "worker" ? ` href="/${_.version}/manifest.json"` : ""

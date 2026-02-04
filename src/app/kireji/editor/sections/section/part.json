@@ -1,0 +1,8 @@
+{
+ "abstract": true,
+ "extends": "boolean",
+ "point": [
+  "POINTER_EVENT",
+  "TARGET_ELEMENT"
+ ]
+}

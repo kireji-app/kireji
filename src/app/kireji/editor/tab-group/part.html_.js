@@ -1,0 +1,1 @@
+return `<section id=tab-group>${tabGroup.openTabs.map(({ part: tabPart, filename, payload }, tabIndex) => tabGroup.renderTabHTML(tabPart, filename, payload, tabIndex)).join("")}</section>`

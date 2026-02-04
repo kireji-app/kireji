@@ -1,0 +1,1 @@
+return `<width-handle ${sidebarWidth.pointAttr()}></width-handle>`

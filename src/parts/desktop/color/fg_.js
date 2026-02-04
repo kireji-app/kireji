@@ -1,0 +1,1 @@
+return _.application[`theme-${color.isLight ? "light" : "dark"}-fg`]

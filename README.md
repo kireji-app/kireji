@@ -11,9 +11,40 @@ The Kireji Project poses a question: **What if we could treat every web page as 
 | **Kireji** | **Web Framework - ★ You are here<br><sup>A reactive web framework with MPHF routing</sup>**
 | [Demo](https://github.com/kireji-app/demo#readme) | [App Ecosystem<br><sup>An example app ecosystem demonstrating the project](https://github.com/kireji-app/demo#readme)</sup>
 
-## Implementation
+## Usage
 
-> <sub>Note: This is currently an empty placeholder for the framework that powers the [Demo App Ecosystem](https://github.com/kireji-app/demo#readme). Check back later to see if the package has been populated.</sub>
+> <sub>Note: This framework is currently under heavy development in early alpha. Expect large, breaking changes with each version and some awkward features. Check out the [Demo App Ecosystem](https://github.com/kireji-app/demo#readme) to see the framework in action. Check back later to see if the package has been updated.</sub>
+
+```bash
+# In an empty git repo.
+npm install kireji
+
+# To initialize an empty project:
+npx kireji init
+
+# To initialize a hello world project:
+npx kireji example
+
+# The following commands require at least one git commit to work:
+
+# Build a local development server.
+npx kireji dev
+
+# Build a production server.
+npx kireji build
+
+# Get the project and package version info:
+npx kireji version
+
+# Get the list of commands:
+npx kireji
+# Or:
+npx kireji help
+```
+
+More documentation is coming soon about how to define components, work with the framework's premade components, and make use of the framework's premade applications (which intimately integrate with your own app and allow you to inspect it in real-time) in development builds.
+
+## Implementation
 
 This framework uses the **MPHF Coordinate System** to assign a unique, gap-free coordinate to every valid point in a space constrained by its component definitions. It uses the **MVC paradigm** to efficiently update the DOM. It uses a **packing mechanism** to create single-artifact builds. It provides a library of **premade components** including a **web server** and **service worker** to bootstrap the development process.
 
@@ -28,7 +59,7 @@ This refinement is designed to provide:
 
 ### Namespacing
 
-Parts are assigned a unique namespace relating a web application's origin, for example:
+Parts are assigned a unique namespace that relates them to a web application's origin, for example:
 
 ```js
 _.com.example
