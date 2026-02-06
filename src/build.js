@@ -232,13 +232,18 @@ function ƒ(_) {
 `)
   const buildStartTime = Date.now()
   if (environment === "node" && require.main === module) {
-   const stats = { fileCount: 0, domainCount: 0 }
+   const
+    stats = { fileCount: 0, domainCount: 0 },
+    { readdirSync: readFolder, readFileSync: readFile, existsSync: exists } = require("fs"),
+    { resolve } = require("path"),
+    configPath = resolve(__dirname, "../../../src/kireji.json")
+
+   if (exists(configPath))
+    Object.assign(_, require(configPath))
+
    logScope(1, "Archiving Repository", archiveLog => {
-    warn("Warning: Not yet merging with framework source files.")
     let lastLogFlush = Date.now()
     const
-     { readdirSync: readFolder, readFileSync: readFile, existsSync: exists } = require("fs"),
-     { resolve } = require("path"),
      batchedLogs = [],
      bufferLog = (verbosity, msg) => {
       if (verbosity > _.verbosity)
@@ -273,7 +278,6 @@ function ƒ(_) {
       const filenames = []
 
       for (const [itemName, { entry, source }] of unifiedEntries) {
-       debug(itemName)
        // Ignore logic (TS files, hidden files, etc)
        if (itemName.startsWith(".") || itemName === "Icon" || (!host && itemName === "build.js") || itemName.endsWith(".ts")) {
         bufferLog(4, "".padEnd(depth, " ") + `⬚ ${itemName.padEnd(20, " ")} - ignored`)
@@ -320,11 +324,6 @@ function ƒ(_) {
      }
 
     readRecursive("", __dirname, resolve(__dirname, "../../../src"), _, 0)
-
-    // TODO: Evaluate the timing of this action.
-    const configPath = resolve(__dirname, "../../../src/kireji.json")
-    if (exists(configPath))
-     Object.assign(_, require(configPath))
 
     if (batchedLogs.length)
      archiveLog(batchedLogs.join("\n") + "\n")

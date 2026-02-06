@@ -100,7 +100,6 @@ logScope(1, `\nCreating Deployment Artifact`, log => {
  if (!existsSync(archiveFolder))
   mkdirSync(archiveFolder)
 
- debug()
  writeFileSync(artifactPath, _["build.js"])
 
  log("Success.")
