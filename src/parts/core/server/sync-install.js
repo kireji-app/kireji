@@ -199,7 +199,7 @@ const httpServer = require('http').createServer((request, response) => logServer
     /** @type {IVersionedExports} */
     let destinationExports
     try {
-     destinationExports = destinationVersion === _.version ? currentExports : require(`../.versions/${destinationVersion}.js`)
+     destinationExports = destinationVersion === _.version ? currentExports : require(`../../../.versions/${destinationVersion}.js`)
     } catch {
      throw `Bad Version: ${destinationVersion}`
     }
@@ -211,7 +211,7 @@ const httpServer = require('http').createServer((request, response) => logServer
      /** @type {IVersionedExports} */
      let sourceExports
      try {
-      sourceExports = require(`../.versions/${sourceVersion}.js`)
+      sourceExports = require(`../../../.versions/${sourceVersion}.js`)
      } catch {
       throw `Bad Version: ${sourceVersion}`
      }
