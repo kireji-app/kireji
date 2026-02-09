@@ -135,10 +135,14 @@ class SourceMappedFile {
  getMap(): string
 }
 /** A string representing which of three known environments the framework is running on.
- * 1. "node"
+ * 1. "node-main"
  *     - Unpacked in a clone of the project git repo in node.
  *     - It's called by `npx kireji` in order to perform operations like pack the repo into a single client artifact and run as a backend to serve that artifact and to server-render HTML.
- *     - It's state (when it runs as a server) is set by http requests at the designated port.
+ *     - Its state (when it runs as a server) is set by http requests at the designated port.
+ * 2. "node-module"
+ *     - Packed and archived, loaded in as a module via `require` by the main node module.
+ *     - It acts as a proxy for a previous version of the project, when matching versioned URLs are fetched.
+ *     - Its state is set by proxy requests passed through by the main node module.
  * 3. "worker"
  *     - Packed and deployed as the browser's ServiceWorker.
  *     - It's booted by the browser after a client registers it.
@@ -147,7 +151,7 @@ class SourceMappedFile {
  *     - Packed and deployed as a front-end framework hydrating a browser tab.
  *     - It's booted by a script tag added to the server- or worker-rendered html file.
  *     - Its state is initially set by `location.href` (whatever is in the address bar) and then set by user interaction thereafter. */
-declare const environment: "node" | "worker" | "client"
+declare const environment: "client" | "worker" | "node-main" | "node-module"
 /** True if the framework was built on the cloud from the main branch. */
 declare const production: boolean
 /** A unicode-safe replacement for btoa. */

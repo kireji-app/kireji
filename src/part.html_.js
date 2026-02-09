@@ -50,8 +50,8 @@ const nonImageStyles = `<style id="user-css">${_["part.css"]}</style>` +
  `<style id="application-css">${application["part.css"]}</style>`
 
 const styles = nonImageStyles +
- `<style id="img-css">${environment === "node" ? "" : _["images.css"]}</style>` +
- (environment === "node" ? `<style id="early-img-css">${_.getImagesEarly(bodyHTML, nonImageStyles)}</style>` : "")
+ `<style id="img-css">${environment.startsWith("node") ? "" : _["images.css"]}</style>` +
+ (environment.startsWith("node") ? `<style id="early-img-css">${_.getImagesEarly(bodyHTML, nonImageStyles)}</style>` : "")
 
 const headHTML =
  `<head>${title}${meta}${links}${styles}</head>`

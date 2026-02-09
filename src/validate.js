@@ -1,4 +1,4 @@
-if (environment === "node" && require.main === module) {
+if (environment === "node-main") {
  logScope(1, "Routing Test", log => {
   // logScope(3, "Uninitialized Model", log => log(serialize(_.model)))
   const testURL = `https://${_.defaultApplicationHost}/${_.version}/${_.landingHash}/`

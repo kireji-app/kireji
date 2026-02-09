@@ -83,7 +83,7 @@ const
 
 module.exports = currentExports
 
-if (require.main !== module) {
+if (environment === "node-module") {
  logScope(0, "Server Ready - Proxy Module")
  return
 }

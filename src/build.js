@@ -7,17 +7,18 @@ function ƒ(_, compressedSubjectOrigins) {
    Object.defineProperty(_, "$", { value: (f => x => f(x).toString().trim())(require("child_process").execSync) }),
    _.command = process.argv[2] || "help",
    _.local = _.command === "dev" ? "1" : "0",
-   require.main === module && (
+   require.main === module ? (
     _.branch = _.$("git rev-parse --abbrev-ref HEAD").toString().trim(),
     _.gitSHA = _.$("git rev-parse HEAD").toString().trim(),
     _.version = (([M, m, p], c) => +_.local ? +M && c === "major" ? `${++M}.0.0` : c === "minor" || (!+M && c === "major") ? `${M}.${++m}.0` : `${M}.${m}.${++p}` : `${M}.${m}.${p}`)(_.$("git log -1 --pretty=%s").toString().match(/^\s*(\d+\.\d+\.\d+)/)[1].split("."), _.change),
     _.modified = _.$('git show -s --format=%ci HEAD').toString().trim(),
     _.ETag = `"${_.version}.${_.gitSHA.slice(0, 7)}${+_.local ? ("." + Math.random()).slice(2, 10) : ""}"`,
-    _.name = __dirname.split(/[\\/]/).filter(Boolean).at(-4)
-   ),
-   "node"
+    _.name = __dirname.split(/[\\/]/).filter(Boolean).at(-4),
+    "node-main"
+   ) :
+    "node-module"
   ),
-  production = _.branch === "main" && environment !== "node" && !(+_.local),
+  production = _.branch === "main" && (environment === "client" || environment === "worker") && !(+_.local),
   welcomeMessage = `
      ▌ ▘     ▘▘ ${_.name}
  k = ▙▘▌▛▘█▌ ▌▌ ${_.branch}
@@ -63,7 +64,7 @@ function ƒ(_, compressedSubjectOrigins) {
    }], "table")
   },
   logServerScope = (col1, col2, col3, callback) => {
-   return logScope(0, `\n${("" + col1).padEnd(22, " ")} ${(environment === "node" ? Math.trunc(process.memoryUsage().rss / 1024 / 1024) + " MiB" : "--").padEnd(8, " ")} ${("" + col2).padStart(24, " ")} ${col3}`, log => callback((col1, col2, col3) => log(`${("" + col1).padEnd(20, " ")} ${(environment === "node" ? Math.trunc(process.memoryUsage().rss / 1024 / 1024) + " MiB" : "--").padEnd(8, " ")} ${("" + col2).padStart(24, " ")} ${col3}`)))
+   return logScope(0, `\n${("" + col1).padEnd(22, " ")} ${(environment.startsWith("node") ? Math.trunc(process.memoryUsage().rss / 1024 / 1024) + " MiB" : "--").padEnd(8, " ")} ${("" + col2).padStart(24, " ")} ${col3}`, log => callback((col1, col2, col3) => log(`${("" + col1).padEnd(20, " ")} ${(environment.startsWith("node") ? Math.trunc(process.memoryUsage().rss / 1024 / 1024) + " MiB" : "--").padEnd(8, " ")} ${("" + col2).padStart(24, " ")} ${col3}`)))
   }
 
  // String and Stringification Utilities
@@ -240,7 +241,7 @@ function ƒ(_, compressedSubjectOrigins) {
    subjectIndices = new Map(),
    subjectOrigins = new Map()
 
-  if (environment === "node" && require.main === module) {
+  if (environment === "node-main") {
    subjectOrigins.set("", true)
 
    const
@@ -719,7 +720,7 @@ function ƒ(_, compressedSubjectOrigins) {
      return part
     },
     hydrateSubjectOrigins = () => {
-     if (environment === "node") {
+     if (environment === "node-main") {
       const bits = allSubjects.map(([host, fn]) => +subjectOrigins.get(host + (fn ? "/" + fn : "")))
       const bitString = bits.join("")
       compressedSubjectOrigins = encodeSegment(BigInt("0b" + bitString))
