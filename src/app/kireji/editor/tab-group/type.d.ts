@@ -57,10 +57,6 @@ declare interface IKirejiAppTabGroup
  readonly activeTabIndex: number
  /** The index of the preview tab, if one exists. The preview tab is the tab which can be replaced when opening a new tab. */
  readonly previewTabIndex?: number
- /** The array of memoized offset route IDs corresponding to the start of each part's filename plane. */
- readonly partOffsets: number[]
- /** The total number of tab subjects available - the number of _different_ filenames and part summaries that can be the focus of their own tab (regardless of the maximum number of tabs which can be open at once). */
- readonly subjectCount: bigint
  /** A data type which can be used to performantly rank and unrank permutation indices. */
  readonly FenwickTree: typeof FenwickTree
 }

@@ -1,4 +1,4 @@
-const indexOfLastPossibleTabSubject = tabGroup.subjectCount - 1n
+const indexOfLastPossibleTabSubject = BigInt(allSubjects.length) - 1n
 const indexOfLastOpenTab = NUMBER_OF_TABS_OPEN - 1n
 
 let permutationFactorOfCurrentTabIndex = 1n

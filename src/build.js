@@ -1,23 +1,23 @@
 #!/usr/bin/env node
-function ƒ(_) {
+function ƒ(_, compressedSubjectOrigins) {
 
  // Initialization
  const
   environment = globalThis.constructor === globalThis.Window ? "client" : globalThis.constructor === globalThis.ServiceWorkerGlobalScope ? "worker" : (
    Object.defineProperty(_, "$", { value: (f => x => f(x).toString().trim())(require("child_process").execSync) }),
    _.command = process.argv[2] || "help",
-   _.local = _.command === "dev",
+   _.local = _.command === "dev" ? "1" : "0",
    require.main === module && (
     _.branch = _.$("git rev-parse --abbrev-ref HEAD").toString().trim(),
     _.gitSHA = _.$("git rev-parse HEAD").toString().trim(),
-    _.version = (([M, m, p], c) => _.local ? +M && c === "major" ? `${++M}.0.0` : c === "minor" || (!+M && c === "major") ? `${M}.${++m}.0` : `${M}.${m}.${++p}` : `${M}.${m}.${p}`)(_.$("git log -1 --pretty=%s").toString().match(/^\s*(\d+\.\d+\.\d+)/)[1].split("."), _.change),
+    _.version = (([M, m, p], c) => +_.local ? +M && c === "major" ? `${++M}.0.0` : c === "minor" || (!+M && c === "major") ? `${M}.${++m}.0` : `${M}.${m}.${++p}` : `${M}.${m}.${p}`)(_.$("git log -1 --pretty=%s").toString().match(/^\s*(\d+\.\d+\.\d+)/)[1].split("."), _.change),
     _.modified = _.$('git show -s --format=%ci HEAD').toString().trim(),
-    _.ETag = `"${_.version}.${_.gitSHA.slice(0, 7)}${_.local ? ("." + Math.random()).slice(2, 10) : ""}"`,
+    _.ETag = `"${_.version}.${_.gitSHA.slice(0, 7)}${+_.local ? ("." + Math.random()).slice(2, 10) : ""}"`,
     _.name = __dirname.split(/[\\/]/).filter(Boolean).at(-4)
    ),
    "node"
   ),
-  production = _.branch === "main" && environment !== "node" && !_.local,
+  production = _.branch === "main" && environment !== "node" && !(+_.local),
   welcomeMessage = `
      ▌ ▘     ▘▘ ${_.name}
  k = ▙▘▌▛▘█▌ ▌▌ ${_.branch}
@@ -132,6 +132,9 @@ function ƒ(_) {
   pathRadix = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_0",
   encodeSegment = routeID => {
 
+   if (typeof routeID !== "bigint")
+    throw new RangeError(`Segment encoder can only encode a bigint type (got ${typeof routeID})`)
+
    if (routeID < 0n)
     throw new RangeError("Segment encoder cannot encode a negative route ID.")
 
@@ -230,16 +233,41 @@ function ƒ(_) {
  ┊ Now booting the Kireji Web Framework ┊
  ╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈╯
 `)
-  const buildStartTime = Date.now()
-  if (environment === "node" && require.main === module) {
-   const
-    stats = { fileCount: 0, domainCount: 0 },
-    { readdirSync: readFolder, readFileSync: readFile, existsSync: exists } = require("fs"),
-    { resolve } = require("path"),
-    configPath = resolve(__dirname, "../../../src/kireji.json")
 
-   if (exists(configPath))
-    Object.assign(_, require(configPath))
+  const
+   bootStartTime = Date.now(),
+   allSubjects = [],
+   subjectIndices = new Map(),
+   subjectOrigins = new Map()
+
+  if (environment === "node" && require.main === module) {
+   subjectOrigins.set("", true)
+
+   const
+    stats = { fileCount: 0, partCount: 0, ignoreCount: 0 },
+    { readdirSync: readFolder, readFileSync: readFile, existsSync: exists } = require("fs"),
+    { resolve } = require("path")
+
+   logScope(1, "Merging Configurations", configLog => {
+    for (const key in _) {
+     const value = _[key]
+     if (typeof value !== "string")
+      throw new TypeError(`Internal Error: found framework default config parameter that was not a string (typeof "${key}" === ${typeof value}).`)
+     subjectOrigins.set("/" + key, false)
+    }
+    const projectConfigPath = resolve(__dirname, "../../../src/kireji.json")
+    if (exists(projectConfigPath)) {
+     const projectConfig = require(projectConfigPath)
+     for (const key in projectConfig) {
+      const value = projectConfig[key]
+      if (typeof value !== "string")
+       throw new TypeError(`All config values in kireji.json must be strings (found typeof "${key}" === ${typeof value}).`)
+      _[key] = value
+      subjectOrigins.set("/" + key, true)
+     }
+    }
+    configLog("Done.")
+   })
 
    logScope(1, "Archiving Repository", archiveLog => {
     let lastLogFlush = Date.now()
@@ -256,88 +284,69 @@ function ƒ(_) {
        lastLogFlush = now
       }
      },
-     readRecursive = (host, baseDir, overlayDir, part, depth) => {
-      if (host && host.length > 253)
-       throw SyntaxError(`requested host is ${host.length} characters long, exceeding the maximum domain name length of 253. \n${host}`)
+     frameworkRoot = __dirname,
+     projectRoot = resolve(__dirname, "../../../src"),
+     readRecursive = domains => {
 
-      // 1. Get entries from BOTH directories if they exist
-      const baseEntries = exists(baseDir) ? readFolder(baseDir, { withFileTypes: true }) : []
-      const overlayEntries = exists(overlayDir) ? readFolder(overlayDir, { withFileTypes: true }) : []
+      const host = [...domains].reverse().join(".")
 
-      // 2. Create a unified map of names to entry types (Overlay wins)
-      const unifiedEntries = new Map()
+      if (host.length > 253)
+       throw SyntaxError(`Part host would be ${host.length} characters long, exceeding the maximum host name length of 253 (${host}).`)
 
-      // Base entries first
-      for (const entry of baseEntries)
-       unifiedEntries.set(entry.name, { entry, source: 'base' })
+      const mergedSubjects = new Map()
 
-      // Overlays overwrite base definitions
-      for (const entry of overlayEntries)
-       unifiedEntries.set(entry.name, { entry, source: 'overlay' })
+      const frameworkPath = resolve(frameworkRoot, ...domains)
+      if (exists(frameworkPath))
+       for (const subject of readFolder(frameworkPath, { withFileTypes: true }))
+        mergedSubjects.set(subject.name, { subject, path: frameworkPath })
 
-      const filenames = []
+      const projectPath = resolve(projectRoot, ...domains)
+      if (exists(projectPath))
+       for (const subject of readFolder(projectPath, { withFileTypes: true }))
+        mergedSubjects.set(subject.name, { subject, path: projectPath })
 
-      for (const [itemName, { entry, source }] of unifiedEntries) {
-       // Ignore logic (TS files, hidden files, etc)
+      const part = domains.length ? {} : _
+
+      for (const [itemName, { subject, path }] of mergedSubjects)
        if (itemName.startsWith(".") || itemName === "Icon" || (!host && itemName === "build.js") || itemName.endsWith(".ts")) {
-        bufferLog(4, "".padEnd(depth, " ") + `⬚ ${itemName.padEnd(20, " ")} - ignored`)
-        continue
+        stats.ignoreCount++
+        bufferLog(4, "".padEnd(domains.length, " ") + `⬚ ${itemName.padEnd(20, " ")} - ignored`)
+       } else if (subject.isDirectory()) {
+        stats.partCount++
+        bufferLog(2, "".padEnd(domains.length, "  ") + `▼ ${itemName}/`)
+        subjectOrigins.set(itemName + (host ? "." + host : ""), path === projectPath)
+        part[itemName] = readRecursive([...domains, itemName])
+       } else if (subject.isFile()) {
+        stats.fileCount++
+        const isBinary = itemName.endsWith(".png") || itemName.endsWith(".gif")
+        bufferLog(3, "".padEnd(domains.length, " ") + `${isBinary ? "▣" : "≡"} ${itemName}`)
+        subjectOrigins.set(host + "/" + itemName, path === projectPath)
+        part[itemName] = readFile(resolve(path, itemName), isBinary ? "base64" : "utf-8")
+       } else {
+        stats.ignoreCount++
+        bufferLog(4, "".padEnd(domains.length, " ") + `⬚ ${itemName.padEnd(20, " ")} - ignored (exotic type)`)
        }
 
-       // Determine paths for the next step
-       const nextBase = `${baseDir}/${itemName}`
-       const nextOverlay = `${overlayDir}/${itemName}`
-
-       // Logic for host string construction remains...
-       const filePath = (host ? host.split(".").reverse().join("/") + "/" : "") + itemName
-
-       if (entry.isDirectory()) {
-        bufferLog(2, "".padEnd(depth, "  ") + `▼ ${itemName}/`)
-
-        // RECURSION: Pass both potential paths down
-        readRecursive(
-         host ? (itemName ? itemName + "." + host : host) : itemName ?? "",
-         nextBase,
-         nextOverlay,
-         (part[itemName] = part[itemName] || {}), // Ensure we merge into existing object if base/overlay share folder
-         depth + 1
-        )
-
-       } else if (entry.isFile()) {
-        // Prioritize overlay file path, fallback to base
-        const actualPath = (source === 'overlay') ? nextOverlay : nextBase
-        filenames.push([itemName, actualPath])
-       }
-      }
-
-      // File processing (remains largely the same, but uses the prioritized path)
-      for (const [filename, filePath] of filenames) {
-       const isBinary = filename.endsWith("png") || filename.endsWith("gif")
-       const content = readFile(filePath, isBinary ? "base64" : "utf-8")
-
-       part[filename] = content
-       stats.fileCount++
-       bufferLog(3, "".padEnd(depth, " ") + `${isBinary ? "▣" : "≡"} ${filename}`)
-      }
-
-      stats.domainCount++
+      return part
      }
 
-    readRecursive("", __dirname, resolve(__dirname, "../../../src"), _, 0)
+    readRecursive([])
 
     if (batchedLogs.length)
      archiveLog(batchedLogs.join("\n") + "\n")
 
-    archiveLog(`Archived in ${Date.now() - buildStartTime}ms`)
+    archiveLog(`Archived in ${Date.now() - bootStartTime}ms`)
    })
 
-   logScope(2, "\nLogging Domain Stats", () => {
+   logScope(2, "\nDomain Stats", () => {
     logAny(2, [{
-     Parts: { Amount: stats.domainCount },
+     Parts: { Amount: stats.partCount },
      Files: { Amount: stats.fileCount },
+     Ignored: { Amount: stats.ignoreCount }
     }], "table")
    })
   }
+
   logScope(1, "\nRecursively Hydrating Parts", hydrateLog => {
 
    class SourceMappedFile {
@@ -404,7 +413,7 @@ function ƒ(_) {
     packAndMap(url) {
      const sourceFile = this
      const script = sourceFile.lines.join("\n")
-     return _.mapping
+     return +_.mapping
       ? script +
       `
 //${"#"} sourceMappingURL=data:application/json;charset=utf-8;base64,${btoaUnicode(sourceFile.getMap())}${url
@@ -474,7 +483,7 @@ function ƒ(_) {
     earlyImageSources = [],
     partsByHost = {},
     preHydrationArchive = serialize(_),
-    hydrateRecursive = (part, domains = []) => {
+    hydratePartsRecursive = (part, domains = []) => {
 
      let host
 
@@ -516,7 +525,9 @@ function ƒ(_) {
        const extendsString = part.manifest.extends ?? "part"
        const relativeStepsBack = extendsString.match(/\.*$/)[0].length
        const typename = relativeStepsBack ? `${extendsString.slice(0, -relativeStepsBack)}.${domains.slice(relativeStepsBack - 1).join(".")}` : extendsString.includes(".") ? extendsString : `${extendsString}.abstract.parts`
-       prototype = hydrateRecursive(typename)
+       prototype = hydratePartsRecursive(typename)
+       if (!prototype.isAbstract)
+        throw new Error(`Hydration Error: parts can only extend abstract parts (${host} tried to extend ${prototype.host}).`)
        Object.setPrototypeOf(part, prototype)
        part.define({
         isAbstract: { value: part.manifest.abstract }
@@ -662,6 +673,8 @@ function ƒ(_) {
          earlyImageSources.push([part, fn.slice(6)])
         imageSources.push([part, fn])
        }
+       subjectIndices.set(`${host}/${fn}`, allSubjects.length)
+       allSubjects.push([host, fn])
       }
       for (const methodID in part.manifest)
        if (!["extends", "abstract"].includes(methodID))
@@ -690,7 +703,7 @@ function ƒ(_) {
         part.define({ [identifier]: { value: childPart } })
        }
 
-       hydrateRecursive(childPart, [subdomain, ...domains])
+       hydratePartsRecursive(childPart, [subdomain, ...domains])
 
        childPart.define({ "..": { value: part } })
 
@@ -699,9 +712,22 @@ function ƒ(_) {
       }
       if (!part.isAbstract) instances.push(part)
       allParts.push(part)
+      subjectIndices.set(host, allSubjects.length)
+      allSubjects.push([host])
      })
 
      return part
+    },
+    hydrateSubjectOrigins = () => {
+     if (environment === "node") {
+      const bits = allSubjects.map(([host, fn]) => +subjectOrigins.get(host + (fn ? "/" + fn : "")))
+      const bitString = bits.join("")
+      compressedSubjectOrigins = encodeSegment(BigInt("0b" + bitString))
+     } else {
+      const bitString = decodeSegment(compressedSubjectOrigins).toString(2).padStart(allSubjects.length, "0")
+      const bits = [...bitString]
+      allSubjects.forEach(([host, fn], index) => subjectOrigins.set(host + (fn ? "/" + fn : ""), bits[index] === "1"))
+     }
     },
     countAndSortInheritorsRecursive = part => {
      if (part.totalInheritors !== undefined)
@@ -717,7 +743,8 @@ function ƒ(_) {
      return totalInheritors
     }
 
-   hydrateRecursive(_)
+   hydratePartsRecursive(_)
+   hydrateSubjectOrigins()
    countAndSortInheritorsRecursive(_.parts.abstract.part)
    hydrateLog(`\nParts hydrated in ${Date.now() - hydrationStartTime}ms.`)
 
@@ -752,10 +779,10 @@ function ƒ(_) {
    })
 
    logScope(1, "\nBuilding Part Instances", buildLog => {
-    const buildStartTime = Date.now()
+    const bootStartTime = Date.now()
     for (const part of instances)
      part.startBuild()
-    buildLog(`Parts built in ${Date.now() - buildStartTime}ms.`)
+    buildLog(`Parts built in ${Date.now() - bootStartTime}ms.`)
    })
 
    logScope(2, "\nLogging Part Entropy", () => {
@@ -795,7 +822,7 @@ function ƒ(_) {
 
   bootLog(`
  ╭┈┈┈┈┈┈┈┈┈┈┈ BOOT SUCCEEDED ┈┈┈┈┈┈┈┈┈┈┈╮
- ┊ Booted in ${(Date.now() - buildStartTime + "ms.").padEnd(27, " ")}┊
+ ┊ Booted in ${(Date.now() - bootStartTime + "ms.").padEnd(27, " ")}┊
  ┊                                      ┊
  ┊ End of synchronous script execution. ┊
  ╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈╯
@@ -804,12 +831,12 @@ function ƒ(_) {
 }
 
 ƒ({
- verbosity: 1,
+ verbosity: "1",
  // TODO: Fix source mapping bugs.
- mapping: false,
+ mapping: "0",
  change: "major",
- hangHydration: 0,
- haltHydration: false,
+ hangHydration: "0",
+ haltHydration: "0",
  defaultApplicationHost: "kireji.app",
- port: 3000
+ port: "3000"
 })

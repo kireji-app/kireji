@@ -3,10 +3,7 @@ const tabBitDepths = [0n, 0n]
 const tabOffsets = [0n]
 const permutationSizes = [1n]
 const payloadSizes = [1n]
-const partOffsets = [0, allParts.length]
-const subjectCount = BigInt(allParts.reduce((subjectCount, part, i) =>
- partOffsets[i + 2] = subjectCount + part.filenames.length, allParts.length
-))
+const subjectCount = BigInt(allSubjects.length)
 const maxTabCount = subjectCount
 const LSB = []
 const powerFloor = 2n ** BigInt(subjectCount.toString(2).length - 1)
@@ -63,8 +60,6 @@ tabGroup.define({
  tabBitDepths: { value: tabBitDepths },
  permutationSizes: { value: permutationSizes },
  payloadSizes: { value: payloadSizes },
- partOffsets: { value: partOffsets },
- subjectCount: { value: subjectCount },
  maxTabCount: { value: maxTabCount },
  previousPart: { value: null, writable: true },
  tree: { value: null, writable: true },

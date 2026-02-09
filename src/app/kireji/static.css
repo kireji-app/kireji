@@ -9,14 +9,14 @@
  --sidebar-width: calc(var(--tool-bar-width) + var(--sidebar-view-width));
 }
 
-body.modern #kireji_app {
+body.modern {
  --tab-group-height: calc(var(--tab-line-height) + var(--spacing) / 1.5);
  --tab-line-height: 26px;
  --crumbs-height: 26px;
  --tab-icon-size: 20px;
 }
 
-body.vintage #kireji_app {
+body.vintage {
  --tab-group-height: calc(var(--tab-line-height) + 2px);
  --tab-line-height: 20px;
  --crumbs-height: 20px;

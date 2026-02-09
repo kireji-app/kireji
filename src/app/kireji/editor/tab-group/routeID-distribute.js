@@ -37,7 +37,7 @@ if (numberOfTabsOpen !== tabGroup.openTabs.length || tabGroup.permutationRouteID
  tabGroup.tree = new tabGroup.FenwickTree()
 
  const indexOfLastOpenTab = numberOfTabsOpen - 1n
- const indexOfLastPossibleTabSubject = tabGroup.subjectCount - 1n
+ const indexOfLastPossibleTabSubject = BigInt(allSubjects.length) - 1n
 
  for (let currentTabIndex = 0n; currentTabIndex < numberOfTabsOpen; currentTabIndex++) {
 
@@ -56,29 +56,12 @@ if (numberOfTabsOpen !== tabGroup.openTabs.length || tabGroup.permutationRouteID
   const payload = payloadRouteID % tabGroup.payloadCardinality
   payloadRouteID /= tabGroup.payloadCardinality
 
-  // Using embedded match logic, split apart the true index into usable file data.
-  if (trueIndexOfActiveTabSubject < allParts.length) {
-
-   // The index is in the first plane; it maps to the set of parts themselves.
-   tabGroup.openTabs[currentTabIndex] = {
-    part: allParts[trueIndexOfActiveTabSubject],
-    payload
-   }
-  } else {
-
-   // The index is among the later planes, indicating a specific file defined on a specific part.
-   for (let indexOfPlane = 1; indexOfPlane <= allParts.length; indexOfPlane++) {
-    const nextPlaneIndex = indexOfPlane + 1
-    if (nextPlaneIndex > allParts.length || trueIndexOfActiveTabSubject < tabGroup.partOffsets[nextPlaneIndex]) {
-     const indexOfOwningPart = indexOfPlane - 1
-     const part = allParts[indexOfOwningPart]
-     const firstIndexOfCurrentPlane = tabGroup.partOffsets[indexOfPlane]
-     const indexOfSubjectWithinCurrentPlane = Number(trueIndexOfActiveTabSubject) - firstIndexOfCurrentPlane
-     const filename = part.filenames[indexOfSubjectWithinCurrentPlane]
-     tabGroup.openTabs[currentTabIndex] = { part, filename, payload }
-     break
-    }
-   }
+  // Match the subject index with the actual subject.
+  const [host, filename] = allSubjects[Number(trueIndexOfActiveTabSubject)]
+  tabGroup.openTabs[currentTabIndex] = {
+   part: partsByHost[host],
+   filename,
+   payload
   }
  }
 

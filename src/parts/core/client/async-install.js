@@ -4,7 +4,7 @@ await Promise.all([
 ])
 
 logScope(0, "Finalizing Hydration", log => {
- if (_.haltHydration && !production)
+ if (+_.haltHydration && !production)
   warn('Intentionally blocked hydration.')
  else {
 

@@ -289,7 +289,17 @@ declare function randomBits(bigCount: number): bigint
 declare function randomRouteID(cardinality: bigint): bigint
 /** Returns a random boolean value. */
 declare function flipCoin(): boolean
-/** The immutable list of runtime instances for the root space, in order of when they were fully hydrated. */
+/** The immutable list of runtime instances for the root space, in order of when the were reached during recursive part hydration. */
 declare const instances: IPartAny[]
-/** The immutable list of every part in the root space, in order of when they were fully hydrated. */
+/** The immutable list of every part in the root space, in order of when the were reached during recursive part hydration. */
 declare const allParts: IPartAny[]
+/** The immutable list of every part host and filename combination, in order of when the were reached during recursive part hydration. */
+declare const allSubjects: [host: string, filename?: string]
+/** The Unix timestamp (in ms) when the current instance of the framework started booting. */
+declare const bootStartTime: number
+/** A map that provides information about whether a subject was defined in the project repository (maps to true) or only in the kireji framework package (maps to false). */
+declare const subjectOrigins: Map<string, boolean>
+/** A map that provides the index (in the `allSubjects` array) for the given subject. */
+declare const subjectIndices: Map<string, boolean>
+/** A base64-encoded string which represents a portable bitmask that compresses `subjectOrigins` in hydration order (because that order is identical between environments). */
+declare const compressedSubjectOrigins: string

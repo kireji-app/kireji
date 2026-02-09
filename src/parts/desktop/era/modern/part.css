@@ -57,13 +57,13 @@ task-bar button,
 task-bar menu-button {
  height: var(--icon-size);
  line-height: var(--icon-size);
- cursor: pointer;
  font-size: calc(var(--icon-size) * 1.2);
 }
 
 button:hover,
 menu-button:hover {
  color: var(--accent);
+ cursor: pointer;
 }
 
 menu-button>img {

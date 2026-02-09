@@ -260,4 +260,4 @@ const httpServer = require('http').createServer((request, response) => logServer
  }
 ))
 
-httpServer.listen(_.port, () => logScope(0, `Server Ready - http://localhost:${_.port}`))
+httpServer.listen(+_.port, () => logScope(0, `Server Ready - http://localhost:${_.port}`))
