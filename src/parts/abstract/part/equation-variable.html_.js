@@ -1,0 +1,1 @@
+return `<math><msub><mi>𝑘</mi><mi>${part.key ?? "ecosystem"}</mi></msub></math>`

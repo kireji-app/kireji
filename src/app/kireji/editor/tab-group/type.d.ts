@@ -57,6 +57,8 @@ declare interface IKirejiAppTabGroup
  readonly activeTabIndex: number
  /** The index of the preview tab, if one exists. The preview tab is the tab which can be replaced when opening a new tab. */
  readonly previewTabIndex?: number
+ /** The maximum number of tabs that the user can have open, used to mitigate the potentially massive state space of this component. */
+ readonly maxTabCount: bigint
  /** A data type which can be used to performantly rank and unrank permutation indices. */
  readonly FenwickTree: typeof FenwickTree
 }

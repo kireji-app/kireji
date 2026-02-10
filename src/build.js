@@ -73,7 +73,7 @@ function ƒ(_, compressedSubjectOrigins) {
   toCharms = (x, unit = true) => encodeSegment(BigInt(x) - 1n).length + (unit ? " charm" + (x !== 1 ? "s" : "") : 0),
   camelCase = (words, delimiter = "-") => (typeof words === "string" ? words.split(delimiter) : words).map((word, i) => (i ? word[0].toUpperCase() + word.slice(1) : word)).join(""),
   serialize = value => JSON.stringify(value, (k, v) => (typeof v === "bigint" ? v.toString() + "n" : v), 1),
-  scientific = (x, html = false) => { x = x.toString(10); const log10 = x.length - 1; x = Math.round((x[0] ?? 0) + (x[1] ?? 0) + (x[2] ?? 0) + (x[3] ?? "0") + "." + (x[4] ?? "0")).toString(); const factor = `${x.slice(0, 1)}.${x.slice(1)}`; return html ? `<math><mn>${factor}</mn><mo>&times;</mo><msup><mn>10</mn><mn>${log10}</mn></msup></math>` : `${factor} × 10` + [...log10.toString()].map(n => '⁰¹²³⁴⁵⁶⁷⁸⁹'[n]).join("") },
+  scientific = (x, html = false) => { x = x.toString(10); const log10 = x.length - 1; x = Math.round((x[0] ?? 0) + (x[1] ?? 0) + (x[2] ?? 0) + (x[3] ?? "0") + "." + (x[4] ?? "0")).toString(); const factor = `${x.slice(0, 1)}.${x.slice(1)}`; return html ? `<math><mn>${factor}</mn><mo>&sdot;</mo><msup><mn>10</mn><mn>${log10}</mn></msup></math>` : `${factor} × 10` + [...log10.toString()].map(n => '⁰¹²³⁴⁵⁶⁷⁸⁹'[n]).join("") },
   btoaUnicode = string => btoa(new TextEncoder("utf-8").encode(string).reduce((data, byte) => data + String.fromCharCode(byte), "")),
   sanitizeAttr = string => string.replaceAll(/&/g, '&amp;').replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;').replaceAll(/</g, '&lt;').replaceAll(/>/g, '&gt;')
 

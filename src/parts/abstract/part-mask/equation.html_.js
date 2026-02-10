@@ -1,0 +1,1 @@
+return `<math>${partMask["equation-variable.html"]}</math>`

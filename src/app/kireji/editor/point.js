@@ -101,6 +101,11 @@ const pointerConfig = {
      return
     }
 
+    if (tabGroup.previewTabIndex === null && BigInt(tabGroup.openTabs.length) === tabGroup.maxTabCount) {
+     alert("You have too many tabs open!")
+     return
+    }
+
     let indexOfNewlyCreatedTab = numberOfTabsOpen === 0 ? 0 : tabGroup.activeTabIndex + 1
     let newPreviewTabIndex = null
 
@@ -164,6 +169,11 @@ const pointerConfig = {
      tabGroup.previewTabIndex = adjustedPreviewTabIndex
      tabGroup.recomputeRouteID(true)
     } else {
+
+     if (BigInt(tabGroup.openTabs.length) === tabGroup.maxTabCount) {
+      alert("You have too many tabs open!")
+      return
+     }
 
      const previewTab = tabGroup.previewTab
 

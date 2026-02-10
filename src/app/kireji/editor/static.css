@@ -274,7 +274,7 @@ body.modern #kireji_app editor-view>scroller->scroll-content {
   display: inline-block;
  }
 
- body.modern #kireji_app #info-state-space>section:not([disabled])>p {
+ body.modern #kireji_app #info-state-space>section:not([disabled])>:is(p, math) {
   float: right;
   margin: 0;
  }
