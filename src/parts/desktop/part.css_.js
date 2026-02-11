@@ -1,1 +1,1 @@
-return desktop.icons["part.css"]
+return desktop.icons["part.css"] + desktop["static.css"]

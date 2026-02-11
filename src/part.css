@@ -31,7 +31,7 @@ body {
  --menu-tween: 0;
  --h: 100vh;
  --warning-height: 28px;
- --wallpaper-height: calc(var(--h) - var(--task-bar-height) - var(--warning-height));
+ --wallpaper-height: calc(var(--h) - var(--task-bar-height) - var(--warning-height) - var(--title-bar-height));
  --wallpaper-width: 100vw;
  --padding: calc(3.5 * var(--spacing));
  --gap: calc(2.5 * var(--spacing));
@@ -52,7 +52,7 @@ wallpaper- {
  --app-height: var(--wallpaper-height);
  --app-width: var(--wallpaper-width);
  position: fixed;
- top: var(--warning-height);
+ top: calc(var(--warning-height) + var(--title-bar-height));
  height: var(--wallpaper-height);
  left: 0;
  right: 0;
@@ -158,19 +158,7 @@ scroll-bar[disabled]>thumb- {
  display: none;
 }
 
-task-menu {
- position: fixed;
- top: 0;
- bottom: 0;
- left: 0;
- right: 0;
- margin: 0;
- padding: 0;
- outline: none;
-}
-
-button,
-menu-button {
+button {
  background: transparent;
  padding: 0;
  margin: 0;
@@ -184,13 +172,13 @@ button:focus {
  outline: none;
 }
 
-task-bar>menu-button {
- position: absolute;
- left: var(--spacing);
- bottom: var(--spacing);
+task-bar>button {
+ position: relative;
+ margin-left: var(--spacing);
+ margin-bottom: var(--spacing);
 }
 
-task-sidebar {
+task-menu {
  margin: 0;
  position: fixed;
  overflow: hidden;
@@ -321,4 +309,42 @@ body.dark warning- {
 #stats-tray-item,
 #clock-tray-item {
  font-size: revert;
+}
+
+title-bar {
+ display: flex;
+ flex-flow: row nowrap;
+ margin: 0;
+ padding: 0;
+ height: var(--title-bar-height);
+ line-height: var(--title-bar-height);
+ position: fixed;
+ top: var(--warning-height);
+ left: 0;
+ right: 0;
+}
+
+title-bar>button {
+ width: var(--icon-size);
+}
+
+title-bar>.hide:before {
+ content: "_"
+}
+
+title-bar>.restore:before {
+ content: "☐"
+}
+
+/* Temp */
+title-bar>.restore {
+ display: none;
+}
+
+title-bar>.maximize:before {
+ content: "⛶"
+}
+
+title-bar>.close:before {
+ content: "✕"
 }

@@ -1,1 +1,1 @@
-return `<menu-button ${menu.pointAttr()} tabIndex=0 class="btn"><img class="part-icon" src="${_.application.placeholderImage("part.png")}"/></menu-button>`
+return `<button class=menu ${menu.pointAttr()} tabIndex=0 class="btn">𑁔</button>`

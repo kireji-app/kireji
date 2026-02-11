@@ -16,5 +16,8 @@
  "early-get-images": [
   "BODY_HTML",
   "HEAD_HTML"
+ ],
+ "application-goto": [
+  "HOST"
  ]
 }

@@ -1,0 +1,1 @@
+return Object.values(_.applications)

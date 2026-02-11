@@ -1,0 +1,24 @@
+{
+ "extends": "permutation",
+ "point": [
+  "POINTER_EVENT",
+  "TARGET_ELEMENT",
+  "INSTANCE_INDEX"
+ ],
+ "point-close": [
+  "POINTER_EVENT",
+  "TARGET_ELEMENT"
+ ],
+ "point-hide": [
+  "POINTER_EVENT",
+  "TARGET_ELEMENT"
+ ],
+ "point-restore": [
+  "POINTER_EVENT",
+  "TARGET_ELEMENT"
+ ],
+ "HTML-render-task": [
+  "INSTANCE",
+  "INSTANCE_INDEX"
+ ]
+}

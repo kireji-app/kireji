@@ -2,7 +2,7 @@ const menuApplicationsCount = Object.keys(_.menuApplications).length
 const controlLinesCount = 4
 const separatorCount = 2
 return part["static.css"] + `
-task-sidebar::after {
+task-menu::after {
  content: "${_.application.fancyTitle}";
 }
 body {

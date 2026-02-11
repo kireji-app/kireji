@@ -4,4 +4,4 @@ menu.element = Q("task-menu") ?? (() => {
  return offscreen.querySelector("task-menu")
 })()
 
-menu.button = Q("menu-button")
+menu.button = Q("button.menu")

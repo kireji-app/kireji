@@ -1,0 +1,1 @@
+debug('remove ' + INSTANCE.application.host + ' from windows views')

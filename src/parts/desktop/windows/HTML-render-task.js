@@ -1,0 +1,1 @@
+return `<button class="task${INSTANCE.application === _.application ? " pressed" : ""}" ${windows.pointAttr("point", INSTANCE_INDEX)} tabIndex=0><img src="${INSTANCE.application.placeholderImage("part.png")}"/><span>${INSTANCE.application.title}</span></button>`

@@ -1,0 +1,1 @@
+debug('replace window views of window #' + INSTANCE_INDEX + " with " + INSTANCE.application.host + '.')

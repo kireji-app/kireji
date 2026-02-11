@@ -6,7 +6,7 @@ if (hydrated) {
 
  // TODO: Create a "pseudo-part" that has all the same view methods, etc. of a normal part but is dynamically instantiated for dynamic typing.
 
- if (tabGroup.openTabs.length !== tabGroup.viewedOpenTabs.length || tabGroup.viewedPermutation !== tabGroup.permutationRouteID || tabGroup.viewedPayload !== tabGroup.payloadRouteID) {
+ if (tabGroup.openTabs.length !== tabGroup.viewedOpenTabs.length || tabGroup.viewedPermutationRouteID !== tabGroup.permutationRouteID || tabGroup.viewedPayloadRouteID !== tabGroup.payloadRouteID) {
   // TODO: This is a dead-simple approach ... more performant approaches exist.
   const tabContainer = Q("#tab-group")
   const existingTabCount = tabGroup.viewedOpenTabs.length
@@ -38,8 +38,8 @@ if (hydrated) {
 
    tabContainer.appendChild(newTabElement)
   }
-  tabGroup.viewedPermutation = tabGroup.permutationRouteID
-  tabGroup.viewedPayload = tabGroup.payloadRouteID
+  tabGroup.viewedPermutationRouteID = tabGroup.permutationRouteID
+  tabGroup.viewedPayloadRouteID = tabGroup.payloadRouteID
   tabGroup.viewedOpenTabs = [...tabGroup.openTabs]
  }
 

@@ -52,8 +52,8 @@ tabGroup.define({
  previewTabIndex: { value: null, writable: true },
  viewedActiveTab: { value: null, writable: true },
  viewedPreviewTab: { value: null, writable: true },
- viewedPermutation: { value: null, writable: true },
- viewedPayload: { value: null, writable: true },
+ viewedPermutationRouteID: { value: null, writable: true },
+ viewedPayloadRouteID: { value: null, writable: true },
  viewedOpenTabs: { value: null, writable: true },
  openTabs: { value: [] },
  tabOffsets: { value: tabOffsets },
@@ -61,7 +61,6 @@ tabGroup.define({
  permutationSizes: { value: permutationSizes },
  payloadSizes: { value: payloadSizes },
  maxTabCount: { value: maxTabCount },
- previousPart: { value: null, writable: true },
  tree: { value: null, writable: true },
  container: { value: null, writable: true },
  FenwickTree: {

@@ -5,6 +5,9 @@ declare interface ITaskBar
  // Subparts.
  readonly tray: ITray
  readonly menu: IMenu
+
+ // Runtime Properties.
+ readonly element: HTMLElement
 }
 
 declare type ITaskbarPart = IPart<ITaskBar, IPartAny>

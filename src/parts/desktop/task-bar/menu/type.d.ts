@@ -7,8 +7,6 @@ declare interface IMenu
  readonly clip: IMenuClip
  /** A movie clip that represents the closed position. It plays once and freezes on its last frame. */
  readonly closed: IMenuClip
- /** The movie clip that tweens the menu from the opened position to the closed position. */
- readonly dismiss: IMenuClip
  /** The movie clip that tweens the menu from the closed position to the opened position. */
  readonly introduce: IMenuClip
  /** A movie clip that represents the opened position. It plays once and freezes on its last frame. */
@@ -31,13 +29,12 @@ declare interface IMenu
 
 /** A type that generates an animated menu.
  * 
- * It's a seamless looping sequence of four movie clips:
+ * It contains three movie clips:
  * ```
  * [
  *   menu.closed,
  *   menu.introduce,
- *   menu.opened,
- *   menu.dismiss
+ *   menu.opened
  * ]
  * ```*/
 declare const menu: IMenu

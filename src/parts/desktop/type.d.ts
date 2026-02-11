@@ -6,6 +6,7 @@ declare interface IDesktop
  readonly era: IEra
  readonly taskBar: ITaskBar
  readonly icons: IDesktopIcons
+ readonly windows: IDesktopWindows
 }
 
 declare const desktop: IDesktop

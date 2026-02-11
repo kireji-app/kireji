@@ -1,0 +1,46 @@
+{
+ "abstract": true,
+ "superset-get": [],
+ "model-validate-instance": [
+  "MODEL"
+ ],
+ "routeID-get-permutation": [
+  "INSTANCES"
+ ],
+ "routeID-distribute-instance": [
+  "SUBJECT_INDEX",
+  "ROUTE_ID"
+ ],
+ "routeID-collect-instance": [
+  "INSTANCE"
+ ],
+ "subject-instance-to": [
+  "INSTANCE"
+ ],
+ "routeID-get-payload": [
+  "INSTANCES"
+ ],
+ "routeID-recompute": [],
+ "factor-get-permutation": [
+  "INSTANCE_COUNT",
+  "CURRENT_INSTANCE_INDEX"
+ ],
+ "view-add-instance": [
+  "INSTANCE",
+  "INSTANCE_INDEX"
+ ],
+ "view-replace-instance": [
+  "INSTANCE",
+  "INSTANCE_INDEX"
+ ],
+ "view-remove-instance": [
+  "INSTANCE",
+  "INSTANCE_INDEX"
+ ],
+ "model-instance-from": [
+  "MODEL"
+ ],
+ "model-instance-to": [
+  "INSTANCE"
+ ]
+}

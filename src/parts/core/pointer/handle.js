@@ -37,9 +37,7 @@ const
 
   // Determine if the drop should be handled using a click override.
   const hasDoubleClick = typeof POINTER_CONFIG.doubleClick === "function"
-  const wasClick = (typeof POINTER_CONFIG.click === "function" || hasDoubleClick || POINTER_CONFIG.focus === "click") && (
-   ({ left, right, top, bottom }) => pointerEvent.clientX >= left && pointerEvent.clientX <= right && pointerEvent.clientY >= top && pointerEvent.clientY <= bottom
-  )(POINTER_CONFIG.TARGET_ELEMENT.getBoundingClientRect())
+  const wasClick = (typeof POINTER_CONFIG.click === "function" || hasDoubleClick || POINTER_CONFIG.focus === "click") && inRect(pointerEvent, POINTER_CONFIG.TARGET_ELEMENT.getBoundingClientRect())
 
   if (wasClick) {
 

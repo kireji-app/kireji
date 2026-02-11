@@ -41,10 +41,10 @@ declare interface IKirejiAppTabGroup
   * The most recent preview tab model, as determined while populating the view (not when propagating the route ID). */
  readonly viewedPreviewTab?: IKirejiAppTabGroupTab
  /** The most recent permutation route ID, used to quickly determine if the tab arrangement has changed since the last view population. */
- readonly viewedPermutation?: bigint
+ readonly viewedPermutationRouteID?: bigint
  /** The most recent payload route ID, used to quickly determine if any payload data has changed since the last view population. */
- readonly viewedPayload?: bigint
- /** The set of viewed tab objects corresponding to the current `tabGroup.viewedPermutation`. */
+ readonly viewedPayloadRouteID?: bigint
+ /** The set of viewed tab objects corresponding to the current `tabGroup.viewedPermutationRouteID`. */
  readonly viewedOpenTabs: IKirejiAppTabGroupTabArray
  /** A subindex representing which permutation of k open tabs is assigned. */
  readonly permutationRouteID: bigint

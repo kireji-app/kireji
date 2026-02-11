@@ -19,10 +19,10 @@ await logScope(1, 'Ensuring ServiceWorker Controller', async log => {
 
   if (!production) {
    nav.serviceWorker.oncontrollerchange = () => {
-    if (_.resetLocalState) {
+    if (+_.resetLocalState) {
      /* Reset to the landing hash on service worker update (useful during
         development that changes the part arrangement frequently. */
-     location.assign(location.origin + `/${_.version}/${_.landingHash}/`)
+     location.assign(location.origin + `/${_.version}/`)
     } else location.reload()
    }
   }

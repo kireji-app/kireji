@@ -131,7 +131,7 @@ body.light #kireji_app editor-[data-drop-target] :is(editor-view, crumbs-)::afte
  margin: 0;
  padding: 0;
  counter-reset: ln;
- padding-bottom: calc(100vh - var(--tab-group-height) - var(--crumbs-height) - var(--task-bar-height) - var(--warning-height) - var(--code-line-height));
+ padding-bottom: calc(100vh - var(--tab-group-height) - var(--crumbs-height) - var(--task-bar-height) - var(--warning-height) - var(--code-line-height) - var(--title-bar-height));
 }
 
 #kireji_app editor-view>scroller-:has(#file-viewer) {
@@ -393,7 +393,7 @@ body.vintage #kireji_app crumbs- {
 }
 
 body.vintage #kireji_app #file-viewer {
- padding-bottom: calc(100vh - var(--tab-group-height) - var(--crumbs-height) - var(--task-bar-height) - var(--warning-height) - var(--code-line-height) - 24px);
+ padding-bottom: calc(100vh - var(--tab-group-height) - var(--crumbs-height) - var(--task-bar-height) - var(--warning-height) - var(--title-bar-height) - var(--code-line-height) - 24px);
 }
 
 body.vintage.light #kireji_app editor-view {

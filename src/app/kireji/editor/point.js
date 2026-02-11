@@ -10,9 +10,7 @@ const pointerConfig = {
   }
  },
  drag(pointerEvent) {
-  const
-   { left: tabsLeft, right: tabsRight, top: tabsTop, bottom: tabsBottom } = tabGroup.container.getBoundingClientRect(),
-   isOverTabGroup = pointerEvent.clientX >= tabsLeft && pointerEvent.clientX <= tabsRight && pointerEvent.clientY >= tabsTop && pointerEvent.clientY <= tabsBottom
+  const isOverTabGroup = inRect(pointerEvent, tabGroup.container.getBoundingClientRect())
   if (isOverTabGroup) {
    if (tabGroup.container.parentElement.hasAttribute("data-drop-target"))
     tabGroup.container.parentElement.removeAttribute("data-drop-target")
@@ -39,9 +37,7 @@ const pointerConfig = {
     }
    }
   } else {
-   const
-    editorRect = tabGroup.container.parentElement.getBoundingClientRect(),
-    draggedItemIsOverEditor = pointerEvent.clientX >= editorRect.left && pointerEvent.clientX <= editorRect.right && pointerEvent.clientY >= editorRect.top && pointerEvent.clientY <= editorRect.bottom
+   const draggedItemIsOverEditor = inRect(pointerEvent, tabGroup.container.parentElement.getBoundingClientRect())
    if (draggedItemIsOverEditor && !tabGroup.container.parentElement.hasAttribute("data-drop-target"))
     tabGroup.container.parentElement.setAttribute("data-drop-target", "")
    else if (!draggedItemIsOverEditor && tabGroup.container.parentElement.hasAttribute("data-drop-target"))
@@ -67,12 +63,9 @@ const pointerConfig = {
  drop(pointerEvent) {
   // TODO: break into separate "click" and "drop" handlers.
   const
-   draggedItemRect = TARGET_ELEMENT.getBoundingClientRect(),
-   draggedItemWasDroppedOntoItself = pointerEvent.clientX >= draggedItemRect.left && pointerEvent.clientX <= draggedItemRect.right && pointerEvent.clientY >= draggedItemRect.top && pointerEvent.clientY <= draggedItemRect.bottom,
-   tabGroupRect = tabGroup.container.getBoundingClientRect(),
-   draggedItemWasDroppedOntoTabGroup = pointerEvent.clientX >= tabGroupRect.left && pointerEvent.clientX <= tabGroupRect.right && pointerEvent.clientY >= tabGroupRect.top && pointerEvent.clientY <= tabGroupRect.bottom,
-   editorRect = tabGroup.container.parentElement.getBoundingClientRect(),
-   draggedItemWasDroppedOntoEditor = pointerEvent.clientX >= editorRect.left && pointerEvent.clientX <= editorRect.right && pointerEvent.clientY >= editorRect.top && pointerEvent.clientY <= editorRect.bottom,
+   draggedItemWasDroppedOntoItself = inRect(pointerEvent, TARGET_ELEMENT.getBoundingClientRect()),
+   draggedItemWasDroppedOntoTabGroup = inRect(pointerEvent, tabGroup.container.getBoundingClientRect()),
+   draggedItemWasDroppedOntoEditor = inRect(pointerEvent, tabGroup.container.parentElement.getBoundingClientRect()),
    draggedItemIsAlreadyTheActiveTab = this.activeTabIndexOfDraggedItem !== -1,
    draggedItemFileData = draggedItemIsAlreadyTheActiveTab ? tabGroup.openTabs[this.activeTabIndexOfDraggedItem] : { part: allParts[PART_INDEX], filename: isNaN(FILE_INDEX) ? undefined : allParts[PART_INDEX].filenames[FILE_INDEX], payload: TAB_PAYLOAD },
    existingTabIndexOfFileData = draggedItemIsAlreadyTheActiveTab ? this.activeTabIndexOfDraggedItem : tabGroup.openTabs.findIndex(tab => tab.part === draggedItemFileData.part && tab.filename === draggedItemFileData.filename),

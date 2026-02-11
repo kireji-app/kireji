@@ -50,6 +50,10 @@ declare interface IEcosystem
  readonly setRoute(REQUEST_URL: string): void
  /** Performs automated build-time unit tests to validate the state of the build. */
  readonly validate(): void
+ /** *Client-only*
+  * 
+  * Navigates to the given host by setting the current location. An undo poit is automatically set by the browser. */
+ readonly gotoApplication(HOST: string): void
 
  // Runtime Properties.
  /** The ecosystem's currently assigned application, encoded by the host of the current URL. */
@@ -72,7 +76,10 @@ declare interface IEcosystem
  * 
  * The serialized version should not include any values that are added during or after recursively hydrating the part tree. */
 declare const _: IEcosystem
+/** A shorthand for document.querySelector */
 declare const Q: typeof document.querySelector
+/** Checks if the given pointer event occured within the given dom rectangle. */
+declare const inRect: (pointerEvent: PointerEvent, domRect: DOMRect) => boolean
 /** A function which simplifies the process of deploying to three environments (server, worker, client) by giving them all the same routing functions, virtual DOM and synchronous fetch method which can produce both static assets and dynamically generated files.
  * 
  * It creates a function scope in which all other .js files execute. It then boots the ecosystem. */

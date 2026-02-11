@@ -1,13 +1,17 @@
 body,
 html {
  --scrollbar-width: 16px;
- --pressed-checker:
-  linear-gradient(45deg, var(--bg-light-er) 25%, transparent 25%, transparent 75%, var(--bg-light-er) 75%, var(--bg-light-er)) 0 0 / 2px 2px,
-  linear-gradient(45deg, var(--bg-light-er) 25%, transparent 25%, transparent 75%, var(--bg-light-er) 75%, var(--bg-light-er)) 1px 1px / 2px 2px;
+ --bg-checker:
+  linear-gradient(45deg, var(--bg) 25%, transparent 25%, transparent 75%, var(--bg) 75%, var(--bg)) 0 0 / 2px 2px,
+  linear-gradient(45deg, var(--bg) 25%, transparent 25%, transparent 75%, var(--bg) 75%, var(--bg)) 1px 1px / 2px 2px;
 }
 
 scroll-bar {
- background: var(--pressed-checker);
+ background: var(--bg-checker), white;
+}
+
+body.dark scroll-bar {
+ background: var(--bg-checker), black;
 }
 
 scroll-bar>:is(.scroll-up, .scroll-down, thumb-) {
@@ -143,19 +147,22 @@ scroll-bar>thumb- {
  height: 100%;
  margin: 0;
  width: 160px;
+ flex-shrink: 0;
+ flex-basis: 160px;
  display: flex;
  flex-flow: row nowrap;
  gap: 3px;
  border: none;
  padding: 3px 2px 2px;
  text-align: left;
- box-shadow: inset -1px -1px var(--bg-dark-er), inset 1px 1px var(--bg-light-er), inset -2px -2px var(--bg-dark), inset 2px 2px var(--bg-light);
+ box-shadow: var(--deep-outset);
 }
 
 body {
  --bottom: calc(var(--task-bar-height) - 4px);
  --spacing: 12px;
  --task-bar-height: 28px;
+ --title-bar-height: 18px;
  --icon-size: var(--task-bar-height);
  --deep-inset:
   inset -1px -1px var(--bg-light-est),
@@ -193,7 +200,7 @@ body.dark {
   inset -2px -2px var(--bg-dark);
 }
 
-task-sidebar {
+task-menu {
  height: calc(var(--menu-tween) * var(--sidebar-height));
  min-width: 164px;
  left: 2px;
@@ -205,7 +212,7 @@ task-sidebar {
  box-shadow: var(--deep-outset);
 }
 
-task-sidebar::after {
+task-menu::after {
  pointer-events: none;
  /* font-smooth: never;
  -webkit-font-smoothing: none; */
@@ -256,44 +263,11 @@ body.dark hr {
  height: 16px;
 }
 
-.task:focus::after {
- border: 1px dotted white;
- mix-blend-mode: difference;
- content: "";
- position: absolute;
- margin: 3px;
- left: 0;
- right: 0;
- top: 0;
- bottom: 0;
- pointer-events: none;
-}
-
-.task.open {
+body:not(.menu-pressed) task-bar:not(:focus-within)>button.task.pressed {
  font: bold var(--default-font-size) var(--system-ui);
  padding: 4px 2px 2px;
- box-shadow: inset -1px -1px var(--bg-light-er), inset 1px 1px var(--bg-dark-er), inset -2px -2px var(--bg-light), inset 2px 2px var(--bg-dark);
-}
-
-.task.open>* {
- z-index: 3
-}
-
-.task.open::before {
- content: "";
- position: absolute;
- margin: 2px;
- border-top: 1px solid var(--bg-light-er);
- left: 0;
- right: 0;
- top: 0;
- bottom: 0;
- background: var(--pressed-checker);
-}
-
-.task.icon {
- width: 16px;
- height: 16px;
+ box-shadow: var(--deep-inset);
+ background: var(--bg-checker), white;
 }
 
 tray- {
@@ -347,11 +321,11 @@ task-bar {
  box-shadow: inset 0 1px var(--bg-light-er), inset 0 2px var(--bg-light);
 }
 
-task-bar>menu-button {
+task-bar>button {
  width: min-content !important;
  height: 22px;
- bottom: 2px;
- left: 2px;
+ margin-bottom: 2px;
+ margin-left: 2px;
  display: flex;
  flex-flow: row nowrap;
  gap: 3px;
@@ -363,13 +337,13 @@ task-bar>menu-button {
  box-shadow: var(--deep-outset);
 }
 
-menu-button>.part-icon {
+title-bar>.part-icon {
  width: 16px;
  height: 16px;
- margin: 0;
+ margin: 1px 3px 1px 2px;
 }
 
-body.menu-pressed menu-button {
+body.menu-pressed task-bar>button.menu {
  box-shadow: var(--deep-inset);
  padding: 4px 4px 2px;
 }
@@ -378,7 +352,7 @@ desktop-icon .label {
  position: relative;
 }
 
-menu-button:focus::before {
+task-bar>button:focus::before {
  border: 1px dotted white;
  mix-blend-mode: difference;
  content: "";
@@ -391,10 +365,48 @@ menu-button:focus::before {
  pointer-events: none;
 }
 
-menu-button::after {
+task-bar>button.menu::after {
  content: "Menu";
 }
 
 .handle {
  display: none;
+}
+
+title-bar {
+ background-color: var(--accent);
+ color: white;
+}
+
+body.dark title-bar {
+ background-color: var(--accent);
+ color: black;
+}
+
+title-bar>button {
+ width: 16px;
+ height: 14px;
+ margin: 2px;
+ background-color: var(--bg);
+ color: var(--fg);
+ box-shadow: var(--deep-outset);
+ flex-shrink: none;
+ line-height: 14px;
+ font-size: 14px;
+ text-align: center;
+ cursor: default;
+ text-decoration: none;
+}
+
+title-bar>button:active {
+ box-shadow: var(--deep-inset);
+}
+
+title-bar>:is(.hide, .restore) {
+ margin-left: 0;
+ margin-right: 0;
+}
+
+title-bar>.hide {
+ margin-right: 0;
 }

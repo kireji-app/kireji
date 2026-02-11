@@ -34,6 +34,7 @@ const bodyHTML =
    `🚧 App in Alpha. Features subject to change/break without notice.`
   ) +
   `</warning->` +
+  `<title-bar><img class="part-icon" src="${_.application.placeholderImage("part.png")}"/>${application.title}<flex-spacer></flex-spacer><button class=hide ${windows.pointAttr("hidePoint")}></button><button class=restore ${windows.pointAttr("restorePoint")} disabled></button><button class=close ${windows.pointAttr("closePoint")}></button></title-bar>` +
   `<wallpaper- class=app-container id=${application.host.replaceAll(".", "_")} tabIndex=0${application.attributes ? ` ${application.attributes}` : ""}${application.style ? ` style="${application.style}"` : ""}>` + (
    application["part.html"]
   ) +

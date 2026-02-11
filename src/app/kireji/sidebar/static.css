@@ -129,8 +129,7 @@
 
 body.modern #kireji_app #sidebar-view-header {
  box-shadow:
-  inset -2px 0 0 -1px var(--bg-un-mode),
-  inset 0 2px 0 -1px var(--bg-un-mode);
+  inset -2px 0 0 -1px var(--bg-un-mode);
 }
 
 body.modern #kireji_app #sidebar-view {
