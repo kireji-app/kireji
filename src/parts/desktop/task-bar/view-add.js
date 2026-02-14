@@ -5,6 +5,8 @@ if (!hydrated)
 
   if (taskBar.menu.arm !== taskBar.menu.closed)
    Q("task-bar>button.menu").focus()
+  else
+   Q("title-bar").focus()
 
   document.addEventListener('pointerdown', pointerEvent => {
    if (taskBar.menu.arm !== taskBar.menu.closed && !inRect(pointerEvent, taskBar.menu.element.getBoundingClientRect())) {

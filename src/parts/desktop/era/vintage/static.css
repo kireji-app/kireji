@@ -19,7 +19,7 @@ scroll-bar>:is(.scroll-up, .scroll-down, thumb-) {
  box-shadow: var(--deep-outset);
 }
 
-scroll-bar>:is(.scroll-up, .scroll-down):active {
+scroll-bar>:is(.scroll-up, .scroll-down).down {
  box-shadow: var(--deep-inset);
 }
 
@@ -263,7 +263,8 @@ body.dark hr {
  height: 16px;
 }
 
-body:not(.menu-pressed) task-bar:not(:focus-within)>button.task.pressed {
+body:focus-within:not(.menu-pressed)>:not(task-bar:focus-within)>button.task.pressed,
+body:focus-within:not(.menu-pressed)>task-bar>button.task.pressed:focus {
  font: bold var(--default-font-size) var(--system-ui);
  padding: 4px 2px 2px;
  box-shadow: var(--deep-inset);
@@ -374,12 +375,19 @@ task-bar>button.menu::after {
 }
 
 title-bar {
+ background-color: var(--bg-un-mode);
+ color: var(--fg-mode);
+}
+
+
+body:focus-within:not(.menu-pressed):has(>task-bar:not(:focus-within))>title-bar,
+body:focus-within:not(.menu-pressed):has(>task-bar>button.task.pressed:focus)>title-bar {
  background-color: var(--accent);
  color: white;
 }
 
-body.dark title-bar {
- background-color: var(--accent);
+body:focus-within.dark:not(.menu-pressed):has(>task-bar:not(:focus-within))>title-bar,
+body:focus-within.dark:not(.menu-pressed):has(>task-bar>button.task.pressed:focus)>title-bar {
  color: black;
 }
 
@@ -398,7 +406,7 @@ title-bar>button {
  text-decoration: none;
 }
 
-title-bar>button:active {
+title-bar>button.down {
  box-shadow: var(--deep-inset);
 }
 

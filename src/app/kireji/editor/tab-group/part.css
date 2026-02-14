@@ -208,7 +208,7 @@ body.vintage #kireji_app tab- .close-tab:hover {
  box-shadow: var(--outset);
 }
 
-body.vintage #kireji_app tab- .close-tab:active {
+body.vintage #kireji_app tab- .close-tab.down {
  box-shadow: var(--deep-inset);
 }
 

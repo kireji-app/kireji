@@ -24,23 +24,64 @@ logScope(0, "Finalizing Hydration", log => {
     log(`Main thread hang finished at iteration ${iteration}.`)
    })
 
-  globalThis.addEventListener("popstate", () => addressBar.useRoute())
+  log("Defining Client-Only Methods and Default Listeners")
+  if (environment === "client") {
+   Object.assign(globalThis, {
+    Q(...args) {
+     return document.querySelector(...args)
+    },
+    inRect(pointerEvent, boundingClientRect) {
+     return pointerEvent.clientX >= boundingClientRect.left
+      && pointerEvent.clientX <= boundingClientRect.right
+      && pointerEvent.clientY >= boundingClientRect.top
+      && pointerEvent.clientY <= boundingClientRect.bottom
+    }
+   })
 
-  log("Setting initial state.")
+   // Clean up preview operations upon going back.
+   window.addEventListener("pageshow", pageTransitionEvent => {
+    log("Setting Initial State")
+    addressBar.useRoute()
+
+    log("Activating Body")
+    document.body.classList.remove("unhydrated")
+
+    debug('remove these preview classes', document.querySelectorAll(`[class^="preview-"]`))
+   })
+
+   // Prevent normal click events to ensure the pointerdown event always takes precedence.
+   document.addEventListener("click", pointerEvent => {
+    pointerEvent.preventDefault()
+    pointerEvent.stopPropagation()
+   }, { capture: true })
+
+   // Listen for history popstate (but why?).
+   globalThis.addEventListener("popstate", () => {
+    log("Setting Initial State")
+    addressBar.useRoute()
+
+    log("Activating Body")
+    document.body.classList.remove("unhydrated")
+
+    debug('remove these preview classes', document.querySelectorAll(`[class^="preview-"]`))
+   })
+  }
+
+  log("Setting Initial State")
   addressBar.useRoute()
 
-  log("Activating Body.")
+  log("Activating Body")
   document.body.classList.remove("unhydrated")
 
   // Make ecosystem available to HTML event handlers.
   globalThis._ = _
 
-  log("Client hydration complete.")
-  client.hydrated = true
-
   log("Starting Engine Loop")
   _.define({
    frameRequest: { value: requestAnimationFrame(() => _.distributeLoop()), writable: true },
   })
+
+  log("Client hydration complete.")
+  client.hydrated = true
  }
 })

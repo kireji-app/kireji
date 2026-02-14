@@ -79,6 +79,9 @@ const
   // Perform custom action.
   if (typeof POINTER_CONFIG.reset === "function")
    POINTER_CONFIG.reset()
+
+  // Remove CSS feedback.
+  POINTER_CONFIG.TARGET_ELEMENT.classList.remove("down")
  },
  endDoubleClick = () => {
   clearTimeout(pointer.doubleClick.timeout)
@@ -94,6 +97,9 @@ document.addEventListener("pointercancel", reset, { capture: true, signal: contr
 
 // Don't allow anything else to start picking up events.
 POINTER_CONFIG.TARGET_ELEMENT.setPointerCapture(pointer.id = POINTER_CONFIG.POINTER_EVENT.pointerId)
+
+// Allow CSS styles to target the element while its down.
+POINTER_CONFIG.TARGET_ELEMENT.classList.add("down")
 
 // Conditionally focus the element.
 if (POINTER_CONFIG.focus === "down")
