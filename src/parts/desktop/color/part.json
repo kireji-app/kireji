@@ -1,20 +1,22 @@
 {
  "extends": "match",
- "hex-rgb-from": [
-  "HEX"
- ],
- "hex-rgb-to": [
-  "R",
-  "G",
-  "B"
- ],
- "hex-blend": [
-  "A",
-  "B",
-  "MODE=\"screen\""
- ],
- "point": [
-  "POINTER_EVENT",
-  "TARGET_ELEMENT"
- ]
+ "methods": {
+  "hex-rgb-from": [
+   "HEX"
+  ],
+  "hex-rgb-to": [
+   "R",
+   "G",
+   "B"
+  ],
+  "hex-blend": [
+   "A",
+   "B",
+   "MODE=\"screen\""
+  ],
+  "point": [
+   "POINTER_EVENT",
+   "TARGET_ELEMENT"
+  ]
+ }
 }

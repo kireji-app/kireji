@@ -1,7 +1,9 @@
 {
  "abstract": true,
- "routeID-collect": [
-  "CHANGED_ARMS",
-  "DEPTH"
- ]
+ "methods": {
+  "routeID-collect": [
+   "CHANGED_ARMS",
+   "DEPTH"
+  ]
+ }
 }

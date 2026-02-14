@@ -1,15 +1,17 @@
 {
  "abstract": true,
  "extends": "application",
- "CSS-get-error": [
-  "MESSAGE"
- ],
- "HTML-get-error": [
-  "STATUS",
-  "MESSAGE"
- ],
- "response-get-error": [
-  "ERROR_STRING",
-  "REQUEST_HOST"
- ]
+ "methods": {
+  "CSS-get-error": [
+   "MESSAGE"
+  ],
+  "HTML-get-error": [
+   "STATUS",
+   "MESSAGE"
+  ],
+  "response-get-error": [
+   "ERROR_STRING",
+   "REQUEST_HOST"
+  ]
+ }
 }

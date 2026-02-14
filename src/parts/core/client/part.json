@@ -1,6 +1,3 @@
 {
- "extends": "facet",
- "performance-simulate-slow": [
-  "DELAY_IN_MS = 0"
- ]
+ "extends": "facet"
 }

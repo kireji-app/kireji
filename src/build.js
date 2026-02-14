@@ -533,7 +533,9 @@ function ƒ(_, compressedSubjectOrigins) {
        part.define({
         isAbstract: { value: part.manifest.abstract }
        })
+       part.manifest.methods ??= {}
        Object.setPrototypeOf(part.manifest, prototype.manifest)
+       Object.setPrototypeOf(part.manifest.methods, prototype.manifest.methods)
        prototype.inheritors.push(part)
       }
       const sourceFile = new SourceMappedFile(pathFromRepo, pathToRepo, "compiled-part.js")
@@ -640,10 +642,10 @@ function ƒ(_, compressedSubjectOrigins) {
         property.niceNameIsValidIdentifier = property.isSymbol || property.isGenerated || Property.identifierPattern.test(property.niceName)
         property.propertyReference = property.niceNameIsValidIdentifier ? property.niceName : `["${property.niceName}"]`
         property.propertyAccessor = property.propertyReference.startsWith("[") ? property.propertyReference : "." + property.niceName
-        const args = part.manifest[PROPERTY_ID];
+        const args = part.manifest.methods[PROPERTY_ID]
         const errorIndex = args?.findIndex(arg => !arg || typeof arg !== "string") ?? -1
         if (errorIndex !== -1)
-         throw `Invalid method argument\n\t_.${[...domains].reverse().join(".")}.manifest["${PROPERTY_ID}"][${errorIndex}]\n\tAll arguments must be non-empty strings.`
+         throw `Invalid method argument\n\t_.${[...domains].reverse().join(".")}.manifest.methods["${PROPERTY_ID}"][${errorIndex}]\n\tAll arguments must be non-empty strings.`
         property.argumentString = "(" + (args?.join(", ") ?? (PROPERTY_ID.startsWith("set-") ? "VALUE" : "")) + ")"
         property.modifiers = property.isAsync ? "async " : (property.isGenerated || property.isAlias ? "get " : "")
         property.signature = "\n\n " + property.propertyReference + `: {\n  ${(property.isGenerated || property.isAlias) ? property.modifiers : ((property.isAsync ? property.modifiers : "") + "value")}${property.argumentString} {`
@@ -658,6 +660,7 @@ function ƒ(_, compressedSubjectOrigins) {
        Property: { value: Property },
        prototype: { value: Object.getPrototypeOf(part) }
       })
+
       for (const fn of part.filenames) {
        if (!fn.includes(".") && fn.includes("-")) {
         Property.ids.add("@" + fn)
@@ -677,9 +680,9 @@ function ƒ(_, compressedSubjectOrigins) {
        subjectIndices.set(`${host}/${fn}`, allSubjects.length)
        allSubjects.push([host, fn])
       }
-      for (const methodID in part.manifest)
-       if (!["extends", "abstract"].includes(methodID))
-        Property.ids.add(methodID)
+
+      for (const methodID in part.manifest.methods)
+       Property.ids.add(methodID)
 
       sourceFile.addSection(`@descriptor-map-open@({\n //  ${host}${!prototype ? "" : ` instanceof ${prototype.host}`}\n`, buildSource)
       for (const id of Property.ids) new Property(id)

@@ -1,6 +1,8 @@
 {
  "abstract": true,
- "toggle": [],
- "clear": [],
- "set": []
+ "methods": {
+  "toggle": [],
+  "clear": [],
+  "set": []
+ }
 }

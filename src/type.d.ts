@@ -94,8 +94,6 @@ declare const sourcePositionMarkPattern: RegExp
 declare const host: string
 /** The compiled string which should evaluate to an object. */
 declare const script: string
-/** An object that serializes method signatures and meta data during part object hydration. The object is parsed from the file `part.json` (or `{}` if no file is found). Its prototype is the prototype part's own partManifest or null, if it's the Core. */
-declare const partManifest: IPartData
 /** The inverse of pathToRoot. The path "back up" to the repository root from the directory containing the source code the part used. */
 declare const pathToRepo: string
 /** All of the data collected about the source of each property added to the part during hydration. */
@@ -230,7 +228,7 @@ declare class Property {
   * 
   * Example: `.myMethod`, `[Symbol.iterator]`, `["property-with-hyphens"]`. */
  readonly propertyAccessor: string
- /** The string representing the method's arguments list, including parentheses. Derived from part configuration (`partManifest[PROPERTY_ID]`).
+ /** The string representing the method's arguments list, including parentheses. Derived from part configuration (`part.manifest.methods[PROPERTY_ID]`).
   * 
   * Example: `(arg1, arg2)`. Defaults to `()` if no arguments defined. */
  readonly argumentString: string

@@ -1,5 +1,7 @@
 {
  "extends": "facet",
- "undo": [],
- "redo": []
+ "methods": {
+  "undo": [],
+  "redo": []
+ }
 }

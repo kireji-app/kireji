@@ -1,7 +1,9 @@
 {
  "abstract": true,
- "point": [
-  "POINTER_EVENT",
-  "TARGET_ELEMENT"
- ]
+ "methods": {
+  "point": [
+   "POINTER_EVENT",
+   "TARGET_ELEMENT"
+  ]
+ }
 }

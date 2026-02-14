@@ -1,4 +1,6 @@
 {
  "abstract": true,
- "superset-create": []
+ "methods": {
+  "superset-create": []
+ }
 }

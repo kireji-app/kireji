@@ -7,7 +7,7 @@ const
   const filename = isProperty ? subjectProperty.filename : data
   const modifiers = isProperty ? subjectProperty.modifiers : ""
   const niceName = isProperty ? subjectProperty.niceName : `"${filename}"`
-  const args = isProperty ? subject.manifest[subjectProperty.id] ?? null : null
+  const args = isProperty ? subject.manifest.methods[subjectProperty.id] ?? null : null
   const isAlias = isProperty && subjectProperty.isAlias
   const isView = isProperty && subjectProperty.isView
   const isGenerated = isProperty && subjectProperty.isGenerated

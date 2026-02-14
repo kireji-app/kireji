@@ -152,6 +152,8 @@ declare interface IPart<TOwner, TSubpart>
   readonly abstract?: boolean
   /** Whether or not the part will be instanced (inherit = false) or retained (inherit = true) during the create step. */
   readonly inherit?: boolean
+  /** The list of methods that the part adds. The prototype of the methods object is set to the part's prototype's manifest methods object. If no object is defined in a manifest, the empty object will be created autoamtically. */
+  readonly methods: Record<string, string[]>
  }
  /** The previous route of the part, changed at the last call to distributeRouteID or collectRouteID. */
  readonly previousRouteID: bigint
