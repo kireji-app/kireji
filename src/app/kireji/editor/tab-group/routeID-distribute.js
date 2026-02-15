@@ -34,7 +34,7 @@ if (numberOfTabsOpen !== tabGroup.openTabs.length || tabGroup.permutationRouteID
  tabGroup.payloadRouteID = payloadRouteID
 
  // Prepare an empty Fenwick tree for converting availability-based indices to absolute indices.
- tabGroup.tree = new tabGroup.FenwickTree()
+ tabGroup.tree = new FenwickTree(BigInt(allSubjects.length))
 
  const indexOfLastOpenTab = numberOfTabsOpen - 1n
  const indexOfLastPossibleTabSubject = BigInt(allSubjects.length) - 1n

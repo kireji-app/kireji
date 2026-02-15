@@ -59,18 +59,9 @@ declare interface IKirejiAppTabGroup
  readonly previewTabIndex?: number
  /** The maximum number of tabs that the user can have open, used to mitigate the potentially massive state space of this component. */
  readonly maxTabCount: bigint
- /** A data type which can be used to performantly rank and unrank permutation indices. */
- readonly FenwickTree: typeof FenwickTree
 }
 
 declare type IKirejiAppTabGroupTabArray = IKirejiAppTabGroupTab[]
-
-declare class FenwickTree {
- constructor(): FenwickTree
- update(i: bigint, val: bigint): void
- query(i: bigint): bigint
- findNthAvailable(n: bigint): bigint
-}
 
 declare interface IKirejiAppTabGroupTab {
  readonly part: IPartAny

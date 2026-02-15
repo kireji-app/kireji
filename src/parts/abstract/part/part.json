@@ -68,6 +68,12 @@
   "attr-point": [
    "METHOD_NAME = 'point'",
    "...ARGS"
+  ],
+  "manifest-resolve-owner-of": [
+   "PROPERTY_KEY"
+  ],
+  "manifest-resolve-part-from": [
+   "PROPERTY_KEY"
   ]
  }
 }

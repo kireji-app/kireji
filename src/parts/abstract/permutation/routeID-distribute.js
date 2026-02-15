@@ -27,7 +27,7 @@ if (instanceCount !== permutation.instances.length || permutation.permutationRou
  permutation.payloadRouteID = payloadRouteID
 
  // Prepare an empty Fenwick tree for converting availability-based indices to absolute indices.
- permutation.tree = new permutation.FenwickTree()
+ permutation.tree = new FenwickTree(BigInt(permutation.superset.length))
 
  const indexOfLastInstance = instanceCount - 1n
  const indexOfLastPossibleInstanceSubject = BigInt(permutation.superset.length) - 1n

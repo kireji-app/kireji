@@ -62,7 +62,7 @@ declare interface IPart<TOwner, TSubpart>
  readonly placeholderImage(IMAGE_NAME: string): string
  /** A css variable representing the absolute css name of the given image, traversing the prototype chain if necessary. */
  readonly cssVariableOfImage(IMAGE_NAME: string): string
- /** Collects every build function in its prototype chain and then calls them all on itself. */
+ /** Collects every build function in the part's prototype chain and then calls them all on the part itself. */
  readonly startBuild(): void
  /** Sets the part's routeID, propagating it leafward and rootward and updating all views. If DELTA is true, then ROUTE_ID is added to the part's current route ID. */
  readonly setRouteID(ROUTE_ID: bigint, DELTA: boolean = false): void
@@ -102,6 +102,10 @@ declare interface IPart<TOwner, TSubpart>
  readonly distributePopulateView(): void
  /** If the part was enabled, calls distributeRemoveView on any subparts that were also enabled, passing the signal leafward. Then, if the part is no longer enabled, calls removeView on itself.*/
  readonly distributeRemoveView(): void
+ /** Searches the part prototype chain starting at the calling part and working towards the type root to find and return the nearest part which owns the given property. Returns null if the given property does not exist anywhere in the chain. */
+ readonly resolveOwnerOfManifest(PROPERTY_KEY: string): IPartAny | null
+ /** Returns a part whose host was provided as a (potentially relative) host name using the given property key in the part's manifest. This method uses the nearest part on which the manifest key is actually defined as the base for resolving any relative host name. Returns null if the given property does not exist anywhere in the chain. */
+ readonly resolvePartFromManifest(PROPERTY_KEY: string): IPartAny | null
 
  // Runtime Properties.
  /** The parent part.
@@ -147,14 +151,7 @@ declare interface IPart<TOwner, TSubpart>
   * ```*/
  readonly justDisabled: boolean
  /** The object created by parsing the part's "part.json" and assigning its prototype to the part's prototype's own manifest. */
- readonly manifest: {
-  /** Whether or not the part should be considered a subpart of its parent part (abstract = false) or an uninstanceable prototype for other parts (abstract = true). */
-  readonly abstract?: boolean
-  /** Whether or not the part will be instanced (inherit = false) or retained (inherit = true) during the create step. */
-  readonly inherit?: boolean
-  /** The list of methods that the part adds. The prototype of the methods object is set to the part's prototype's manifest methods object. If no object is defined in a manifest, the empty object will be created autoamtically. */
-  readonly methods: Record<string, string[]>
- }
+ readonly manifest: IPartManifest
  /** The previous route of the part, changed at the last call to distributeRouteID or collectRouteID. */
  readonly previousRouteID: bigint
  readonly Property: typeof Property
@@ -177,7 +174,30 @@ declare interface IPart<TOwner, TSubpart>
   * All runtime properties are added using this method.
   * 
   * No property descriptor should have its "enumerable" property set to true, as that would make the property appear to be a serialized property which can only be added by adding a new file into the part's repository folder. */
- readonly define(propertyDescriptorMap: PropertyDescriptorMap): this
+ readonly define(definition: IRuntimePropertyDefinitions<this>): this
+}
+
+declare type IRuntimePropertyDefinitions<T> = {
+ [P in keyof T]: IRuntimePropertyDefinition<T, T[P]>
+} & {
+ [key: string]: IRuntimePropertyDefinition<T, any>
+}
+
+declare type IRuntimePropertyDefinition<TOwner, TValue> = {
+ resolve(this: TOwner): TValue
+ readonly value?: TValue
+ readonly writable?: boolean
+ readonly configurable?: boolean
+ enumerable: never
+}
+
+declare interface IPartManifest {
+ /** Whether or not the part should be considered a subpart of its parent part (abstract = false) or an uninstanceable prototype for other parts (abstract = true). */
+ readonly abstract?: boolean
+ /** Whether or not the part will be instanced (inherit = false) or retained (inherit = true) during the create step. */
+ readonly inherit?: boolean
+ /** The list of methods that the part adds. The prototype of the methods object is set to the part's prototype's manifest methods object. If no object is defined in a manifest, the empty object will be created autoamtically. */
+ readonly methods: Record<string, string[]>
 }
 
 declare type IPartAny =

@@ -122,9 +122,6 @@ declare interface IPropertyTable<T> {
  readonly ["view-distribute-end"]: T
 }
 
-declare interface IPartData extends IPropertyTable<string[]> {
- readonly extends: string
-}
 /** A type used for source mapping and packing data from one or more files into a single new file. */
 class SourceMappedFile {
  /** The alphabet that Source Map Version 3 uses to base64 encode its source mapping data segments. */
@@ -298,6 +295,10 @@ declare function randomBits(bigCount: number): bigint
 declare function randomRouteID(cardinality: bigint): bigint
 /** Returns a random boolean value. */
 declare function flipCoin(): boolean
+/** Hydrates (but does not build) the given serialized part instance. If the part is already hydrated, the part is returned unchanged. If the part argument is a string, the part is found in the serialized archive and the process is run on that part, throwing an error if the part cannot be found. If the part is a runtime instance, it will not update the sets tracking build-time instances. */
+declare function hydratePartsRecursive(part: string | IPartAny, domains: string[], isRuntimeInstance: boolean = false): IPartAny
+/** Resolves the given relative host string to an absolute host name using the given base. */
+declare function resolveRelativeHost(relativeHost: string, base: string | string[]): string
 /** The immutable list of runtime instances for the root space, in order of when the were reached during recursive part hydration. */
 declare const instances: IPartAny[]
 /** The immutable list of every part in the root space, in order of when the were reached during recursive part hydration. */
@@ -312,3 +313,12 @@ declare const subjectOrigins: Map<string, boolean>
 declare const subjectIndices: Map<string, boolean>
 /** A base64-encoded string which represents a portable bitmask that compresses `subjectOrigins` in hydration order (because that order is identical between environments). */
 declare const compressedSubjectOrigins: string
+/** A data type which can be used to performantly rank and unrank permutation indices. The `size` argument must be a BigInt representing the length of the superset from which the permutation will be chosen. */
+declare class FenwickTree {
+ readonly size: bigint
+ readonly powerFloor: bigint
+ constructor(size: bigint): FenwickTree
+ update(i: bigint, val: bigint): void
+ query(i: bigint): bigint
+ findNthAvailable(n: bigint): bigint
+}

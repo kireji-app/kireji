@@ -57,8 +57,6 @@ declare interface IPermutation<TOwner, TInstance, TModel, TSubject>
 
  /** A Fenwick tree that allows performant ranking and unranking of permutation indices. */
  readonly tree: FenwickTree
- /** A data type which can be used to performantly rank and unrank permutation indices. */
- readonly FenwickTree: typeof FenwickTree
 }
 
 declare type IPermutationAny =

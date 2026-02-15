@@ -77,6 +77,43 @@ function ƒ(_, compressedSubjectOrigins) {
   btoaUnicode = string => btoa(new TextEncoder("utf-8").encode(string).reduce((data, byte) => data + String.fromCharCode(byte), "")),
   sanitizeAttr = string => string.replaceAll(/&/g, '&amp;').replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;').replaceAll(/</g, '&lt;').replaceAll(/>/g, '&gt;')
 
+ // Math Utilities
+ class FenwickTree {
+  static LSB = []
+  constructor(size) {
+
+   const oldSize = BigInt(FenwickTree.LSB.length)
+
+   for (let newSize = oldSize + 1n; newSize <= size; newSize++)
+    FenwickTree.LSB[newSize - 1n] = newSize & -newSize
+
+   this.size = size
+   this.tree = FenwickTree.LSB.slice(0, Number(size))
+   this.powerFloor = 2n ** BigInt(size.toString(2).length - 1)
+  }
+  update(i, val) {
+   for (; i < this.size; i += FenwickTree.LSB[i])
+    this.tree[i] += val
+  }
+  query(i) {
+   let sum = 0n
+   for (; i >= 0n; i -= FenwickTree.LSB[i])
+    sum += this.tree[i]
+   return sum
+  }
+  findNthAvailable(n) {
+   let nthAvailable = 0n
+   for (let p = this.powerFloor; p > 0n; p /= 2n) {
+    const i = nthAvailable + p
+    if (i <= this.size && this.tree[i - 1n] <= n) {
+     n -= this.tree[i - 1n]
+     nthAvailable = i
+    }
+   }
+   return nthAvailable
+  }
+ }
+
  // Random Number Generation
  const
   randomBits = bitCount => {
@@ -476,6 +513,8 @@ function ƒ(_, compressedSubjectOrigins) {
     }
    }
 
+   let buildTimeHydrationIsComplete = false
+
    const
     hydrationStartTime = Date.now(),
     instances = [],
@@ -484,6 +523,27 @@ function ƒ(_, compressedSubjectOrigins) {
     earlyImageSources = [],
     partsByHost = {},
     preHydrationArchive = serialize(_),
+    resolveRelativeHost = (relativeHost, base) => {
+
+     if (typeof relativeHost !== "string")
+      throw new TypeError(`Resolve Relative Host Error: the given relative host must be a string (got ${typeof relativeHost}).`)
+
+     const relativeStepsBack = relativeHost.match(/\.*$/)[0].length
+
+     if (relativeStepsBack) {
+      if (typeof base === "string")
+       base = base.split(".")
+      else if (!Array.isArray(base))
+       throw new TypeError(`Cannot resolve relative host "${relativeHost}" because the given base is not an absolute string host or an array of domains.`)
+
+      return `${relativeHost.slice(0, -relativeStepsBack)}.${base.slice(relativeStepsBack - 1).join(".")}`
+     }
+
+     if (relativeHost.includes("."))
+      return relativeHost
+
+     return `${relativeHost}.abstract.parts`
+    },
     hydratePartsRecursive = (part, domains = []) => {
 
      let host
@@ -520,13 +580,23 @@ function ƒ(_, compressedSubjectOrigins) {
       })
       let prototype = null
       if (host === "part.abstract.parts") {
-       Object.defineProperty(part, "define", { value(descriptor) { return Object.defineProperties(this, descriptor) } })
+       Object.defineProperty(part, "define", {
+        value(descriptorMap) {
+         // Resolve late-bound properties in the order they were added to the descriptor map.
+         for (const propertyKey of Reflect.ownKeys(descriptorMap)) {
+          const propertyDescriptor = descriptorMap[propertyKey]
+          if ("resolve" in propertyDescriptor) {
+           propertyDescriptor.value = propertyDescriptor.resolve.call(part)
+           delete propertyDescriptor.resolve
+          }
+          Object.defineProperty(this, propertyKey, propertyDescriptor)
+         }
+         return this
+        }
+       })
        part.define({ isAbstract: { value: part.manifest.abstract } })
       } else {
-       const extendsString = part.manifest.extends ?? "part"
-       const relativeStepsBack = extendsString.match(/\.*$/)[0].length
-       const typename = relativeStepsBack ? `${extendsString.slice(0, -relativeStepsBack)}.${domains.slice(relativeStepsBack - 1).join(".")}` : extendsString.includes(".") ? extendsString : `${extendsString}.abstract.parts`
-       prototype = hydratePartsRecursive(typename)
+       prototype = hydratePartsRecursive(resolveRelativeHost(part.manifest.extends ?? "part", domains))
        if (!prototype.isAbstract)
         throw new Error(`Hydration Error: parts can only extend abstract parts (${host} tried to extend ${prototype.host}).`)
        Object.setPrototypeOf(part, prototype)
@@ -536,7 +606,8 @@ function ƒ(_, compressedSubjectOrigins) {
        part.manifest.methods ??= {}
        Object.setPrototypeOf(part.manifest, prototype.manifest)
        Object.setPrototypeOf(part.manifest.methods, prototype.manifest.methods)
-       prototype.inheritors.push(part)
+       if (!buildTimeHydrationIsComplete)
+        prototype.inheritors.push(part)
       }
       const sourceFile = new SourceMappedFile(pathFromRepo, pathToRepo, "compiled-part.js")
       const buildSource = sourceFile.addSource(pathToRepo + "/build.js", ƒ.toString())
@@ -666,19 +737,24 @@ function ƒ(_, compressedSubjectOrigins) {
         Property.ids.add("@" + fn)
        } else if (fn.endsWith("_.js") || fn.endsWith(".js") && (fn.startsWith("set-") || fn.startsWith("view-"))) {
         Property.ids.add(fn.slice(0, -3))
-
         if (fn.endsWith(".png_.js") || fn.endsWith(".gif_.js")) {
+         if (buildTimeHydrationIsComplete)
+          throw new Error(`Adding images to runtime part instances is currently not supported.`)
          if (fn.startsWith("early-"))
           earlyImageSources.push([part, fn.slice(6, -4)])
          imageSources.push([part, fn.slice(0, -4)])
         }
        } else if (fn.endsWith(".png") || fn.endsWith(".gif")) {
+        if (buildTimeHydrationIsComplete)
+         throw new Error(`Adding images to runtime part instances is currently not supported.`)
         if (fn.startsWith("early-"))
          earlyImageSources.push([part, fn.slice(6)])
         imageSources.push([part, fn])
        }
-       subjectIndices.set(`${host}/${fn}`, allSubjects.length)
-       allSubjects.push([host, fn])
+       if (!buildTimeHydrationIsComplete) {
+        subjectIndices.set(`${host}/${fn}`, allSubjects.length)
+        allSubjects.push([host, fn])
+       }
       }
 
       for (const methodID in part.manifest.methods)
@@ -689,8 +765,7 @@ function ƒ(_, compressedSubjectOrigins) {
       sourceFile.addLine("@descriptor-map-close@})", buildSource)
       const propertyDescriptorScript = sourceFile.packAndMap()
       try {
-       const propertyDescriptor = eval(propertyDescriptorScript)
-       part.define(propertyDescriptor)
+       part.define(eval(propertyDescriptorScript))
       } catch (evalError) {
        throw new Error(`Failed to construct property descriptor for ${host}.\n${evalError}\n${propertyDescriptorScript}`)
       }
@@ -714,10 +789,12 @@ function ƒ(_, compressedSubjectOrigins) {
        if (!childPart.isAbstract)
         part.subparts.push(childPart)
       }
-      if (!part.isAbstract) instances.push(part)
-      allParts.push(part)
-      subjectIndices.set(host, allSubjects.length)
-      allSubjects.push([host])
+      if (!part.isAbstract && !buildTimeHydrationIsComplete) {
+       instances.push(part)
+       allParts.push(part)
+       subjectIndices.set(host, allSubjects.length)
+       allSubjects.push([host])
+      }
      })
 
      return part
@@ -751,6 +828,7 @@ function ƒ(_, compressedSubjectOrigins) {
    hydrateSubjectOrigins()
    countAndSortInheritorsRecursive(_.parts.abstract.part)
    hydrateLog(`\nParts hydrated in ${Date.now() - hydrationStartTime}ms.`)
+   buildTimeHydrationIsComplete = true
 
    _.define({ "..": { value: null } })
 

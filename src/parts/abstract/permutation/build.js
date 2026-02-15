@@ -79,33 +79,5 @@ permutation.define({
  instances: { value: [] },
  viewedInstances: { value: null, writable: true },
 
- tree: { value: null, writable: true },
- FenwickTree: {
-  value: class FenwickTree {
-   constructor() {
-    this.tree = [...LSB]
-   }
-   update(i, val) {
-    for (; i < supersetSize; i += LSB[i])
-     this.tree[i] += val
-   }
-   query(i) {
-    let sum = 0n
-    for (; i >= 0n; i -= LSB[i])
-     sum += this.tree[i]
-    return sum
-   }
-   findNthAvailable(n) {
-    let nthAvailable = 0n
-    for (let p = powerFloor; p > 0n; p /= 2n) {
-     const i = nthAvailable + p
-     if (i <= supersetSize && this.tree[i - 1n] <= n) {
-      n -= this.tree[i - 1n]
-      nthAvailable = i
-     }
-    }
-    return nthAvailable
-   }
-  }
- }
+ tree: { value: null, writable: true }
 })

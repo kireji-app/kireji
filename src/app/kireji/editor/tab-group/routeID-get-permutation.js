@@ -1,7 +1,7 @@
 const numberOfTabsOpen = BigInt(TABS.length)
 
 // Prepare an empty Fenwick tree for converting absolute indices to availability-based indices.
-tabGroup.tree = new tabGroup.FenwickTree()
+tabGroup.tree = new FenwickTree(BigInt(allSubjects.length))
 
 // Compile the array of unranked indices into a single permutation identifier.
 let permutationRouteID = 0n

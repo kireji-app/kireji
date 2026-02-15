@@ -1,7 +1,7 @@
 const instanceCount = BigInt(INSTANCES.length)
 
 // Prepare an empty Fenwick tree for converting absolute indices to availability-based indices.
-permutation.tree = new permutation.FenwickTree()
+permutation.tree = new FenwickTree(permutation.superset.length)
 
 // Compile the array of unranked indices into a single permutation identifier.
 let permutationRouteID = 0n

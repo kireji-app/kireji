@@ -1,13 +1,13 @@
-const cardinality = activePart.cardinality
-const cardinalityAsString = instances.includes(activePart) ? cardinality.toLocaleString() : null
+const activePartCardinality = activePart.cardinality
+const cardinalityAsString = instances.includes(activePart) ? activePartCardinality.toLocaleString() : null
 
 return (
  instances.includes(activePart) ? (
   "<h3>Cardinality</h3>" +
-  `<p>${cardinalityAsString.length < 16 ? cardinalityAsString : scientific(cardinality, true)}</p>` +
+  `<p>${cardinalityAsString.length < 16 ? cardinalityAsString : scientific(activePartCardinality, true)}</p>` +
   `<hr>` +
   "<h3>Hartley Entropy</h3>" +
-  `<p>${toCharms(activePart.cardinality)} (${toBits(activePart.cardinality)})</p>` +
+  `<p>${toCharms(activePartCardinality)} (${toBits(activePartCardinality)})</p>` +
   `<hr>` +
   `<h3>Equation</h3>` +
   "<math>" + activePart["equation-variable.html"] + "<mo>=</mo>" + activePart["equation.html"] + "</math>"
