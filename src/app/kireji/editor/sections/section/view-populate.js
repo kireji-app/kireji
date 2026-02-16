@@ -1,4 +1,4 @@
-if (hydrated) {
+if (client.hydrated) {
  const detailsElement = Q(`#info-${part.key}`)
 
  if (detailsElement) {

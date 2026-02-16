@@ -1,4 +1,4 @@
-if (hydrated) {
+if (client.hydrated) {
  const partsToOpen = new Set(folders.chosenParts)
 
  for (const alreadyOpenView of document.querySelectorAll(`#${folders[".."].id} details[open]>summary`)) {

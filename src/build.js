@@ -586,7 +586,7 @@ function ƒ(_, compressedSubjectOrigins) {
          for (const propertyKey of Reflect.ownKeys(descriptorMap)) {
           const propertyDescriptor = descriptorMap[propertyKey]
           if ("resolve" in propertyDescriptor) {
-           propertyDescriptor.value = propertyDescriptor.resolve.call(part)
+           propertyDescriptor.value = propertyDescriptor.resolve.call(this)
            delete propertyDescriptor.resolve
           }
           Object.defineProperty(this, propertyKey, propertyDescriptor)
@@ -729,7 +729,7 @@ function ƒ(_, compressedSubjectOrigins) {
       }
       part.define({
        Property: { value: Property },
-       prototype: { value: Object.getPrototypeOf(part) }
+       prototype: { value: prototype }
       })
 
       for (const fn of part.filenames) {

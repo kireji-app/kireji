@@ -1,22 +1,24 @@
-if (!hydrated)
- _.parts.core.client.promise.then(() => {
+if (client.hydrated)
+ throw `Unexpected: added the task bar view after hydration.`
 
-  taskBar.element = Q("task-bar")
+_.parts.core.client.promise.then(() => {
 
-  if (taskBar.menu.arm !== taskBar.menu.closed)
-   Q("task-bar>button.menu").focus()
-  else
-   Q("title-bar").focus()
+ taskBar.element = Q("task-bar")
 
-  document.addEventListener('pointerdown', pointerEvent => {
-   if (taskBar.menu.arm !== taskBar.menu.closed && !inRect(pointerEvent, taskBar.menu.element.getBoundingClientRect())) {
+ if (taskBar.menu.arm !== taskBar.menu.closed)
+  Q("task-bar>button.menu").focus()
+ else
+  Q("title-bar").focus()
 
-    if (inRect(pointerEvent, taskBar.element.getBoundingClientRect())) {
-     pointerEvent.stopPropagation()
-     pointerEvent.preventDefault()
-    }
+ document.addEventListener('pointerdown', pointerEvent => {
+  if (taskBar.menu.arm !== taskBar.menu.closed && !inRect(pointerEvent, taskBar.menu.element.getBoundingClientRect())) {
 
-    taskBar.menu.setRouteID(taskBar.menu.modelToRouteID("closed"))
+   if (inRect(pointerEvent, taskBar.element.getBoundingClientRect())) {
+    pointerEvent.stopPropagation()
+    pointerEvent.preventDefault()
    }
-  }, { capture: true })
- })
+
+   taskBar.menu.setRouteID(taskBar.menu.modelToRouteID("closed"))
+  }
+ }, { capture: true })
+})

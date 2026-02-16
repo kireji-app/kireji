@@ -1,4 +1,4 @@
-if (hydrated) {
+if (client.hydrated) {
  // TODO: Consider if this should be distribute view populate instead of just view populate.
  const hasNoInstances = !permutation.instances.length
 

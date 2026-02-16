@@ -1,4 +1,4 @@
-if (hydrated) {
+if (client.hydrated) {
 
  const hasNoTabs = !tabGroup.openTabs.length
  const activeTab = tabGroup.activeTab

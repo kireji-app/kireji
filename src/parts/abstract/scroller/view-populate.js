@@ -5,7 +5,7 @@ if (scroller.skipDOMUpdate) {
   scroller.skipRouteIDUpdate = true
   scroller.container.scrollTop = scroller.fraction * scroller.container.scrollHeight
  }
- if (hydrated) updateDOM()
+ if (client.hydrated) updateDOM()
  else client.promise.then(updateDOM)
 }
 
@@ -13,5 +13,5 @@ const updateDOM = () => {
  scroller.scrollBar.style.setProperty("--fraction", scroller.fraction)
 }
 
-if (hydrated) updateDOM()
+if (client.hydrated) updateDOM()
 else client.promise.then(updateDOM)

@@ -13,7 +13,7 @@ let cardinality = 1n
 
 for (let tabCount = 1n, permutationSize = 1n, payloadSize = 1n; tabCount <= subjectCount; tabCount++) {
 
- // Memoize a prototype LSB array to simplify initialization of Fenwick tree instances.
+ // TODO: Replace implementation.
  LSB[tabCount - 1n] = tabCount & -tabCount
 
  if (tabCount > maxTabCount)

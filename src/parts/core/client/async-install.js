@@ -24,7 +24,7 @@ logScope(0, "Finalizing Hydration", log => {
     log(`Main thread hang finished at iteration ${iteration}.`)
    })
 
-  log("Defining Client-Only Methods and Default Listeners")
+  log("Defining Client-Only Methods, Globals and Default Listeners")
   if (environment === "client") {
    Object.assign(globalThis, {
     Q(...args) {
@@ -35,7 +35,12 @@ logScope(0, "Finalizing Hydration", log => {
       && pointerEvent.clientX <= boundingClientRect.right
       && pointerEvent.clientY >= boundingClientRect.top
       && pointerEvent.clientY <= boundingClientRect.bottom
-    }
+    },
+    setUndoPoint() {
+     _.parts.core.addressBar.setUndoPoint()
+    },
+    pointer: _.parts.core.pointer,
+    client: _.parts.core.client
    })
 
    // Clean up preview operations upon going back.

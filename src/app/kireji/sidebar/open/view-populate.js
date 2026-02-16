@@ -1,4 +1,4 @@
-if (hydrated) {
+if (client.hydrated) {
  /** @type {IScroller<IPartOutliner<IKirejiAppSidebar>>} */
  const scroller = sidebar.view.scroller
 

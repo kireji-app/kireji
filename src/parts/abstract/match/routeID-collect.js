@@ -26,17 +26,8 @@ for (const changedArm of CHANGED_ARMS) {
  }
 }
 
-if (!newArm) {
- try {
-  newArm = match.defaultArm
-  if (newArm !== null)
-   newArm.distributeRouteID(0n)
-  else
-   match.updateRouteID(-1n)
- } catch (cause) {
-  throw new Error("An arm to enable could not be found.", cause)
- }
-}
+if (!newArm)
+ throw new Error("An arm to enable could not be found.")
 
 if (oldArm && newArm !== oldArm && !disabledArm)
  oldArm.distributeRouteID(-1n)

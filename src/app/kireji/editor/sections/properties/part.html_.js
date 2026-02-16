@@ -67,10 +67,10 @@ const
  },
  recordHTML = [createRecordsHTML(activePart)]
 
-let prototype = activePart.prototype
-while (prototype !== Object.prototype) {
- recordHTML.push(createRecordsHTML(prototype))
- prototype = prototype.prototype
+let recordsSubject = activePart.prototype
+while (recordsSubject) {
+ recordHTML.push(createRecordsHTML(recordsSubject))
+ recordsSubject = recordsSubject.prototype
 }
 
 return recordHTML.join("")

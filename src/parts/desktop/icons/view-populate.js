@@ -1,4 +1,4 @@
-if (hydrated) {
+if (client.hydrated) {
  const selectedIcons = new Set(desktopIcons.chosenParts)
 
  for (const alreadySelectedIcon of document.querySelectorAll(`#desktop_parts desktop-icon[data-selected]`)) {

@@ -1,8 +1,9 @@
 {
  "compilerOptions": {
   "target": "esnext",
-  "module": "esnext",
-  "checkJs": false
+  "module": "commonjs",
+  // "checkJs": true,
+  // "moduleDetection": "force"
  },
  "exclude": [
   "build.js",
