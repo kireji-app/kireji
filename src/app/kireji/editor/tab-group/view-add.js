@@ -5,9 +5,10 @@ tabGroup.viewedPayloadRouteID = tabGroup.payloadRouteID
 tabGroup.viewedOpenTabs = [...tabGroup.openTabs]
 tabGroup.container = Q("#tab-group")
 
-_.parts.core.client.promise.then(() => {
+client.promise.then(() => {
  Q(`tab-[data-active]`)?.scrollIntoView({
   behavior: 'smooth',
   inline: 'nearest',
  })
+ tabGroup.attachListeners()
 })

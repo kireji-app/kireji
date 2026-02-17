@@ -1,1 +1,2 @@
-addressBar.update()
+if (client.hydrated)
+ addressBar.update()

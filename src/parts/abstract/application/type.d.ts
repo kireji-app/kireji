@@ -8,7 +8,7 @@ declare interface IApplication<TOwner, TFactor>
  IApplicationDetails {
 
  // Serialized Properties.
- /** An optional array of classes which the application wants to have applied to the body. */
+ /** An array of classes which the application wants to have applied to the body. */
  readonly "classes": string[]
  /** An object corresponding to any custom headers that the application would like to include in the final response for its index pages. */
  readonly "customHeaders": Record<string, string>
@@ -51,7 +51,7 @@ declare interface IApplicationDetails
  /** The partial pathname or segment corresponding to the current page of the application. */
  readonly "pathname": string
  /** An optional string of attributes which will be added to the application host element. */
- readonly "attributes"?: string
+ readonly "attributes"?: string[]
  /** An optional string representing the style attribute of the application host element, which can be used for making quick (quicker than replacing part.css) changes to css variables. */
  readonly "style"?: string
  /** For SEO, the portion of the "sitemap.xml" file listing the application or application section's available canonical links. */

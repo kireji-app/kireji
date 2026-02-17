@@ -94,7 +94,7 @@ const pointerConfig = {
      return
     }
 
-    if (tabGroup.previewTabIndex === null && BigInt(tabGroup.openTabs.length) === tabGroup.maxTabCount) {
+    if ((tabGroup.previewTabIndex === null || droppedOntoEditor) && BigInt(tabGroup.openTabs.length) === tabGroup.maxTabCount) {
      alert("You have too many tabs open!")
      return
     }
@@ -163,6 +163,7 @@ const pointerConfig = {
      tabGroup.recomputeRouteID(true)
     } else {
 
+     debug("B", tabGroup.previewTabIndex === null, BigInt(tabGroup.openTabs.length), tabGroup.maxTabCount)
      if (BigInt(tabGroup.openTabs.length) === tabGroup.maxTabCount) {
       alert("You have too many tabs open!")
       return

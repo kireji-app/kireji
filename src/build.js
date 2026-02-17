@@ -789,8 +789,8 @@ function ƒ(_, compressedSubjectOrigins) {
        if (!childPart.isAbstract)
         part.subparts.push(childPart)
       }
-      if (!part.isAbstract && !buildTimeHydrationIsComplete) {
-       instances.push(part)
+      if (!buildTimeHydrationIsComplete) {
+       if (!part.isAbstract) instances.push(part)
        allParts.push(part)
        subjectIndices.set(host, allSubjects.length)
        allSubjects.push([host])

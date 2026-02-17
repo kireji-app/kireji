@@ -1,60 +1,39 @@
-const placeholderIcon = application.placeholderImage("part.png")
+const
+ title = sanitizeAttr(application.title ?? "Untitled App"),
+ icon = application.placeholderImage("part.png")
 
-const meta =
- // `<meta name="robots" content="noindex" />` +
- `<meta name="format-detection" content="telephone=no, email=no, address=no, date=no">` +
- `<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"/>` +
- `<meta name="description" content="${sanitizeAttr(application.descriptionMeta ?? "This app is coming soon.")}">` /* +
- `<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">` +
- `<meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">`*/
-
-const links =
- (production ? `` : `<link rel="manifest"${worker.manifestLink}/>`) +
- `<link class=favicon rel=icon href="${placeholderIcon}"/>` +
- `<link class=favicon rel="apple-touch-icon" href="${placeholderIcon}"/>` +
- `<link rel="canonical" href="https://${application.host}${application.canonicalPathname ?? "/"}" />`
-
-const title =
- `<title>${sanitizeAttr(application.title ?? "Untitled App")}</title>`
-
-const bodyClassList = ['unhydrated', era.arm.key, color.isLight ? "light" : "dark"]
-
-if (taskBar.menu.arm?.key === "open")
- bodyClassList.push("menu-fully-open")
-
-if (taskBar.menu.arm?.key !== "closed")
- bodyClassList.push("menu-pressed")
-
-if (application.classes)
- bodyClassList.push(...application.classes)
-
-const bodyHTML =
- `<body class="${bodyClassList.join(" ")}">` + (
-  `<warning->` + (
-   `🚧 App in Alpha. Features subject to change/break without notice.`
-  ) +
-  `</warning->` +
-  `<title-bar autofocus tabIndex=0><img class="part-icon" src="${_.application.placeholderImage("part.png")}"/>${application.title}<flex-spacer></flex-spacer><button class=hide ${windows.pointAttr("hidePoint")}></button><button class=restore ${windows.pointAttr("restorePoint")} disabled></button><button class=close ${windows.pointAttr("closePoint")}></button></title-bar>` +
-  `<wallpaper- class=app-container id=${application.host.replaceAll(".", "_")} tabIndex=0${application.attributes ? ` ${application.attributes}` : ""}${application.style ? ` style="${application.style}"` : ""}>` + (
-   application["part.html"]
-  ) +
-  `</wallpaper->` +
-  `<!-- windows -->` +
-  taskBar["part.html"] +
-  worker["part.html"]
- ) +
- `</body>`
-
-const nonImageStyles = `<style id="user-css">${_["part.css"]}</style>` +
- `<style id="era-css">${era["part.css"]}</style>` +
- `<style id="color-css">${color["part.css"]}</style>` +
- `<style id="application-css">${application["part.css"]}</style>`
-
-const styles = nonImageStyles +
- `<style id="img-css">${environment.startsWith("node") ? "" : _["images.css"]}</style>` +
- (environment.startsWith("node") ? `<style id="early-img-css">${_.getImagesEarly(bodyHTML, nonImageStyles)}</style>` : "")
-
-const headHTML =
- `<head>${title}${meta}${links}${styles}</head>`
-
-return `<!DOCTYPE html><html lang=en>${headHTML}${bodyHTML}</html>`
+return _.injectImages(/* html */`<!DOCTYPE html>
+<html lang=en>
+ <head>
+  <title>${title}</title>
+  <meta name="format-detection" content="telephone=no, email=no, address=no, date=no">
+  <meta name="description" content="${sanitizeAttr(application.descriptionMeta ?? "This app is coming soon.")}">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"/>
+  <!-- <meta name="theme-color" ... media="(prefers-color-scheme: light)"> -->
+  <link class=favicon rel=icon href="${icon}"/>
+  <link class=favicon rel="apple-touch-icon" href="${icon}"/>
+  <link rel="canonical" href="https://${application.host}${application.canonicalPathname ?? "/"}" />
+  <!-- <link rel="manifest"${worker.manifestLink}/> -->
+  <style id="user-css">${_["part.css"]}</style>
+  <style id="era-css">${era["part.css"]}</style>
+  <style id="color-css">${color["part.css"]}</style>
+  <style id="application-css">${application["part.css"]}</style>
+ </head>
+ <body class="unhydrated ${[era.arm.key, color.arm.key, ...taskBar.menu.classes, ...application.classes].join(" ")}">
+  <warning->🚧 App in Alpha. Features subject to change/break without notice.</warning->
+  <title-bar autofocus tabIndex=0>
+   <img class="part-icon" src="${icon}"/>
+   <span id=application-title>${title}</span>
+   <flex-spacer></flex-spacer>
+   <button class=hide ${windows.pointAttr("hidePoint")}></button>
+   <button class=restore ${windows.pointAttr("restorePoint")} disabled></button>
+   <button class=close ${windows.pointAttr("closePoint")}></button>
+  </title-bar>
+  <wallpaper- class=app-container id=${application.host.replaceAll(".", "_")} tabIndex=0 ${application.attributes.join(" ")}>
+  ${application["part.html"]}
+  </wallpaper->
+  <!-- windows -->
+  ${taskBar["part.html"]}
+  ${worker["part.html"]}
+ </body>
+</html>`)

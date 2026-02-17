@@ -36,8 +36,8 @@ declare interface IEcosystem
  readonly "landing-model.json": string
  /** The internal port (typically between 3000 and 4000) where the server will be hosted for both the reverse proxy in production and when testing locally via `localhost`. */
  readonly "port": number
- /** Returns a css that inlines `early-*` compressed images for enhancing the first page appearance when using server-side rendering. It scans the given body HTML for usages of the early images to optimize inclusion. */
- readonly getImagesEarly(BODY_HTML: string): string
+ /** Returns the given HTML document with images (using `early-*` compressed images for server- or worker-rendered snapshots) into the head as style tag(s). This is used for enhancing the first page appearance when using server-side rendering. When injecting early images, it scans the given document for image usages to determine which early images the snapshot requires. */
+ readonly injectImages(HTML_DOCUMENT: string): string
  /** Handles standard anchor link clicks in one of four ways:
    * 1. For canonical links in the current app: calls `_.translateCanonicalPathname` on the anchor's href and then goes to the returned internal route.
    * 2. For links to other applications with no pathname: sets the current application by navigating to the given host, bringing the current pathname with it.
@@ -52,7 +52,7 @@ declare interface IEcosystem
  readonly validate(): void
  /** *Client-only*
   * 
-  * Navigates to the given host by setting the current location. An undo poit is automatically set by the browser. */
+  * Navigates to the given host by setting the current location. An undo point is automatically set by the browser. */
  readonly gotoApplication(HOST: string): void
 
  // Runtime Properties.
@@ -78,7 +78,7 @@ declare interface IEcosystem
 declare const _: IEcosystem
 /** A shorthand for document.querySelector */
 declare const Q: typeof document.querySelector
-/** Checks if the given pointer event occured within the given dom rectangle. */
+/** Checks if the given pointer event occurred within the given dom rectangle. */
 declare const inRect: (pointerEvent: PointerEvent, domRect: DOMRect) => boolean
 /** A function which simplifies the process of deploying to three environments (server, worker, client) by giving them all the same routing functions, virtual DOM and synchronous fetch method which can produce both static assets and dynamically generated files.
  * 
@@ -108,19 +108,7 @@ declare const pathFromRepo: string
 declare const subdomains: string[]
 /** The list of static assets for the part whose source code is currently being evaluated. */
 declare const filenames: string[]
-declare interface ISourceDirectory<T> { }
-declare interface IPropertyTable<T> {
- readonly ["route-set"]: T
- readonly ["routeID-set"]: T
- readonly ["routeID-collect"]: T
- readonly ["routeID-distribute"]: T
-
- readonly ["view-remove"]: T
- readonly ["view-add"]: T
- readonly ["view-populate"]: T
- readonly ["view-distribute-update"]: T
- readonly ["view-distribute-end"]: T
-}
+declare const earlyImageSources: [[IPartAny, string]]
 
 /** A type used for source mapping and packing data from one or more files into a single new file. */
 class SourceMappedFile {

@@ -14,9 +14,8 @@
    "PATHNAME",
    "HASH"
   ],
-  "early-get-images": [
-   "BODY_HTML",
-   "HEAD_HTML"
+  "images-inject": [
+   "HTML_DOCUMENT"
   ],
   "application-goto": [
    "HOST"

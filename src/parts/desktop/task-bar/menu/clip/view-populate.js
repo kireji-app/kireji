@@ -1,2 +1,4 @@
-menu.element.setAttribute("style", menu.arm.styleAttr)
-base()
+if (client.hydrated) {
+ menu.element.setAttribute("style", menu.arm.style)
+ base()
+}

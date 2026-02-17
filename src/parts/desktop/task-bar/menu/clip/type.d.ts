@@ -5,7 +5,7 @@ declare interface IMenuClip
  /** The key for the clip which should play next when autoplaying the clip. */
  readonly "nextKey": string
  /** Returns the correct style attribute for the menu, computed from the clip's routeID, allowing the current clip to drive the menu's css. */
- readonly "styleAttr": string
+ readonly "style": string
 }
 
 declare const menuClip: IMenuClip

@@ -1,7 +1,7 @@
 if (client.hydrated)
  throw `Unexpected: added the task bar view after hydration.`
 
-_.parts.core.client.promise.then(() => {
+client.promise.then(() => {
 
  taskBar.element = Q("task-bar")
 

@@ -1,4 +1,4 @@
-return `<task-menu style="${menu.arm.styleAttr}">
+return `<task-menu style="${menu.arm.style}">
  <ul id=application-control>${Object.entries(_.menuApplications).map(([host, application]) => {
  const isCurrentApplication = application === _.application
  return `

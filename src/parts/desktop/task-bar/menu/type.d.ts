@@ -13,6 +13,8 @@ declare interface IMenu
  readonly opened: IMenuClip
 
  // Serialized Properties.
+ /** The array of classes that the menu wants to have applied to the body element. */
+ readonly "classes": string[]
  /** The HTML that renders the menu button on the taskbar. */
  readonly "button.html": string
  /** The HTML that renders the desktop application menu, including some application links and a few settings. */

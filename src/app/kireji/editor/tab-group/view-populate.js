@@ -113,4 +113,4 @@ if (client.hydrated) {
  Q("#sidebar-view summary[data-active]")?.removeAttribute("data-active")
  if (!hasNoTabs)
   Q(`#sidebar-view summary[data-index="${allParts.indexOf(tabGroup.viewedActiveTab.part)}"]`)?.setAttribute("data-active", "")
-} else _.parts.core.client.promise.then(() => tabGroup.attachListeners())
+}

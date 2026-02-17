@@ -23,7 +23,7 @@ declare interface IPart<TOwner, TSubpart>
  readonly "key": string
  /** The number of subparts the part has. */
  readonly "length": number
- /** A getter that generates a JSON-compatable model value from the state of the part and its subparts. */
+ /** A getter that generates a JSON-compatible model value from the state of the part and its subparts. */
  readonly "model": any
  /** The raw JSON string used to construct the object at `part.manifest`. */
  readonly "part.json": string
@@ -196,7 +196,7 @@ declare interface IPartManifest {
  readonly abstract?: boolean
  /** Whether or not the part will be instanced (inherit = false) or retained (inherit = true) during the create step. */
  readonly inherit?: boolean
- /** The list of methods that the part adds. The prototype of the methods object is set to the part's prototype's manifest methods object. If no object is defined in a manifest, the empty object will be created autoamtically. */
+ /** The list of methods that the part adds. The prototype of the methods object is set to the part's prototype's manifest methods object. If no object is defined in a manifest, the empty object will be created automatically. */
  readonly methods: Record<string, string[]>
 }
 

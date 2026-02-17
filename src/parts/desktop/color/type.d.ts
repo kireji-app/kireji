@@ -1,10 +1,10 @@
 declare interface IColor
- extends IMatch<IDesktop, IColorMode>,
+ extends IMatch<IDesktop, IBodyMode<IColor>>,
  IWebComponent {
 
  // Subparts.
- readonly light: IColorMode
- readonly dark: IColorMode
+ readonly light: IBodyMode<IColor>
+ readonly dark: IBodyMode<IColor>
 
  // Serialized Properties.
  readonly "lightEstAccent": string

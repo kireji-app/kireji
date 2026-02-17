@@ -1,1 +1,3 @@
-return `${desktop.icons.pointAttr()}`
+return [
+ desktop.icons.pointAttr()
+]
