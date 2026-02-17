@@ -10,7 +10,7 @@ declare interface IErrorApplication<TOwner>
  readonly getErrorCSS(MESSAGE: string): string
  /** Returns a stylized error page for the given message and status. */
  readonly getErrorHTML(STATUS: string | number, MESSAGE: string): string
- /** Returns an object based on the given error string which can be used to populate an error response. */
+ /** Returns an object based on the given error string which can be used to update an error response. */
  readonly getErrorResponse(ERROR_STRING: string, REQUEST_HOST: string): string
 }
 

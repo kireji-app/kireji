@@ -23,6 +23,7 @@ const
   'Content-Type': 'text/html;charset=UTF-8',
   "Document-Policy": "force-load-at-top",
   "Vary": "Sec-CH-Prefers-Color-Scheme",
+  // TODO: Finish the security setup.
   // 'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'; image-src data:; script-src self 'unsafe-inline'",
   // 'Permissions-Policy': 'microphone=(), camera=(), web-share=(self), full-screen=(self)',
   'Cross-Origin-Embedder-Policy': 'require-corp',
@@ -133,7 +134,7 @@ const httpServer = require('http').createServer((request, response) => logServer
      break respond
     }
 
-    if (["/robots.txt", "/ads.txt", "/sitemap.txt", "/browserconfig.xml"/*, "/mstile-150x150.png"*/].includes(pathname)/* || pathname.startsWith("/apple-touch-icon")*/)
+    if (["/robots.txt", "/ads.txt", "/sitemap.txt", "/browserconfig.xml"].includes(pathname))
      throw `Config 404:${pathname.slice(1)}`
 
     if (pathname.startsWith("/.well-known"))
@@ -141,11 +142,6 @@ const httpServer = require('http').createServer((request, response) => logServer
 
     if (pathname.endsWith(".map"))
      throw `Config 404:.map file`
-
-    /*
-    if (["/favicon.ico"].includes(pathname))
-     throw `Favicon`
-    */
 
     if (isLocalRequest && !(host in _.applications)) {
      /* This is handled by the reverse proxy when not testing locally. */

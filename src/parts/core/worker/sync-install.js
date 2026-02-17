@@ -77,7 +77,6 @@ globalThis.onfetch = event => logServerScope(
  })
 
 globalThis.onactivate = () => globalThis.clients.claim()
-// globalThis.oninstall = () => globalThis.skipWaiting()
 globalThis.onmessage = ({ data: { code, payload }, source }) => {
  switch (code) {
 

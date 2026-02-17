@@ -22,5 +22,11 @@ part.define({
  wasEnabled: { value: false, writable: true },
  justEnabled: { value: false, writable: true },
  justDisabled: { value: false, writable: true },
- callbacks: { value: { add: {}, populate: {}, remove: {} } }
+ callbacks: {
+  value: {
+   add: {},
+   update: {},
+   remove: {}
+  }
+ }
 })

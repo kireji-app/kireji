@@ -32,7 +32,7 @@ const
   noop(pointerEvent)
 
   // Don't drop the pointer event if its the wrong type or not the active one.
-  if (pointerEvent.pointerId !== pointer.id || /*pointerEvent.pointerType !== 'touch' */ pointerEvent.pointerType === 'mouse' && pointerEvent.button !== 0)
+  if (pointerEvent.pointerId !== pointer.id || pointerEvent.pointerType === 'mouse' && pointerEvent.button !== 0)
    return
 
   // Determine if the drop should be handled using a click override.

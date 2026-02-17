@@ -7,10 +7,14 @@ part[".."]?.collectRouteID([part])
 if (environment === "client") {
  part.distributeRemoveView()
  part[".."]?.collectRemoveView()
+
  part[".."]?.collectAddView()
  part.distributeAddView()
- part[".."]?.collectPopulateView()
- part.distributePopulateView()
+
+ if (client.hydrated) {
+  part[".."]?.collectUpdateView()
+  part.distributeUpdateView()
+ }
 }
 
 part.distributeClean()

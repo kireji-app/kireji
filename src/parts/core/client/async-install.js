@@ -44,6 +44,7 @@ logScope(0, "Finalizing Hydration", log => {
    })
 
    // Clean up preview operations upon going back.
+   // TODO: fix bugs here.
    window.addEventListener("pageshow", pageTransitionEvent => {
     log("Setting Initial State")
     addressBar.useRoute()
@@ -60,7 +61,7 @@ logScope(0, "Finalizing Hydration", log => {
     pointerEvent.stopPropagation()
    }, { capture: true })
 
-   // Listen for history popstate (but why?).
+   // Listen for history popstate, which is called if bfcache is not employed.
    globalThis.addEventListener("popstate", () => {
     log("Setting Initial State")
     addressBar.useRoute()

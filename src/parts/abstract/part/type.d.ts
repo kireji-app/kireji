@@ -82,24 +82,23 @@ declare interface IPart<TOwner, TSubpart>
   * 
   * This method is called by both collectRoute and distributeRoute. It does not propagate the routeID or update any views. */
  readonly updateRouteID(ROUTE_ID: bigint): void
- /** Adds all view elements, properties, and references which the part needs to have in *all* of it's routes. */
+
+ /** Adds view elements, properties, and references which the part needs to have in *all* of it's routes. It is called whenever the part changes from -1n and when a snapshot first hydrates. */
  readonly addView(): void
- /** An updating function which runs *every time* the route of a part changes to something other than `-1n`. */
- readonly populateView(): void
- /** Removes all view elements, properties and references that were added in either `addView` or `populateView`. */
+ /** An updating function which runs every time the route of a part changes to something other than `-1n`. */
+ readonly updateView(): void
+ /** Removes all view elements, properties and references that were added by `addView` or `updateView`. */
  readonly removeView(): void
  /** If the part was just enabled, calls addView then calls collectAddView on any parent, passing the signal rootward.*/
  readonly collectAddView(): void
- /** Whether the part is enabled or not, calls collectPopulateView on any parent, passing the signal rootward.
-  * 
-  * Then, if the part is enabled, calls populateView.*/
- readonly collectPopulateView(): void
+ /** Whether the part is enabled or not, calls collectUpdateView on any parent, passing the signal rootward. If the part is enabled, calls the part's own updateView.*/
+ readonly collectUpdateView(): void
  /** If the part was just disabled, calls removeView and then calls collectRemoveView on any parent, passing the signal rootward.*/
  readonly collectRemoveView(): void
  /** If the part just became enabled, calls addView and then calls distributeAddView on all subparts, passing the signal leafward.*/
  readonly distributeAddView(): void
- /** If the part is enabled, calls populateView on it and then calls distributePopulateView on all subparts, passing the signal leafward.*/
- readonly distributePopulateView(): void
+ /** If the part is enabled, calls updateView on it and then calls distributeUpdateView on all subparts, passing the signal leafward.*/
+ readonly distributeUpdateView(): void
  /** If the part was enabled, calls distributeRemoveView on any subparts that were also enabled, passing the signal leafward. Then, if the part is no longer enabled, calls removeView on itself.*/
  readonly distributeRemoveView(): void
  /** Searches the part prototype chain starting at the calling part and working towards the type root to find and return the nearest part which owns the given property. Returns null if the given property does not exist anywhere in the chain. */

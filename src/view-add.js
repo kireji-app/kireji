@@ -13,3 +13,4 @@ if (!client.hydrated) {
 
  Q("#img-css").innerHTML ||= _["images.css"]
  Q("#early-img-css")?.remove()
+}

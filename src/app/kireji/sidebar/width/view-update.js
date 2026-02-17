@@ -1,0 +1,1 @@
+kirejiApp.container.setAttribute("style", sidebarWidth.style)

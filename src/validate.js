@@ -1,12 +1,8 @@
 if (environment === "node-main") {
  logScope(1, "Routing Test", log => {
-  // logScope(3, "Uninitialized Model", log => log(serialize(_.model)))
   const testURL = `https://${_.defaultApplicationHost}/${_.version}/${_.landingHash}/`
   log("Test URL: " + testURL)
   logScope(1, "Setting route.", () => _.setRoute(testURL))
-
-  // logScope(3, "Landing Model", log => log(serialize(_.landingModel)))
-  // logScope(3, "Resulting Model", log => log(serialize(_.model)))
 
   logScope(3, "Landing Route ID", log => log(_.landingRouteID))
   logScope(3, "Resulting Route ID", log => log(_.routeID))
