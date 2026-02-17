@@ -43,10 +43,6 @@ declare interface IPermutation<TOwner, TInstance, TModel, TSubject>
 
  /** A subindex representing the combined per-instance payload data for the k instances. */
  readonly payloadRouteID: bigint
- /** *Client-only*
-  * 
-  * The most recent payload route ID, used to quickly determine if any payload data has changed since the last view population. */
- readonly viewedPayloadRouteID?: bigint
 
  /** The distributed instance data. */
  readonly instances: TInstance[]

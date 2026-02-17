@@ -70,6 +70,8 @@ declare interface IEcosystem
  readonly landingRouteID: bigint
  /** If in the client environment, an integer ID representing the application frame loop's current pending frame request. Null, otherwise. */
  readonly frameRequest: number | null
+ /** A boolean that is set to `true` as soon as the route ID is set for the first time. */
+ readonly initialized: undefined | true
 }
 
 /** The root part. When JSON stringified, it should inline all information compiled from the git repo in node by the build process.

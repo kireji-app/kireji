@@ -5,13 +5,19 @@ part.distributeRouteID(ROUTE_ID)
 part[".."]?.collectRouteID([part])
 
 if (environment === "client") {
- part.distributeRemoveView()
- part[".."]?.collectRemoveView()
+ if (!client.hydrated) {
 
- part[".."]?.collectAddView()
- part.distributeAddView()
+  if (part !== _ || _.initialized)
+   throw new Error(`Attempted to set the ecosystem route from the wrong part or more than once during hydration (called on ${part.host}).`)
 
- if (client.hydrated) {
+  _.distributeHydrateView()
+ } else {
+  part.distributeRemoveView()
+  part[".."]?.collectRemoveView()
+
+  part[".."]?.collectAddView()
+  part.distributeAddView()
+
   part[".."]?.collectUpdateView()
   part.distributeUpdateView()
  }
@@ -19,3 +25,6 @@ if (environment === "client") {
 
 part.distributeClean()
 part[".."]?.collectClean()
+
+if (!_.initialized)
+ _.define({ initialized: { value: true } })

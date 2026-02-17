@@ -7,6 +7,5 @@ clip.define({
  elapsedTime: { value: undefined, writable: true },
  elapsedFrames: { value: undefined, writable: true },
  playing: { value: undefined, writable: true },
- pendingFrame: { value: undefined, writable: true },
  nextClip: { value: null, writable: true }
 })

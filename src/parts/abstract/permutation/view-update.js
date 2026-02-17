@@ -1,7 +1,5 @@
 // TODO: Consider if this should be distribute view update instead of just view update.
-const hasNoInstances = !permutation.instances.length
-
-if (permutation.instances.length !== permutation.viewedInstances.length || permutation.viewedPermutationRouteID !== permutation.permutationRouteID || permutation.viewedPayloadRouteID !== permutation.payloadRouteID) {
+if (permutation.instances.length !== permutation.viewedInstances.length || permutation.viewedPermutationRouteID !== permutation.permutationRouteID) {
  // TODO: This is a dead-simple approach ... more performant approaches exist.
  const existingInstanceCount = permutation.viewedInstances.length
  const targetInstanceCount = permutation.instances.length
@@ -28,7 +26,7 @@ if (permutation.instances.length !== permutation.viewedInstances.length || permu
 
   permutation.addInstanceView(permutation.instances[i], i)
  }
+
  permutation.viewedPermutationRouteID = permutation.permutationRouteID
- permutation.viewedPayloadRouteID = permutation.payloadRouteID
  permutation.viewedInstances = [...permutation.instances]
 }

@@ -74,7 +74,6 @@ permutation.define({
  viewedPermutationRouteID: { value: null, writable: true },
 
  payloadRouteID: { value: null, writable: true },
- viewedPayloadRouteID: { value: null, writable: true },
 
  instances: { value: [] },
  viewedInstances: { value: null, writable: true },

@@ -1,2 +1,2 @@
 Q("body>task-bar>button.menu").before(menu.element)
-base()
+document.body.classList.add("menu-pressed")

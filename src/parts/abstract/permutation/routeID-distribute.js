@@ -29,9 +29,6 @@ if (instanceCount !== permutation.instances.length || permutation.permutationRou
  // Prepare an empty Fenwick tree for converting availability-based indices to absolute indices.
  permutation.tree = new FenwickTree(BigInt(permutation.superset.length))
 
- const indexOfLastInstance = instanceCount - 1n
- const indexOfLastPossibleInstanceSubject = BigInt(permutation.superset.length) - 1n
-
  for (let currentInstanceIndex = 0n; currentInstanceIndex < instanceCount; currentInstanceIndex++) {
 
   // Use mix-based logic to extract the current instances's availability-based subject index.

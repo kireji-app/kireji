@@ -83,6 +83,8 @@ declare interface IPart<TOwner, TSubpart>
   * This method is called by both collectRoute and distributeRoute. It does not propagate the routeID or update any views. */
  readonly updateRouteID(ROUTE_ID: bigint): void
 
+ /** Creates all the references the ecosystem needs to react to user interaction that couldn't be established by the server- or worker-rendered snapshot. This may also be called by parts that have just been enabled, especially if their `addView()` method relies on introducing the snippet into the DOM that they introduce into the snapshot. */
+ readonly hydrateView(): void
  /** Adds view elements, properties, and references which the part needs to have in *all* of it's routes. It is called whenever the part changes from -1n and when a snapshot first hydrates. */
  readonly addView(): void
  /** An updating function which runs every time the route of a part changes to something other than `-1n`. */
@@ -95,6 +97,8 @@ declare interface IPart<TOwner, TSubpart>
  readonly collectUpdateView(): void
  /** If the part was just disabled, calls removeView and then calls collectRemoveView on any parent, passing the signal rootward.*/
  readonly collectRemoveView(): void
+ /** While the ecosystem is setting its very first route, this calls `hydrateView()` on the part and then passes the signal leafward. */
+ readonly distributeHydrateView(): void
  /** If the part just became enabled, calls addView and then calls distributeAddView on all subparts, passing the signal leafward.*/
  readonly distributeAddView(): void
  /** If the part is enabled, calls updateView on it and then calls distributeUpdateView on all subparts, passing the signal leafward.*/
