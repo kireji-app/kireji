@@ -85,7 +85,7 @@ const
 module.exports = currentExports
 
 if (environment === "node-module") {
- logScope(0, "Server Ready - Proxy Module")
+ logScope(0, server.title + " Ready - Proxy Module")
  return
 }
 
@@ -256,4 +256,4 @@ const httpServer = require('http').createServer((request, response) => logServer
  }
 ))
 
-httpServer.listen(+_.port, () => logScope(0, `Server Ready - http://localhost:${_.port}`))
+httpServer.listen(+_.port, () => logScope(0, `${server.title} Ready - http://localhost:${_.port}`))
