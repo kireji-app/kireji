@@ -147,7 +147,7 @@ scroll-bar>thumb- {
  height: 100%;
  margin: 0;
  width: 160px;
- flex-shrink: 0;
+ flex-shrink: 1;
  flex-basis: 160px;
  display: flex;
  flex-flow: row nowrap;
@@ -156,6 +156,17 @@ scroll-bar>thumb- {
  padding: 3px 2px 2px;
  text-align: left;
  box-shadow: var(--deep-outset);
+ overflow: hidden;
+}
+
+.task img {
+ flex-shrink: 0;
+}
+
+.task span {
+ white-space: pre;
+ overflow: hidden;
+ text-overflow: ellipsis;
 }
 
 body {

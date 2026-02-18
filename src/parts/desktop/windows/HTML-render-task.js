@@ -1,1 +1,1 @@
-return `<button class="task${INSTANCE.application === _.application ? " pressed" : ""}" ${windows.pointAttr("point", INSTANCE_INDEX)} tabIndex=0><img src="${INSTANCE.application.placeholderImage("part.png")}"/><span>${INSTANCE.application.title}</span></button>`
+return `<button class="task${INSTANCE.application === _.application ? " pressed" : ""}" ${windows.pointAttr("point", INSTANCE_INDEX)} tabIndex=0 data-host="${INSTANCE.application.host}"><img src="${INSTANCE.application.placeholderImage("part.png")}"/><span class="title">${INSTANCE.application.title}</span></button>`
