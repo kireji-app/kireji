@@ -33,24 +33,16 @@ declare interface IPermutation<TOwner, TInstance, TModel, TSubject>
  readonly supersetSize: bigint
  /** The maximum number of instances that can exist at one time. */
  readonly maxInstanceCount: bigint
-
  /** A subindex representing which permutation of k instances is assigned. */
  readonly permutationRouteID: bigint
- /** *Client-only*
-  * 
-  * The most recent permutation route ID, used to quickly determine if the instance arrangement has changed since the last view population. */
+ /** The most recent permutation route ID, used to quickly determine if the instance arrangement has changed since the last view population. @remarks Client-only */
  readonly viewedPermutationRouteID?: bigint
-
  /** A subindex representing the combined per-instance payload data for the k instances. */
  readonly payloadRouteID: bigint
-
  /** The distributed instance data. */
  readonly instances: TInstance[]
- /** *Client-only*
-  * 
-  * The set of viewed instance objects corresponding to the current `part.viewedPermutationRouteID`. */
+ /** The set of viewed instance objects corresponding to the current `part.viewedPermutationRouteID`. @remarks Client-only */
  readonly viewedInstances: TInstance[]
-
  /** A Fenwick tree that allows performant ranking and unranking of permutation indices. */
  readonly tree: FenwickTree
 }

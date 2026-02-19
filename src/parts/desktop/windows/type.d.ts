@@ -23,9 +23,7 @@ declare interface IDesktopWindowModel {
  readonly height: number
 }
 
-/** The host of the application to render.
- * 
- * *Only available in `renderTaskHTML` methods.* */
+/** The host of the application to render. @remarks Only in `renderTaskHTML` methods. */
 declare const APPLICATION_HOST: string
 declare const INSTANCES: IDesktopWindow[]
 declare const INSTANCE: IDesktopWindow

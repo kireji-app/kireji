@@ -50,9 +50,7 @@ declare interface IEcosystem
  readonly setRoute(REQUEST_URL: string): void
  /** Performs automated build-time unit tests to validate the state of the build. */
  readonly validate(): void
- /** *Client-only*
-  * 
-  * Navigates to the given host by setting the current location. An undo point is automatically set by the browser. */
+ /** Navigates to the given host by setting the current location. An undo point is automatically set by the browser. @remarks Client-only */
  readonly gotoApplication(HOST: string): void
 
  // Runtime Properties.
@@ -68,15 +66,11 @@ declare interface IEcosystem
  readonly landingModel: string
  /** The routeID of the desired landing page, as computed from data parameters during the initial boot process. */
  readonly landingRouteID: bigint
- /** If in the client environment, an integer ID representing the application frame loop's current pending frame request. Null, otherwise. */
- readonly frameRequest: number | null
  /** A boolean that is set to `true` as soon as the route ID is set for the first time. */
  readonly initialized: undefined | true
 }
 
-/** The root part. When JSON stringified, it should inline all information compiled from the git repo in node by the build process.
- * 
- * The serialized version should not include any values that are added during or after recursively hydrating the part tree. */
+/** This is the root part of the ecosystem, considered the ecosystem itself. @remarks When JSON stringified, it should inline all information compiled from the git repo in node by the build process. The serialized version should not include any values that are added during or after recursively hydrating the part tree. This means that all runtime values should be non-enumerable and defined using the `define()` method. */
 declare const _: IEcosystem
 /** A shorthand for document.querySelector */
 declare const Q: typeof document.querySelector
@@ -261,9 +255,7 @@ declare class MethodConstant {
  /** Idempotent function that ensures that the constant and all its recursive dependencies (`requirements`) are declared (added to the source file output). Marks the constant as used. */
  ensureDeclarationAndDependencies(): void
 }
-/** The incoming request url string.
- * 
- * Available only in _.setRoute(). */
+/** The incoming request url string. @remarks Only in _.setRoute(). */
 declare const REQUEST_URL: string
 /** A host-keyed map of all parts in the ecosystem. */
 declare const partsByHost: Record<string, IPartAny>

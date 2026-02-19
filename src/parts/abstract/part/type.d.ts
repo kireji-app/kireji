@@ -43,7 +43,7 @@ declare interface IPart<TOwner, TSubpart>
  readonly notify(EVENT_TYPE: string): void
  /** Computes the cardinality of the part from its subparts and defines any other necessary properties. */
  readonly build(): void
- /** Calls loop on the part and then propagates the call leafward to all subparts. */
+ /** Calls `loop()` on the part and then propagates the call leafward to all subparts. */
  readonly distributeLoop(): void
  /** Returns the subparts that meet the condition provided by FILTER_FUNCTION.  */
  readonly filter(FILTER_FUNCTION: (subpart: TSubpart, index: number, part: IPart<TOwner, TSubpart>) => TSubpart): TSubpart[]
@@ -53,7 +53,7 @@ declare interface IPart<TOwner, TSubpart>
  readonly includes(SUBPART: TSubpart): boolean
  readonly reduce(REDUCE_FUNCTION: (result: TResult, subpart: TSubpart, index: number, part: IPart<TOwner, TSubpart>) => TResult, INITIAL_VALUE: TResult): TResult
  /** If defined, the per-frame update method for the part. Useful for implementing game features. */
- readonly loop?(TIME: DOMHighResTimeStamp): void
+ readonly loop?(): void
  /** Performs MAP_FUNCTION on every subpart of the part and returns an array of the results. */
  readonly map(MAP_FUNCTION: (subpart: TSubpart, index: number, part: IPart<TOwner, TSubpart>) => TResult): TResult[]
  /** Converts the given model to a routeID without modifying the state of the part. */
@@ -158,9 +158,7 @@ declare interface IPart<TOwner, TSubpart>
  /** The previous route of the part, changed at the last call to distributeRouteID or collectRouteID. */
  readonly previousRouteID: bigint
  readonly Property: typeof Property
- /** The part's prototype part.
-  * 
-  * *Note: The part `part.abstract.parts` does not have a prototype part.* */
+ /** The part's prototype part. @remarks The part `part.abstract.parts` does not have a prototype part. */
  readonly prototype?: IPartAny
  /** The current route of the part expressed as a bigint index in the virtual array of all of its routes. */
  readonly routeID: bigint
@@ -227,13 +225,9 @@ declare function base(...args): any
 declare function recurse(...args): any
 /** Sets the current ecosystem route ID and host application as the undo point (the state the back button will return to). */
 declare function setUndoPoint(): void
-/** The current incoming route ID argument.
- * 
- * *Available within distributeRouteID, setRouteID and updateRouteID methods only.*  */
+/** The current incoming route ID argument. @remarks Available within distributeRouteID, setRouteID and updateRouteID methods only. */
 declare const ROUTE_ID: bigint
-/** The part on which an event occurred.*
- * 
- * **where available as an argument passed to a part listener callback.* */
+/** The part on which an event occurred. @remarks Where available as an argument passed to a part listener callback. */
 declare const SENDER: IPartAny
 /** If on the client, returns whether or not the server-rendered view has been taken over by the client-side MVC framework. */
 declare const hydrated: boolean | null

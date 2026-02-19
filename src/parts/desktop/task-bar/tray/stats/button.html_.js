@@ -1,1 +1,4 @@
-return stats.fps
+if (environment === "client")
+ return client.fps
+
+return 60

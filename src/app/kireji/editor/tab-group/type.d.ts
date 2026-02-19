@@ -28,17 +28,11 @@ declare interface IKirejiAppTabGroup
  readonly permutationSizes: bigint[]
  readonly payloadCardinality: bigint
  readonly payloadSizes: bigint[]
- /** *Client-only*
-  * 
-  * The tab group's main HTML element. */
+ /** The tab group's main HTML element. @remarks Client-only */
  readonly container: HTMLElement
- /** *Client-only*
-  * 
-  * The most recent tab model, as determined while populating the view (not when propagating the route ID). */
+ /** The most recent tab model, as determined while populating the view (not when propagating the route ID). @remarks Client-only */
  readonly viewedActiveTab?: IKirejiAppTabGroupTab
- /** *Client-only*
-  * 
-  * The most recent preview tab model, as determined while populating the view (not when propagating the route ID). */
+ /** The most recent preview tab model, as determined while populating the view (not when propagating the route ID). @remarks Client-only */
  readonly viewedPreviewTab?: IKirejiAppTabGroupTab
  /** The most recent permutation route ID, used to quickly determine if the tab arrangement has changed since the last view population. */
  readonly viewedPermutationRouteID?: bigint
@@ -70,17 +64,11 @@ declare interface IKirejiAppTabGroupTab {
 }
 
 declare const tabGroup: IKirejiAppTabGroup
-/** The index of the tab to render.
- * 
- * *Only available in `close`, `point` and `renderTabHTML` methods.* */
+/** The index of the tab to render. @remarks Only in `close`, `point` and `renderTabHTML` methods. */
 declare const TAB_INDEX: number
-/** The host part of the given tab.
- * 
- * *Only available in `renderTabHTML` method.* */
+/** The host part of the given tab. @remarks Only in `renderTabHTML` method. */
 declare const TAB_PART: IPartAny
-/** The filename of the given tab.
- * 
- * *Only available in `renderTabHTML` method.* */
+/** The filename of the given tab. @remarks Only in `renderTabHTML` method. */
 declare const TAB_FILENAME: string
 declare const activeTab: IKirejiAppTabGroupTab
 declare const activePart: IPartAny

@@ -65,9 +65,7 @@
    "IMAGE_NAME"
   ],
   "loop-distribute": [],
-  "loop": [
-   "TIME"
-  ],
+  "loop": [],
   "attr-point": [
    "METHOD_NAME = 'point'",
    "...ARGS"

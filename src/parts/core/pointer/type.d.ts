@@ -36,13 +36,9 @@ declare interface IPointerConfig {
  doubleClick: (pointerEvent: PointerEvent) => void,
  /** The action that should finally execute whenever the user's pointer action is complete (whether successfully or through a native pointer event cancellation). */
  reset: () => void,
- /** **REQUIRED**
-  * 
-  * The pointerdown event responsible for launching the pointer session. */
+ /** The pointerdown event responsible for launching the pointer session. @remarks Required for all pointer handling. */
  readonly POINTER_EVENT: PointerEvent,
- /** **REQUIRED**
-  * 
-  * The target HTML element whose pointerdown listener responsible for launching the pointer session. */
+ /** The target HTML element whose pointerdown listener responsible for launching the pointer session. @remarks Required for all pointer handling. */
  readonly TARGET_ELEMENT: HTMLElement,
  /** Optional helper that can automate calling TARGET_ELEMENT.focus() during the pointer session. */
  readonly focus?: "none" | "down" | "click",
@@ -51,11 +47,7 @@ declare interface IPointerConfig {
 declare const pointer: IPointer
 
 declare const POINTER_CONFIG: IPointerConfig
-/** The pointerdown event that the current listener is reacting to.
- * 
- * *Available only in pointerdown event listeners.* */
+/** The pointerdown event that the current listener is reacting to. @remarks Only in pointerdown event listeners. */
 declare const POINTER_EVENT: PointerEvent
-/** The element that the current pointerdown event is reacting to.
- * 
- * *Available only in pointerdown event listeners.* */
+/** The element that the current pointerdown event is reacting to. @remarks Only in pointerdown event listeners. */
 declare const TARGET_ELEMENT: HTMLElement
