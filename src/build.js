@@ -78,6 +78,19 @@ function ƒ(_, compressedSubjectOrigins) {
   sanitizeAttr = string => string.replaceAll(/&/g, '&amp;').replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;').replaceAll(/</g, '&lt;').replaceAll(/>/g, '&gt;')
 
  // Math Utilities
+ class Vector {
+  static magnitude(vector) {
+   return Math.hypot(...Object.values(vector))
+  }
+  static normalize(vector) {
+   const result = { ...vector }
+   const magnitude = this.magnitude(vector)
+   if (magnitude)
+    for (const dimension in vector)
+     result[dimension] = vector[dimension] / magnitude
+   return result
+  }
+ }
  class FenwickTree {
   static LSB = []
   constructor(size) {

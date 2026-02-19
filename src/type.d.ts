@@ -312,3 +312,10 @@ declare class FenwickTree {
  query(i: bigint): bigint
  findNthAvailable(n: bigint): bigint
 }
+/** A utility class for handling arbitrary-length vectors. Any object with entirely numeric values can be treated as a vector. */
+declare class Vector {
+ static magnitude(vector: IVector): number
+ static normalize(vector: IVector): IVector
+}
+
+declare type IVector = Record<string, number>

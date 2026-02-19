@@ -8,6 +8,9 @@
    "ROUTE_ID",
    "DELTA = false"
   ],
+  "model-set": [
+   "MODEL"
+  ],
   "routeID-collect": [
    "SUBPARTS",
    "DEPTH"

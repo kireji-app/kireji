@@ -10,11 +10,10 @@ const placeLimits = []
 let product = 1n
 
 for (const dimension of dimensions) {
- const placeLimit = BigInt(dimension)
  placeValues.push(product)
- placeStates.push(-1n)
- placeLimits.push(placeLimit)
- product *= placeLimit
+ placeStates.push(-1)
+ placeLimits.push(dimension)
+ product *= BigInt(dimension)
 }
 
 box.define({

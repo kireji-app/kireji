@@ -15,7 +15,7 @@ client.promise.then(() => {
     pointerEvent.preventDefault()
    }
 
-   taskBar.menu.setRouteID(taskBar.menu.modelToRouteID("closed"))
+   taskBar.menu.setModel("closed")
   }
  }, { capture: true })
 })
