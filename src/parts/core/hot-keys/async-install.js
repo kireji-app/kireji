@@ -37,6 +37,7 @@ globalThis.addEventListener("keyup", keyboardEvent => {
 })
 
 globalThis.addEventListener("keydown", keyboardEvent => {
+
  if (!keyboardEvent.repeat) {
   /* This handles the edge case when the user is holding modifier keys that
    * they pressed while not focused on this instance of the ecosystem. */
@@ -64,15 +65,24 @@ globalThis.addEventListener("keydown", keyboardEvent => {
 
   hotKeys.pressed.add(keyboardEvent.code)
 
-  const combo = hotKeys.combo
-  const methodName = JSON.parse(_.application["hot-keys.json"] ?? "{}")[combo] ?? hotKeys.table[combo]
-  const method = methodName && (_.application[methodName] ?? hotKeys[methodName])
+  const doCombo = () => {
+   const combo = hotKeys.combo
+   const methodName = JSON.parse(_.application["hot-keys.json"] ?? "{}")[combo] ?? hotKeys.table[combo]
+   const method = methodName && (_.application[methodName] ?? hotKeys[methodName])
 
-  if (methodName) {
-   keyboardEvent.preventDefault()
-   if (typeof method === "function")
-    method()
-   // else warn(`Hot Keys Warning: method called ${methodName} is not defined on either the hot keys manager or the current application.`)
+   if (methodName) {
+    keyboardEvent.preventDefault()
+    if (typeof method === "function")
+     method()
+    // else warn(`Hot Keys Warning: method called ${methodName} is not defined on either the hot keys manager or the current application.`)
+   }
   }
+
+  // Prevent a bug when the user presses keys too early.
+  if (client.hydrated)
+   doCombo()
+  else
+   client.promise.then(doCombo)
+
  }
 })

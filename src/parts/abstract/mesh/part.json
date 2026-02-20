@@ -1,0 +1,10 @@
+{
+ "abstract": true,
+ "methods": {
+  "data-get": [],
+  "triangle-is-point-in": [
+   "POINT",
+   "TRIANGLE"
+  ]
+ }
+}

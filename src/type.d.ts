@@ -311,3 +311,4 @@ declare class Vector {
 }
 
 declare type IVector = Record<string, number>
+declare type IVector2 = { x: number, y: number }
