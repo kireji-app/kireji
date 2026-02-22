@@ -1,38 +1,42 @@
 mesh.updateRouteID(ROUTE_ID)
 
-// Binary search to find the correct triangleIndex in O(log T)
-mesh.triangleIndex = (() => {
+// Binary search better than embedded match.
+mesh.triIndex = (() => {
+
  let low = 0
- let high = mesh.triangles.length - 1
+ let high = mesh.triTable.length - 1
 
  while (low <= high) {
-  const mid = (low + high) >>> 1
-  const triangle = mesh.triangles[mid]
-  const nextTriangle = mesh.triangles[mid + 1]
 
-  if (ROUTE_ID < triangle.offset) {
+  const mid = (low + high) >>> 1
+  const triData = mesh.triTable[mid]
+  const nextTriData = mesh.triTable[mid + 1]
+
+  if (ROUTE_ID < triData.offset)
    high = mid - 1
-  } else if (nextTriangle && ROUTE_ID >= nextTriangle.offset) {
+  else if (nextTriData && ROUTE_ID >= nextTriData.offset)
    low = mid + 1
-  } else {
+  else
    return mid
-  }
  }
- return 0 // Fallback
+
+ // Fallback.
+ return 0
 })()
 
-const triangle = mesh.triangles[mesh.triangleIndex]
-let remainingID = ROUTE_ID - triangle.offset
+ROUTE_ID -= mesh.triTable[mesh.triIndex].offset
 
-// Finding the row remains O(R).
-// Since rows are also sorted by offset, we could binary search here too
-// if triangles are massive (e.g., thousands of pixels tall).
-for (const row of triangle.rows) {
- if (!row) continue
- const rowWidth = BigInt(row.xMax - row.xMin + 1)
- if (remainingID < row.offset + rowWidth) {
-  mesh.y = row.y
-  mesh.x = row.xMin + Number(remainingID - row.offset)
+// Embedded match can become binary search later.
+for (const row of mesh.triTable[mesh.triIndex].rows) {
+
+ if (!row)
+  continue
+
+ const rowWidth = BigInt(row.range.max - row.range.min + 1)
+
+ if (ROUTE_ID < row.offset + rowWidth) {
+  mesh.position.y = row.y
+  mesh.position.x = row.range.min + Number(ROUTE_ID - row.offset)
   break
  }
 }

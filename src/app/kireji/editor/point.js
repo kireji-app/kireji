@@ -163,7 +163,6 @@ const pointerConfig = {
      tabGroup.recomputeRouteID(true)
     } else {
 
-     debug("B", tabGroup.previewTabIndex === null, BigInt(tabGroup.openTabs.length), tabGroup.maxTabCount)
      if (BigInt(tabGroup.openTabs.length) === tabGroup.maxTabCount) {
       alert("You have too many tabs open!")
       return

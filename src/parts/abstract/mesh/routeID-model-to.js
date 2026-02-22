@@ -1,4 +1,5 @@
-// TODO: Validate MODEL.
-const triangle = mesh.triangles[MODEL.triangleIndex]
-const row = triangle.rows[Math.round(MODEL.y) - triangle.minY]
-return triangle.offset + row.offset + BigInt(Math.round(MODEL.x) - row.xMin)
+// TODO: Validate MODEL and handle out-of-range points.
+const triIndex = mesh.triThatContainsPoint(MODEL)
+const triData = mesh.triTable[triIndex]
+const row = triData.rows[Math.floor(MODEL.y) - triData.range.min]
+return triData.offset + row.offset + BigInt(Math.floor(MODEL.x) - row.range.min)

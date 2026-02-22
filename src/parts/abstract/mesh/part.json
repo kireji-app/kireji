@@ -2,9 +2,17 @@
  "abstract": true,
  "methods": {
   "data-get": [],
-  "triangle-is-point-in": [
-   "POINT",
-   "TRIANGLE"
+  "point-tri-contains": [
+   "TRI_INDEX",
+   "POINT"
+  ],
+  "point-tri-that-contains": [
+   "POINT"
+  ],
+  "ray-cast": [
+   "FORCE_VECTOR",
+   "DELTA_TIME",
+   "ENABLE_SLIDING"
   ]
  }
 }

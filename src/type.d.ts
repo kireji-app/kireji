@@ -308,6 +308,14 @@ declare class FenwickTree {
 declare class Vector {
  static magnitude(vector: IVector): number
  static normalize(vector: IVector): IVector
+ static sign(vector: IVector): IVector
+ static floor(vector: IVector): IVector
+ /** Performs the given binary operation on the two values, which can each be either a vector or a number. If at least one of the values is a vector, returns a vector. Otherwise, returns a number. */
+ static operate(value1: IVector | number, value2: IVector | number, operation: (a, b) => number): IVector | number
+ /** Adds the two values, which can each be either a vector or a number. If at least one of the values is a vector, returns a vector. Otherwise, returns a number. */
+ static add(value1: IVector | number, value2: IVector | number): IVector | number
+ /** Multiplies the two values, which can each be either a vector or a number. If at least one of the values is a vector, returns a vector. Otherwise, returns a number. */
+ static multiply(value1: IVector | number, value2: IVector | number): IVector | number
 }
 
 declare type IVector = Record<string, number>

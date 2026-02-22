@@ -90,6 +90,56 @@ function ƒ(_, compressedSubjectOrigins) {
      result[dimension] = vector[dimension] / magnitude
    return result
   }
+  static sign(vector) {
+   const result = {}
+   for (const dimension in vector)
+    result[dimension] = Math.sign(vector[dimension])
+   return result
+  }
+  static floor(vector) {
+   const result = {}
+   for (const dimension in vector)
+    result[dimension] = Math.floor(vector[dimension])
+   return result
+  }
+  static round(vector) {
+   const result = {}
+   for (const dimension in vector)
+    result[dimension] = Math.round(vector[dimension])
+   return result
+  }
+  static operate(value1, value2, operation) {
+   if (typeof value1 === "number" || typeof value2 === "number") {
+    if (typeof value1 === "number" && typeof value2 === "number")
+     return operation(value1, value2)
+
+    const result = {}
+    const number = typeof value1 === "number" ? value1 : value2
+    const vector = typeof value1 === "object" ? value1 : value2
+
+    for (const dimension in vector)
+     result[dimension] = operation(vector[dimension], number)
+
+    return result
+   }
+
+   const result = {}
+   const dimensions = Object.keys(value1)
+
+   if (dimensions.some(key => !(key in value2)) || Object.keys(value2).some(key => !(key in value1)))
+    throw new Error(`Vector Operation Error: the two vectors do not have the same keys.`)
+
+   for (const dimension of dimensions)
+    result[dimension] = operation(value1[dimension], value2[dimension])
+
+   return result
+  }
+  static add(value1, value2) {
+   return this.operate(value1, value2, (a, b) => a + b)
+  }
+  static multiply(value1, value2) {
+   return this.operate(value1, value2, (a, b) => a * b)
+  }
  }
  class FenwickTree {
   static LSB = []
