@@ -3,14 +3,16 @@ declare interface IMesh<TOwner>
 
  // Serialized Properties.
  readonly getData(): IMeshData
- /** Casts a ray from the current mesh position along the force vector direction for the given delta time and returns a summary of the results. @param FORCE_VECTOR the force vector represent the position the uninterrupted ray will arrive at in one second. @param DELTA_TIME the duration of the time cast in seconds. */
- readonly castRay(FORCE_VECTOR: IVector2, DELTA_TIME: number): {
+ /** Casts a ray from the current mesh position along the force vector direction for the given delta time and returns a summary of the results. @param FORCE_VECTOR the force vector represent the position the uninterrupted ray will arrive at in one second. @param DELTA_TIME the duration of the time cast in seconds. @param ENABLE_SLIDING whether or not to enable the ray to "wrap" along the mesh boundary instead of stopping cold. */
+ readonly castRay(FORCE_VECTOR: IVector2, DELTA_TIME: number, ENABLE_SLIDING: boolean): {
   /** Whether or not the ray hit the mesh boundary. */
   readonly hit: boolean
   /** The tri the ray most recently occupied when it hit the boundary or the index of the boundary where the ray stopped if there is no hit. */
   readonly triIndex: IMeshTriIndex
   /** The rounded cell position where the cast ray landed. */
   readonly position: IVector2
+  /** The force vector used to cast the ray, which might be different from the input if sliding is enabled as it may point along the direction of the most recent sliding iteration. */
+  readonly forceVector: IVector2
  }
  /** Checks if a point (x, y) rounds to a valid pixel within the specified tri's memoized row data. */
  readonly triContainsPoint(TRI_INDEX: IMeshTriIndex, POINT: IVector2): boolean

@@ -137,8 +137,14 @@ function ƒ(_, compressedSubjectOrigins) {
   static add(value1, value2) {
    return this.operate(value1, value2, (a, b) => a + b)
   }
+  static subtract(value1, value2) {
+   return this.operate(value1, value2, (a, b) => a - b)
+  }
   static multiply(value1, value2) {
    return this.operate(value1, value2, (a, b) => a * b)
+  }
+  static dot(vector1, vector2) {
+   return vector1.x * vector2.x + vector1.y * vector2.y
   }
  }
  class FenwickTree {

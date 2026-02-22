@@ -314,8 +314,11 @@ declare class Vector {
  static operate(value1: IVector | number, value2: IVector | number, operation: (a, b) => number): IVector | number
  /** Adds the two values, which can each be either a vector or a number. If at least one of the values is a vector, returns a vector. Otherwise, returns a number. */
  static add(value1: IVector | number, value2: IVector | number): IVector | number
+ /** Subtracts the two values, which can each be either a vector or a number. If at least one of the values is a vector, returns a vector. Otherwise, returns a number. */
+ static subtract(value1: IVector | number, value2: IVector | number): IVector | number
  /** Multiplies the two values, which can each be either a vector or a number. If at least one of the values is a vector, returns a vector. Otherwise, returns a number. */
  static multiply(value1: IVector | number, value2: IVector | number): IVector | number
+ static dot(vector1: IVector, vector2: IVector): number
 }
 
 declare type IVector = Record<string, number>
