@@ -4,7 +4,7 @@ const rangeLimit = BigInt(Math.trunc(Number(scrollerLimit) * (1 - scroller.conta
 
 pointer.handle({
  drag(pointerEvent) {
-  const positionalRouteID = markedRouteID + BigInt(Math.trunc((pointerEvent.clientY - POINTER_EVENT.clientY) / (scroller.scrollBar.clientHeight - (era.arm === era.vintage ? 2 * scroller.scrollBar.clientWidth : 0)) * Number(scrollerLimit)))
+  const positionalRouteID = markedRouteID + BigInt(Math.trunc((pointerEvent.clientY - POINTER_EVENT.clientY) / (scroller.scrollBar.clientHeight - (era && era.arm === era.vintage ? 2 * scroller.scrollBar.clientWidth : 0)) * Number(scrollerLimit)))
   const newRouteID = positionalRouteID < 0n ? 0n : (positionalRouteID > rangeLimit) ? rangeLimit : positionalRouteID
   if (newRouteID !== scroller.routeID) scroller.setRouteID(newRouteID)
  },

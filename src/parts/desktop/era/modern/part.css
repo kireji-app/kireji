@@ -3,11 +3,15 @@ body {
  --bottom-shadow: 0 2px 7px #0002;
  --icon-size: 29px;
  --spacing: 14px;
- --task-bar-height: calc(var(--icon-size) + 2 * var(--spacing));
  --title-bar-icon-size: 22px;
  --title-bar-height: calc(var(--title-bar-icon-size) + var(--spacing));
  --default-font-size: 13px;
  font: var(--default-font-size) var(--system-ui);
+}
+
+body,
+task-bar {
+ --task-bar-height: calc(var(--icon-size) + 2 * var(--spacing));
 }
 
 title-bar {

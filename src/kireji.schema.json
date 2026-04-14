@@ -1,0 +1,205 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "title": "KirejiConfig",
+ "description": "Schema for the kireji.json configuration file.",
+ "type": "object",
+ "properties": {
+  "includeColor": {
+   "description": "Determines which color mode features will be included in the ecosystem.",
+   "oneOf": [
+    {
+     "const": "none",
+     "description": "The color component will never be included."
+    },
+    {
+     "const": "light",
+     "description": "Dark mode will never be included."
+    },
+    {
+     "const": "dark",
+     "description": "Light mode will never be included."
+    },
+    {
+     "const": "debug-dark",
+     "description": "Dark mode will only be included in local builds."
+    },
+    {
+     "const": "debug-light",
+     "description": "Light mode will only be included in local builds."
+    },
+    {
+     "const": "full",
+     "description": "The full color component will always be included."
+    }
+   ]
+  },
+  "includeEra": {
+   "description": "Determines which era mode features will be included in the ecosystem.",
+   "oneOf": [
+    {
+     "const": "none",
+     "description": "The era component will never be included."
+    },
+    {
+     "const": "vintage",
+     "description": "Modern mode will never be included."
+    },
+    {
+     "const": "modern",
+     "description": "Vintage mode will never be included."
+    },
+    {
+     "const": "debug-modern",
+     "description": "Modern mode will only be included in local builds."
+    },
+    {
+     "const": "debug-vintage",
+     "description": "Vintage mode will only be included in local builds."
+    },
+    {
+     "const": "full",
+     "description": "The full era component will always be included."
+    }
+   ]
+  },
+  "includeMenuApps": {
+   "description": "Determines whether a list of apps should be included in the menu.",
+   "oneOf": [
+    {
+     "const": "none",
+     "description": "Apps will never appear in the menu."
+    },
+    {
+     "const": "local-only",
+     "description": "Apps will only appear in the menu in local builds."
+    },
+    {
+     "const": "full",
+     "description": "Apps will always appear in the menu."
+    }
+   ]
+  },
+  "includeUpdates": {
+   "description": "Determines whether or not the version updating features should be included in the menu.",
+   "oneOf": [
+    {
+     "const": "none",
+     "description": "Update features will never appear in the menu."
+    },
+    {
+     "const": "local-only",
+     "description": "Update features will only appear in the menu in local builds."
+    },
+    {
+     "const": "full",
+     "description": "Update features will always appear in the menu."
+    }
+   ]
+  },
+  "includeKirejiApp": {
+   "description": "Determines whether or not the Kireji IDE should be included in the ecosystem.",
+   "oneOf": [
+    {
+     "const": "none",
+     "description": "kireji.app will never be included."
+    },
+    {
+     "const": "full",
+     "description": "kireji.app will only be included in local builds."
+    },
+    {
+     "const": "demo",
+     "description": "kireji.app will always be included (used only for Demo App Ecosystem)."
+    }
+   ]
+  },
+  "includeDesktop": {
+   "description": "Determines whether or not the ecosystem should include desktop-like features.",
+   "oneOf": [
+    {
+     "const": "none",
+     "description": "The desktop experience will never be included."
+    },
+    {
+     "const": "menu-only",
+     "description": "Only the menu will be included, and it will always be included."
+    },
+    {
+     "const": "local-only",
+     "description": "The full desktop experience will only be included in local builds."
+    },
+    {
+     "const": "full",
+     "description": "The menu will always be included. The desktop experience will only be included in local builds."
+    },
+    {
+     "const": "demo",
+     "description": "The full desktop experience will always be included (used only for Demo App Ecosystem)."
+    }
+   ]
+  },
+  "change": {
+   "description": "Represents the severity of the API change for semantic versioning.",
+   "oneOf": [
+    {
+     "const": "major",
+     "description": "A breaking change which breaks existing hash assignments."
+    },
+    {
+     "const": "minor",
+     "description": "A non-breaking change which adds new hash assignments."
+    },
+    {
+     "const": "patch",
+     "description": "A non-breaking change which does not impact hash assignments at all."
+    }
+   ]
+  },
+  "verbosity": {
+   "description": "A number used to control the detail in logs. Only messages with a priority <= this number will be logged.",
+   "type": "string"
+  },
+  "defaultApplicationHost": {
+   "description": "The host of the desired default app. The server will redirect to this when testing locally.",
+   "type": "string"
+  },
+  "port": {
+   "description": "The internal port (typically 3000-4000) where the server will be hosted.",
+   "type": "string"
+  },
+  "mapping": {
+   "description": "Determines whether or not the artifact should be output with embedded source map data.",
+   "enum": [
+    "disabled",
+    "enabled"
+   ]
+  },
+  "haltHydration": {
+   "description": "If enabled, halts the hydration of the application completely. Useful for debugging FOUC.",
+   "enum": [
+    "disabled",
+    "enabled"
+   ]
+  },
+  "includeWarning": {
+   "description": "If enabled, a warning line appears at the top of all applications regarding alpha status.",
+   "enum": [
+    "disabled",
+    "enabled"
+   ]
+  },
+  "resetLocalState": {
+   "description": "If enabled, applications running locally will reset to their landing hash when the service worker is replaced.",
+   "enum": [
+    "disabled",
+    "enabled"
+   ]
+  },
+  "hangHydration": {
+   "description": "A string representing how long the main thread should hang to simulate loading. Useful for debugging FOUC.",
+   "type": "string"
+  }
+ },
+ "required": [],
+ "additionalProperties": false
+}

@@ -301,6 +301,7 @@ body.dark warning- {
  font-size: revert;
 }
 
+/* TODO: Make title-bar and other desktop experience css dynamic (because it can be disabled in the config). */
 title-bar {
  display: flex;
  flex-flow: row nowrap;

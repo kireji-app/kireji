@@ -172,7 +172,6 @@ scroll-bar>thumb- {
 body {
  --bottom: calc(var(--task-bar-height) - 4px);
  --spacing: 12px;
- --task-bar-height: 28px;
  --title-bar-height: 18px;
  --icon-size: var(--task-bar-height);
  --deep-inset:
@@ -192,6 +191,11 @@ body {
  --default-font-size: 11px;
  font: var(--default-font-size) var(--system-ui);
  image-rendering: pixelated;
+}
+
+body,
+task-bar {
+ --task-bar-height: 28px;
 }
 
 body.dark {

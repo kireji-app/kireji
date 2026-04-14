@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+
+/** @type {(_: IEcosystem, compressedSubjectOrigins: string) => void} */
 function ƒ(_, compressedSubjectOrigins) {
 
  // Initialization
@@ -520,7 +522,7 @@ function ƒ(_, compressedSubjectOrigins) {
     packAndMap(url) {
      const sourceFile = this
      const script = sourceFile.lines.join("\n")
-     return +_.mapping
+     return _.mapping === "enabled"
       ? script +
       `
 //${"#"} sourceMappingURL=data:application/json;charset=utf-8;base64,${btoaUnicode(sourceFile.getMap())}${url
@@ -591,7 +593,6 @@ function ƒ(_, compressedSubjectOrigins) {
     imageSources = [],
     earlyImageSources = [],
     partsByHost = {},
-    preHydrationArchive = serialize(_),
     resolveRelativeHost = (relativeHost, base) => {
 
      if (typeof relativeHost !== "string")
@@ -891,8 +892,74 @@ function ƒ(_, compressedSubjectOrigins) {
       part.inheritors.sort((a, b) => (b.totalInheritors - a.totalInheritors) || (a.host > b.host ? 1 : -1))
 
      return totalInheritors
+    },
+    configureArchiveContent = () => {
+     // TODO: Consider merging user landing model with stock landing model instead of replacing it.
+     const landingModel = JSON.parse(_["landing-model.json"])
+
+     let desktopFeatures = 3
+
+     if (_.includeColor === "none") {
+      delete _.parts.desktop.color
+      delete landingModel.parts.desktop.color
+      desktopFeatures--
+     } else if (_.includeColor === "dark" || (_.includeColor === "debug-light" && production)) {
+      delete _.parts.desktop.color.light
+      landingModel.parts.desktop.color = "light"
+     } else if (_.includeColor === "light" || (_.includeColor === "debug-dark" && production)) {
+      delete _.parts.desktop.color.dark
+      landingModel.parts.desktop.color = "dark"
+     }
+
+     if (_.includeEra === "none") {
+      delete _.parts.desktop.era
+      delete landingModel.parts.desktop.era
+      desktopFeatures--
+     } else if (_.includeEra === "vintage" || (_.includeEra === "debug-modern" && production)) {
+      delete _.parts.desktop.era.modern
+      landingModel.parts.desktop.era = "vintage"
+     } else if (_.includeEra === "modern" || (_.includeEra === "debug-vintage" && production)) {
+      delete _.parts.desktop.era.vintage
+      landingModel.parts.desktop.era = "modern"
+     }
+
+     if (_.includeKirejiApp === "none" || (_.includeKirejiApp === "full" && production)) {
+      delete _.app
+      delete landingModel.app
+     }
+
+     const removeDesktopFeatures = () => {
+      delete _.parts.desktop.icons
+      delete landingModel.parts.desktop.icons
+      delete _.parts.desktop.windows
+      delete landingModel.parts.desktop.windows
+      delete _.parts.desktop["task-bar"].tray
+     }
+
+     if (_.includeDesktop === "none" || (production && _.includeDesktop === "local-only")) {
+      removeDesktopFeatures()
+      delete _.parts.desktop["task-bar"]
+      delete landingModel.parts.desktop.taskBar
+      desktopFeatures--
+     } else if (_.includeDesktop === "menu-only" || (production && _.includeDesktop === "full")) {
+      removeDesktopFeatures()
+      delete _.parts.desktop["task-bar"].tray
+     }
+
+     if (!desktopFeatures) {
+      delete _.parts.desktop
+      delete landingModel.parts.desktop
+     }
+
+     _["landing-model.json"] = JSON.stringify(landingModel)
+
+     Object.defineProperties(_, {
+      landingModel: { value: landingModel },
+      preHydrationArchive: { value: serialize(_) }
+     })
     }
 
+   configureArchiveContent()
    hydratePartsRecursive(_)
    hydrateSubjectOrigins()
    countAndSortInheritorsRecursive(_.parts.abstract.part)
@@ -954,14 +1021,15 @@ function ƒ(_, compressedSubjectOrigins) {
 
   logScope(1, "\nComputing Landing Hash & Route ID", hashLog => {
 
-   const landingModel = JSON.parse(_["landing-model.json"])
-   const landingRouteID = _.modelToRouteID(landingModel)
-   const landingHash = encodeSegment(landingRouteID)
-
    _.define({
-    landingHash: { value: landingHash },
-    landingModel: { value: landingModel },
-    landingRouteID: { value: landingRouteID },
+    landingRouteID: {
+     value: _.modelToRouteID(_.landingModel)
+    },
+    landingHash: {
+     resolve() {
+      return encodeSegment(this.landingRouteID)
+     }
+    }
    })
 
    hashLog("Landing hash: " + _.landingHash)
@@ -982,13 +1050,20 @@ function ƒ(_, compressedSubjectOrigins) {
 }
 
 ƒ({
+ // TODO: fix source mapping bugs.
  verbosity: "1",
- // TODO: Fix source mapping bugs.
- mapping: "0",
  change: "major",
  hangHydration: "0",
- haltHydration: "0",
  defaultApplicationHost: "kireji.app",
  port: "3000",
- showWarning: "1"
+ mapping: "disabled",
+ resetLocalState: "enabled",
+ haltHydration: "disabled",
+ includeWarning: "enabled",
+ includeColor: "full",
+ includeEra: "full",
+ includeMenuApps: "full",
+ includeUpdates: "full",
+ includeKirejiApp: "full",
+ includeDesktop: "full"
 })

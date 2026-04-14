@@ -107,7 +107,7 @@ logScope(1, `\nCreating Deployment Artifact`, log => {
 })
 
 logScope(1, `\nDeployment Artifact Stats`, () => {
- logStringSize(1, preHydrationArchive)
+ logStringSize(1, _.preHydrationArchive)
 })
 
 const httpServer = require('http').createServer((request, response) => logServerScope(

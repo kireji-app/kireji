@@ -25,9 +25,9 @@ if (environment === "node-main") {
  })
  logScope(1, "\nSerialization Test", log => {
   const postHydrationArchive = serialize(_)
-  if (postHydrationArchive !== preHydrationArchive) {
-   warn(`The post-hydration archive was ${postHydrationArchive.length - preHydrationArchive.length} bytes longer than the pre-hydration archive.`)
-   const lines1 = preHydrationArchive.split('\n')
+  if (postHydrationArchive !== _.preHydrationArchive) {
+   warn(`The post-hydration archive was ${postHydrationArchive.length - _.preHydrationArchive.length} bytes longer than the pre-hydration archive.`)
+   const lines1 = _.preHydrationArchive.split('\n')
    const lines2 = postHydrationArchive.split('\n')
    const maxLength = Math.max(lines1.length, lines2.length)
    for (let i = 0; i < maxLength; i++) {

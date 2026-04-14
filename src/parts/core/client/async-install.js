@@ -6,7 +6,7 @@ await Promise.all([
 if (!production) {
 
  // To debug FOUC.
- if (+_.haltHydration) {
+ if (_.haltHydration === "enabled") {
   warn('Intentionally blocked hydration.')
   return
  }

@@ -1,5 +1,6 @@
 declare interface IEcosystem
  extends IMix<null, ITopLevelDomainAny>,
+ IKirejiConfig,
  IWebComponent {
 
  // Subparts.
@@ -10,10 +11,6 @@ declare interface IEcosystem
  readonly parts: IParts
 
  // Serialized Properties.
- /** One of three strings representing the severity of the API change. Used to automatically compute the correct semantic version at build time. */
- readonly "change": "major" | "minor" | "patch"
- /** A number used to control the detail in logs. Only messages with a priority less than or equal to this number will be logged. */
- readonly "verbosity": number
  /** The git branch for the current build version. */
  readonly "branch": string
  /** Returns a packed version of the entire repo as a stand-alone script that boots the ecosystem. */
@@ -26,16 +23,12 @@ declare interface IEcosystem
  readonly "ETag": string
  /** The current unix timestamp, acquired using the high-precision performance.now() + performance.timeOrigin. */
  readonly "now": DOMHighResTimeStamp
- /** The host of the desired default app. The server will redirect to this when the user visits localhost at the designated port to test locally. */
- readonly "defaultApplicationHost": string
  /** A stylesheet containing CSS variables with `url()` values that correspond to images. Used to seamlessly hand-off image rendering from the server-rendered page to the client-rendered page without modifying the DOM. */
  readonly "images.css": string
  /** The current application's PWA manifest. */
  readonly "manifest.json": string
  /** A JSON object serializing the desired landing model of the ecosystem. */
  readonly "landing-model.json": string
- /** The internal port (typically between 3000 and 4000) where the server will be hosted for both the reverse proxy in production and when testing locally via `localhost`. */
- readonly "port": number
  /** Returns the given HTML document with images (using `early-*` compressed images for server- or worker-rendered snapshots) into the head as style tag(s). This is used for enhancing the first page appearance when using server-side rendering. When injecting early images, it scans the given document for image usages to determine which early images the snapshot requires. */
  readonly injectImages(HTML_DOCUMENT: string): string
  /** Handles standard anchor link clicks in one of four ways:
@@ -69,7 +62,104 @@ declare interface IEcosystem
  /** A boolean that is set to `true` as soon as the route ID is set for the first time. */
  readonly initialized: undefined | true
 }
+declare interface IKirejiConfig {
+ /** * Determines which color mode features will be included in the ecosystem. 
+  * - `none`: The color component will never be included.
+  * - `light`: Dark mode will never be included.
+  * - `dark`: Light mode will never be included.
+  * - `debug-dark`: Dark mode will only be included in local builds.
+  * - `debug-light`: Light mode will only be included in local builds.
+  * - `full`: The full color component will always be included.
+  * * @remarks When the menu and both colors are included, the color control will appear in the menu.
+  */
+ readonly "includeColor": "none" | "light" | "dark" | "debug-dark" | "debug-light" | "full";
 
+ /** * Determines which era mode features will be included in the ecosystem.
+  * - `none`: The era component will never be included.
+  * - `vintage`: Modern mode will never be included.
+  * - `modern`: Vintage mode will never be included.
+  * - `debug-modern`: Modern mode will only be included in local builds.
+  * - `debug-vintage`: Vintage mode will only be included in local builds.
+  * - `full`: The full era component will always be included.
+  * * @remarks When the menu and both eras are included, the era control will appear in the menu.
+  */
+ readonly "includeEra": "none" | "vintage" | "modern" | "debug-modern" | "debug-vintage" | "full";
+
+ /** * Determines whether a list of apps should be included in the menu.
+  * - `none`: Apps will never appear in the menu.
+  * - `local-only`: Apps will only appear in the menu in local builds.
+  * - `full`: Apps will always appear in the menu.
+  * * @remarks Has no effect on builds where the menu is not included or when there are no defined menu apps.
+  */
+ readonly "includeMenuApps": "none" | "local-only" | "full";
+
+ /** * Determines whether or not the version updating features should be included in the menu.
+  * - `none`: Update features will never appear in the menu.
+  * - `local-only`: Update features will only appear in the menu in local builds.
+  * - `full`: Update features will always appear in the menu.
+  * * @remarks Has no effect on builds where the menu is not included.
+  */
+ readonly "includeUpdates": "none" | "local-only" | "full";
+
+ /** * Determines whether or not the Kireji IDE should be included in the ecosystem.
+  * - `none`: kireji.app will never be included.
+  * - `full`: kireji.app will only be included in local builds.
+  * - `demo`: kireji.app will always be included (used only for Demo App Ecosystem).
+  */
+ readonly "includeKirejiApp": "none" | "full" | "demo";
+
+ /** * Determines whether or not the ecosystem should include desktop-like features.
+  * - `none`: The desktop experience will never be included.
+  * - `menu-only`: Only the menu will be included, and it will always be included.
+  * - `local-only`: The full desktop experience will only be included in local builds.
+  * - `full`: The menu will always be included. The desktop experience will only be included in local builds.
+  * - `demo`: The full desktop experience will always be included (used only for Demo App Ecosystem).
+  */
+ readonly "includeDesktop": "none" | "menu-only" | "local-only" | "full" | "demo";
+
+ /** * One of three strings representing the severity of the API change. 
+  * - `major`: A breaking change which breaks existing hash assignments.
+  * - `minor`: A non-breaking change which adds new hash assignments.
+  * - `patch`: A non-breaking change which does not impact hash assignments.
+  */
+ readonly "change": "major" | "minor" | "patch";
+
+ /** A number used to control the detail in logs. Only messages with a priority <= this number will be logged. */
+ readonly "verbosity": string;
+
+ /** The host of the desired default app. The server will redirect to this when testing locally. */
+ readonly "defaultApplicationHost": string;
+
+ /** The internal port (typically 3000-4000) where the server will be hosted. */
+ readonly "port": string;
+
+ /** * Determines whether or not the artifact should be output with embedded source map data. 
+  * - `0`: Disabled
+  * - `1`: Enabled
+  */
+ readonly "mapping": "disabled" | "enabled";
+
+ /** * If enabled, halts the hydration of the application completely. Useful for debugging FOUC. 
+  * - `0`: Disabled
+  * - `1`: Enabled
+  */
+ readonly "haltHydration": "disabled" | "enabled";
+
+ /** * If enabled, a warning line appears at the top of all applications regarding alpha status. 
+  * - `0`: Disabled
+  * - `1`: Enabled
+  */
+ readonly "includeWarning": "disabled" | "enabled";
+
+ /** * If enabled, applications running locally will reset to their landing hash when the service worker is replaced. 
+  * - `0`: Disabled
+  * - `1`: Enabled
+  */
+ readonly "resetLocalState": "disabled" | "enabled";
+
+ /** A string representing how long the main thread should hang to simulate loading. Useful for debugging FOUC. */
+ readonly "hangHydration": string;
+}
 /** This is the root part of the ecosystem, considered the ecosystem itself. @remarks When JSON stringified, it should inline all information compiled from the git repo in node by the build process. The serialized version should not include any values that are added during or after recursively hydrating the part tree. This means that all runtime values should be non-enumerable and defined using the `define()` method. */
 declare const _: IEcosystem
 /** A shorthand for document.querySelector */
@@ -323,3 +413,75 @@ declare class Vector {
 
 declare type IVector = Record<string, number>
 declare type IVector2 = { x: number, y: number }
+
+declare type KirejiConfigColor =
+ /** The color component will never be included. */
+ | "none"
+ /** Dark mode will never be included. */
+ | "light"
+ /** Light mode will never be included. */
+ | "dark"
+ /** Dark mode will only be included in local builds. */
+ | "debug-dark"
+ /** Light mode will only be included in local builds. */
+ | "debug-light"
+ /** The full color component will always be included. */
+ | "full"
+
+declare type KirejiConfigEra =
+ /** The era component will never be included. */
+ | "none"
+ /** Modern mode will never be included. */
+ | "vintage"
+ /** Vintage mode will never be included. */
+ | "modern"
+ /**  Modern mode will only be included in local builds. */
+ | "debug-modern"
+ /** Vintage mode will only be included in local builds. */
+ | "debug-vintage"
+ /** The full era component will always be included. */
+ | "full"
+
+declare type KirejiConfigMenuApps =
+ /** Apps will never appear in the menu. */
+ | "none"
+ /** Apps will only appear in the menu in local builds. */
+ | "local-only"
+ /** Apps will always appear in the menu. */
+ | "full"
+
+declare type KirejiConfigUpdates =
+ /** Update features will never appear in the menu. */
+ | "none"
+ /** Update features will only appear in the menu in local builds. */
+ | "local-only"
+ /** Update features will always appear in the menu. */
+ | "full"
+
+declare type KirejiConfigKirejiApp =
+ /** kireji.app will never be included. */
+ | "none"
+ /** kireji.app will only be included in local builds. */
+ | "full"
+ /** kireji.app will always be included (used only for Demo App Ecosystem). */
+ | "demo"
+
+declare type KirejiConfigDesktop =
+ /** The desktop experience will never be included. */
+ | "none"
+ /** Only the menu will be included, and it will always be included. */
+ | "menu-only"
+ /** The full desktop experience will only be included in local builds. */
+ | "local-only"
+ /** The menu will always be included. The desktop experience will only be included in local builds. */
+ | "full"
+ /** The full desktop experience will always be included (used only for Demo App Ecosystem). */
+ | "demo"
+
+declare type KirejiConfigChange =
+ /** A breaking change which breaks existing hash assignments. */
+ | "major"
+ /** A non-breaking change which adds new hash assignments but doesn't break existing ones. */
+ | "minor"
+ /** A non-breaking change which does not impact hash assignments at all. */
+ | "patch"
