@@ -3,14 +3,14 @@ const cardinalityAsString = instances.includes(activePart) ? activePartCardinali
 
 return (
  instances.includes(activePart) ? (
+  `<h3>Equation</h3>` +
+  activePart.mathML(1 + (activePart.length <= 4), "variable") +
+  `<hr>` +
   "<h3>Cardinality</h3>" +
-  `<p>${cardinalityAsString.length < 16 ? cardinalityAsString : scientific(activePartCardinality, true)}</p>` +
+  activePart.mathML(0, "value") +
   `<hr>` +
   "<h3>Hartley Entropy</h3>" +
-  `<p>${toCharms(activePartCardinality)} (${toBits(activePartCardinality)})</p>` +
-  `<hr>` +
-  `<h3>Equation</h3>` +
-  "<math>" + activePart["equation-variable.html"] + "<mo>=</mo>" + activePart["equation.html"] + "</math>"
+  `<math><mn>${toCharms(activePartCardinality, false)}</mn><mspace width=".5ch"/><mtext>charms</mtext><mspace width=".5ch"/><mo>(</mo><mn>${toBits(activePartCardinality, false)}</mn><mspace width=".5ch"/><mtext>bits</mtext><mo>)</mo></math>`
  ) : (
   "<p class=disabled-message>Abstract parts do not have a concrete state space.</p>"
  )

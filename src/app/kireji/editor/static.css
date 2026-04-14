@@ -354,6 +354,13 @@ body.vintage #kireji_app editor-::after {
  pointer-events: none;
 }
 
+body.vintage #kireji_app #info-state-space>section>math {
+ text-align: right;
+ margin: calc(.5 * var(--spacing));
+ width: min-content;
+ justify-self: end;
+}
+
 @container editor-view (width > 350px) {
  body.vintage #kireji_app #info-state-space>section {
   display: grid;

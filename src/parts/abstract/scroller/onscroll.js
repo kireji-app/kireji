@@ -1,4 +1,6 @@
-if (scroller.skipRouteIDUpdate) {
+if (scroller.skipRouteIDUpdate || !client.hydrated) {
+ if (!client.hydrated)
+  debug('onscroll from within the hydration phase')
  scroller.skipRouteIDUpdate = false
 } else {
  const maxY = scroller.container.scrollHeight

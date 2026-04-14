@@ -20,7 +20,7 @@ const timeBetweenIntersections = { ...timeOfNextIntersection }
 // Set the clock to zero.
 let time = 0
 
-function initalizeRayIntersectionSchedule(alsoComputeIntersectionInterval) {
+function initializeRayIntersectionSchedule(alsoComputeIntersectionInterval) {
 
  // If the force vector isn't parallel to the x axis...
  if (FORCE_VECTOR.x !== 0) {
@@ -45,7 +45,7 @@ function initalizeRayIntersectionSchedule(alsoComputeIntersectionInterval) {
  }
 }
 
-initalizeRayIntersectionSchedule(true)
+initializeRayIntersectionSchedule(true)
 
 const start = _.now
 
@@ -160,7 +160,7 @@ while (true) {
    }
 
    if (boundaryAppearsFlat) {
-    // TODO: Consider using the line through the opposing neighbors to search for assymetry in the mesh boundry.
+    // TODO: Consider using the line through the opposing neighbors to search for asymmetry in the mesh boundary.
    }
 
    // If there is no neighboring point, we are "stuck". The ray cast ends here.
@@ -232,7 +232,7 @@ while (true) {
    safeIterationResult.forceVector = FORCE_VECTOR
 
    // The normal ray intersection schedule has changed.
-   initalizeRayIntersectionSchedule()
+   initializeRayIntersectionSchedule()
 
    // Proceed with normal ray casting behavior from this point.
    continue

@@ -989,5 +989,6 @@ function ƒ(_, compressedSubjectOrigins) {
  hangHydration: "0",
  haltHydration: "0",
  defaultApplicationHost: "kireji.app",
- port: "3000"
+ port: "3000",
+ showWarning: "1"
 })

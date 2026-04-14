@@ -283,7 +283,7 @@ declare function hydratePartsRecursive(part: string | IPartAny, domains: string[
 declare function resolveRelativeHost(relativeHost: string, base: string | string[]): string
 /** The immutable list of runtime instances for the root space, in order of when the were reached during recursive part hydration. */
 declare const instances: IPartAny[]
-/** The immutable list of every part in the root space, in order of when the were reached during recursive part hydration. */
+/** The immutable list of every part of the root space, in order of when the were reached during recursive part hydration. */
 declare const allParts: IPartAny[]
 /** The immutable list of every part host and filename combination, in order of when the were reached during recursive part hydration. */
 declare const allSubjects: [host: string, filename?: string]

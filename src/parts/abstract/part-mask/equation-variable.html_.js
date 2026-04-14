@@ -1,1 +1,0 @@
-return `<math><msup><mn>2</mn><mn>${partMask.superset.length}</mn></msup></math>`

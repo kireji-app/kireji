@@ -75,6 +75,17 @@
   ],
   "manifest-resolve-part-from": [
    "PROPERTY_KEY"
+  ],
+  "mathML": [
+   "DEPTH = 0",
+   "EQUATION_TYPE = \"none\"",
+   "LABELS = false",
+   "PARENTHESIZE = false",
+   "WRAP_IN_MATH_TAG = true"
+  ],
+  "mathML-subpart": [
+   "DEPTH",
+   "LABELS"
   ]
  }
 }

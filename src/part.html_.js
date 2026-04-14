@@ -20,7 +20,7 @@ return _.injectImages(/* html */`<!DOCTYPE html>
   <style id="application-css">${application["part.css"]}</style>
  </head>
  <body class="unhydrated ${[era.arm.key, color.arm.key, ...taskBar.menu.classes, ...application.classes].join(" ")}">
-  <warning->🚧 App in Alpha. Features subject to change/break without notice.</warning->
+  ${+_.showWarning ? `<warning->🚧 App in Alpha. Features subject to change/break without notice.</warning->` : ""}
   <title-bar autofocus tabIndex=0>
    <img class="part-icon" src="${icon}"/>
    <span id=application-title>${title}</span>

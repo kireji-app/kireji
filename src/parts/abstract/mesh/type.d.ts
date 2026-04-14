@@ -26,6 +26,7 @@ declare interface IMesh<TOwner>
  readonly triIndex?: IMeshTriIndex
  /** The current position of the state in the mesh. */
  readonly position: IVector2
+ readonly manifest: IMeshManifest
 }
 
 declare interface IMeshTriData {
@@ -58,6 +59,15 @@ declare interface IMeshTriDataRow {
  }
  /** The bigint offset of this row in the overall tri. */
  readonly offset: bigint
+}
+
+
+declare interface IMeshManifest
+ extends IPartManifest {
+ /** The available collision vertices as a flat array of 2D coordinates. Used for defining the world's collision tris. */
+ readonly points: number[],
+ /** The list of collision tris, as a flat array of point triples. Used to define the walkable area of the world. */
+ readonly tris: number[]
 }
 
 declare type IMeshData = [IMeshPoint[], IMeshTri[]]

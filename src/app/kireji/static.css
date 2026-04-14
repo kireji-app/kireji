@@ -5,10 +5,6 @@
  overscroll-behavior: none;
 }
 
-#kireji_app:has(side-bar) {
- --sidebar-width: calc(var(--tool-bar-width) + var(--sidebar-view-width));
-}
-
 body.modern {
  --tab-group-height: calc(var(--tab-line-height) + var(--spacing) / 1.5);
  --tab-line-height: 26px;

@@ -1,1 +1,0 @@
-return `<math>${box.dimensions.map(dimension => `<mn>${dimension}</mn>`).join("<mo>&sdot;</mo>")}</math>`

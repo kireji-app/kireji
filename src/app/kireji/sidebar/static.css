@@ -1,9 +1,32 @@
-#kireji_app side-bar {
+#kireji_app>side-bar {
  position: absolute;
  top: 0;
  left: var(--tool-bar-width);
  width: var(--sidebar-view-width);
  bottom: 0;
+}
+
+@media (width > 424px) {
+
+ #kireji_app:has(side-bar) {
+  --sidebar-width: calc(var(--tool-bar-width) + var(--sidebar-view-width));
+ }
+}
+
+@media (width < 425px) {
+
+ #kireji_app:has(side-bar)>editor- {
+  pointer-events: none;
+ }
+
+ #kireji_app>width-handle {
+  display: none;
+ }
+
+ #kireji_app>side-bar {
+  z-index: 10000;
+  width: calc(var(--app-width) - var(--tool-bar-width));
+ }
 }
 
 #kireji_app #sidebar-view-header {
@@ -92,26 +115,31 @@
  position: relative;
 }
 
+#kireji_app outliner-spacer {
+ width: calc(var(--depth) * var(--tab-line-height) / 2);
+ border-radius: 0;
+ background:
+  linear-gradient(to right, transparent 0%, transparent calc(100% - 1px), var(--bg-un-mode) calc(100% - 1px), var(--bg-un-mode) 100%) 0 0 / calc(var(--tab-line-height) / 2) var(--tab-line-height);
+ /* border-right: 1px solid var(--bg-un-mode); */
+}
+
+#kireji_app outliner-spacer:has(+ img) {
+ width: calc((var(--depth) - 1) * var(--tab-line-height) / 2);
+ margin-right: var(--tab-line-height);
+}
+
+/*
+ #kireji_app details.empty>summary>outliner-spacer:last-of-type {
+  border: none;
+ }
+*/
+
 #kireji_app #sidebar-view summary>.explore-toggle,
 #kireji_app #sidebar-view summary>img,
 #kireji_app #sidebar-view svg {
  height: var(--tab-icon-size);
  width: var(--tab-icon-size);
  margin: calc((var(--tab-line-height) - var(--tab-icon-size)) / 2);
-}
-
-#kireji_app outliner-spacer {
- width: calc(var(--tab-line-height) / 2);
- border-radius: 0;
- border-right: 1px solid var(--bg-un-mode);
-}
-
-#kireji_app outliner-spacer:has(+ img) {
- margin-right: calc(var(--tab-line-height) / 2);
-}
-
-#kireji_app details.empty>summary>outliner-spacer:last-of-type {
- border: none;
 }
 
 #kireji_app #sidebar-view summary .label {
@@ -152,11 +180,19 @@ body.modern #kireji_app #sidebar-view summary {
 
 /* Vintage */
 
-body.vintage #kireji_app side-bar {
+body.vintage #kireji_app>side-bar {
  top: 6px;
  width: calc(var(--sidebar-view-width) - (var(--handle-thickness) / 2) - 2px);
  left: calc(6px + var(--tool-bar-width));
  bottom: 6px;
+}
+
+
+@media (width < 425px) {
+
+ body.vintage #kireji_app>side-bar {
+  width: calc(var(--app-width) - var(--tool-bar-width) - 12px);
+ }
 }
 
 body.vintage #kireji_app side-bar::after {

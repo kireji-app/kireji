@@ -1,1 +1,1 @@
-return Object.values(_.applications)
+return Object.values(_.applications).filter(application => application !== _.parts.desktop)

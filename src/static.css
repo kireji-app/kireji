@@ -30,7 +30,6 @@ body {
  --system-ui-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Mono", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Consolas", "Courier New", monospace;
  --menu-tween: 0;
  --h: 100vh;
- --warning-height: 28px;
  --wallpaper-height: calc(var(--h) - var(--task-bar-height) - var(--warning-height) - var(--title-bar-height));
  --wallpaper-width: 100vw;
  --padding: calc(3.5 * var(--spacing));
@@ -291,15 +290,6 @@ warning- {
 body.dark warning- {
  background-color: #644c08;
 }
-
-@media (width < 390px) {
-
- html,
- body {
-  --warning-height: 49px;
- }
-}
-
 
 #fullscreen-tray-item,
 #share-tray-item {

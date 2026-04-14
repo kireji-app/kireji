@@ -109,6 +109,10 @@ declare interface IPart<TOwner, TSubpart>
  readonly resolveOwnerOfManifest(PROPERTY_KEY: string): IPartAny | null
  /** Returns a part whose host was provided as a (potentially relative) host name using the given property key in the part's manifest. This method uses the nearest part on which the manifest key is actually defined as the base for resolving any relative host name. Returns null if the given property does not exist anywhere in the chain. */
  readonly resolvePartFromManifest(PROPERTY_KEY: string): IPartAny | null
+ /** Generates a returns a MathML string that depicts the cardinality equation of the platform. @param DEPTH the number of levels deep to expand the terms of the equation (up to Infinity) @param AS_EQUATION when true, begins the expression with something like `<math><msub><mi>k</mi><mi>part key</mi></msub><mo>=</mo>...` @param PARENTHESIZE whether or not to add parenthesis around the expression (useful when it will be nested in a larger one) (they will only be added if the resulting expression is not a single term). */
+ readonly mathML(DEPTH: number = 0, EQUATION_TYPE: string = "none", LABELS: boolean = false, PARENTHESIZE: boolean = false, WRAP_IN_MATH_TAG: boolean = true): string
+ /** Returns an array of string terms and operators which, when joined, depict the part's cardinality collecting arithmetic. */
+ readonly subpartMathML(DEPTH: number, LABELS: boolean): string[]
 
  // Runtime Properties.
  /** The parent part.
