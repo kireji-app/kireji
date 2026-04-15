@@ -1,0 +1,1 @@
+Finish the security setup on the server. This includes creating headers like 'Content-Security-Policy' and 'Permissions-Policy'. Applications should get an A grade when scanned by most third-part vulnerability scanners. This improves the reputation and safety of kireji apps.

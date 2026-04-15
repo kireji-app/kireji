@@ -61,7 +61,6 @@ const pointerConfig = {
   this.dragPreviewElement.style = `left:${pointerEvent.clientX}px;top:${pointerEvent.clientY - this.dragPreviewElement.clientHeight}px`
  },
  drop(pointerEvent) {
-  // TODO: break into separate "click" and "drop" handlers.
   const
    draggedItemWasDroppedOntoItself = inRect(pointerEvent, TARGET_ELEMENT.getBoundingClientRect()),
    draggedItemWasDroppedOntoTabGroup = inRect(pointerEvent, tabGroup.container.getBoundingClientRect()),

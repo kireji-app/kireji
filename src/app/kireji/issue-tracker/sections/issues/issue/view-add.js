@@ -1,0 +1,1 @@
+Q("#kireji-issue-modal").innerHTML = kirejiIssue["part.html"]

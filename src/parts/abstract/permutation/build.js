@@ -1,21 +1,3 @@
-
-/* TODO:
- * 1. Instantiate a concrete innstance of an abstract part per-instance. Offload all per-instance logic there.
- *    - Such a part will have optional subparts 'instance' and 'meta'
- *    - "instance" corresponds to each instance part's statically-sized data model
- *      - which also receives its specific subject assigment from the outside (not part of it's route ID)
- *    - "meta" (name pending) corresponds to a non-instance-specific part whose cardinality is dependant upon the number of instances.
- *      - get its implementation details by generalizing the active and preview tab data in the tab group. 
- *      - At build time, the parent permutation will need to be able to query this part to get its cardinality once for every instance up to the max count.
- *      - This part can support mixes, matches, etc. and might even be the ideal place to place a sub-permutation.
- * 2. Convert the tab group to use this abstract type.
- * Considerations;
- * - How do we inspect the states of existing tab instances in `kireji.app`?
- *   - Files will be easy: they are part of the abstract.
- *   - Perhaps the state space box depicts an array of instance space states instead of the single state? Perhaps that is all that is needed?
- *   - Then, how do we depict the states of subparts of the parent part? Do we simply have an array for the entire instance part's tree?
- *   - We might need "push", "pop", "insert", "splice" and/or similar array methods to make it easier to modify the instance set on the fly. */
-
 // Memoize the permutation data.
 const instanceOffsets = [0n]
 const instanceBitDepths = [0n, 0n]

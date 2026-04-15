@@ -1,0 +1,1 @@
+Consider breaking the kireji app drag-and-drop's drop handler (which currently handles both drop and click behavior) into separate "click" and "drop" handlers.

@@ -1,7 +1,5 @@
 const n = permutation.supersetSize
 
-// TODO: factor in other aspects when expanding to the collection type.
-
 return [
  "<mn>1</mn>",
  "<mo>+</mo>",

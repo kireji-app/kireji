@@ -1,0 +1,1 @@
+The children of collapsed outliner items should not be rendered into the snapshot HTML as it bloats the fetch size for invisible items. Instead, they can be rendered during hydration. Furthermore, this can help prevent icons from being inlined in server-rendered snapshot CSS.

@@ -1,0 +1,6 @@
+There are four potential improvements that can be used to refine mesh raycasting to improve edge sliding and potentially performance (if necessary).
+
+1. When the angle of the line through the opposing neighbors appears exactly straight, consider searching in a wider radius for asymmetry in the mesh boundary. This can help prevent dead stops when the force vector is exactly perpendicular to a straight portion of a very gently angled edge.
+2. Consider memoizing triangle neighbors and offering a NEIGHBORS_ONLY argument into the function that determines which triangle a given point falls on. This might improve raytracing performance but it might also introduce edge cases (for example, for meshes with tris that are very thin slivers).
+3. For accurate "friction", we should reduce the speed of the vector-to-nearest-boundary-neighbor proportionally to how far that vector deviates from true force vector.
+4. When the ray casting time limit does not provide enough time to make a full diagonal move, consider moving to one of the two 4-point neighbors that sits between the current ray position and the target diagonal neighbor.

@@ -1,0 +1,4 @@
+The CLI for kireji (via `npx kireji <command>`) should be matured to complete the implementation of its two unimplemented features:
+
+1. `kireji init` - The new project initialization. This is a change perhaps to add certain settings (if vs code is detected or the user agrees in command line) and to initialize a kireji project. The user will already have installed the kireji package via npm in order to run this command. Therefore, it should only exist if there are other steps necessary besides bringing in the package to creating a new project. Test and create new projects in order to refine this experience and determine the need for this command.
+2. `kireji example` - The example project (`kireji-hello`) must be implemented. This can either be stored somewhere into the npm package or stored somewhere else. The notion is to be able to quickly grab this project and instantiate it into a new empty folder to create a fully functioning example project.

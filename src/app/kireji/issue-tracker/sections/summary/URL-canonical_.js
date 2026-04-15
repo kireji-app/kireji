@@ -1,0 +1,1 @@
+return `https://${kirejiIssueTracker.host}${kirejiIssueSummary.canonicalPathname}`

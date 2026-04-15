@@ -160,7 +160,7 @@ while (true) {
    }
 
    if (boundaryAppearsFlat) {
-    // TODO: Consider using the line through the opposing neighbors to search for asymmetry in the mesh boundary.
+    // Do nothing for now...
    }
 
    // If there is no neighboring point, we are "stuck". The ray cast ends here.
@@ -176,7 +176,6 @@ while (true) {
    const distance = Vector.magnitude(vectorToNeighbor)
 
    // Construct a force vector pointing to the chosen neighbor.
-   // TODO: speed should actually be reduced.
    const forceVectorToNeighbor = Vector.multiply(Vector.normalize(vectorToNeighbor), speed)
 
    // Compute travel time to reach the neighbor.
@@ -222,8 +221,6 @@ while (true) {
     }
 
     return safeIterationResult
-
-    // TODO: Consider moving toward a 4-point neighbor instead.
    }
 
    // Set the neighbor as the new safe point.

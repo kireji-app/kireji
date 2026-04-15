@@ -1,0 +1,1 @@
+return kirejiIssues.pathname + kirejiIssue.pathname

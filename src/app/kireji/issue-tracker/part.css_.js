@@ -1,0 +1,1 @@
+return kirejiIssueTracker.scroller["part.css"] + kirejiIssueTracker["static.css"]

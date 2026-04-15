@@ -1,0 +1,1 @@
+Check if features like native share and full screen truly exist and are supported on the user agent. If not, hide the tray button for those features. Currently, tray buttons for those features are all currently hidden.

@@ -2,10 +2,7 @@ const hasNoTabs = !tabGroup.openTabs.length
 const activeTab = tabGroup.activeTab
 const previewTab = tabGroup.previewTab
 
-// TODO: Create a "pseudo-part" that has all the same view methods, etc. of a normal part but is dynamically instantiated for dynamic typing.
-
 if (tabGroup.openTabs.length !== tabGroup.viewedOpenTabs.length || tabGroup.viewedPermutationRouteID !== tabGroup.permutationRouteID || tabGroup.viewedPayloadRouteID !== tabGroup.payloadRouteID) {
- // TODO: This is a dead-simple approach ... more performant approaches exist.
  const tabContainer = Q("#tab-group")
  const existingTabCount = tabGroup.viewedOpenTabs.length
  const targetTabCount = tabGroup.openTabs.length

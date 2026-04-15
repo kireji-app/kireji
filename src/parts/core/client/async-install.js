@@ -40,7 +40,7 @@ logScope(0, "Finalizing Hydration", log => {
   client: _.parts.core.client
  })
 
- // Handle navigation. TODO: fix bugs here.
+ // Handle forward/back button navigation.
  window.addEventListener("pageshow", pageTransitionEvent => {
   log("Setting Initial State")
   addressBar.useRoute()

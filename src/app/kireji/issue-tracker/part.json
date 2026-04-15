@@ -1,0 +1,9 @@
+{
+ "extends": "application",
+ "methods": {
+  "pathname-translate-canonical": [
+   "PATHNAME",
+   "HASH"
+  ]
+ }
+}

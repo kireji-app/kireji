@@ -23,7 +23,6 @@ const
   'Content-Type': 'text/html;charset=UTF-8',
   "Document-Policy": "force-load-at-top",
   "Vary": "Sec-CH-Prefers-Color-Scheme",
-  // TODO: Finish the security setup.
   // 'Content-Security-Policy': "default-src 'none'; style-src 'unsafe-inline'; image-src data:; script-src self 'unsafe-inline'",
   // 'Permissions-Policy': 'microphone=(), camera=(), web-share=(self), full-screen=(self)',
   'Cross-Origin-Embedder-Policy': 'require-corp',

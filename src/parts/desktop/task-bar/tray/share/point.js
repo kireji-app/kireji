@@ -1,5 +1,3 @@
-// TODO: Check if nav.share truly exists. If not, hide the tray button.
-
 pointer.handle({
  click() {
   nav.share({

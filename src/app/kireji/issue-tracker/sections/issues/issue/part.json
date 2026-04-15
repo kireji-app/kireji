@@ -1,0 +1,9 @@
+{
+ "abstract": true,
+ "methods": {
+  "close": [
+   "POINTER_EVENT",
+   "TARGET_ELEMENT"
+  ]
+ }
+}

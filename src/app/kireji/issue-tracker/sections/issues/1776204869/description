@@ -1,0 +1,1 @@
+Make title-bar and other desktop experience css dynamic (because it can be disabled in the config). Currently, some unused desktop components may be still be present in CSS rules in the final snapshots.

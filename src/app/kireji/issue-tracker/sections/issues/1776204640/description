@@ -1,0 +1,5 @@
+Implement and test source code mapping functionality to relate errors and console logs back to the source files that generated them.
+
+This task is in progress. Source mapping generation and inlining has been implemented. Currently, there are some unknown errors with linking to the correct files from chrome and some problems with getting Node.js to recognize and reflect the source maps.
+
+Consider publishing all files with a bottom link to an external source map 3 file that can easily be generated and cached server-side

@@ -1,4 +1,3 @@
-// TODO: consider moving this check (and the cardinality type check) to a post-build "validation" step?
 if (!scroller.query)
  throw new ReferenceError(`Scrollers must define a css selector at \`scroller.query\` which can select the parent element of the scroller (from ${scroller.host}).`)
 

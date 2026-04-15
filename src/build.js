@@ -894,7 +894,6 @@ function ƒ(_, compressedSubjectOrigins) {
      return totalInheritors
     },
     configureArchiveContent = () => {
-     // TODO: Consider merging user landing model with stock landing model instead of replacing it.
      const landingModel = JSON.parse(_["landing-model.json"])
 
      let desktopFeatures = 3
@@ -1050,7 +1049,6 @@ function ƒ(_, compressedSubjectOrigins) {
 }
 
 ƒ({
- // TODO: fix source mapping bugs.
  verbosity: "1",
  change: "major",
  hangHydration: "0",

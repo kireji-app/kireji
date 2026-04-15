@@ -15,8 +15,6 @@ const expression = (() => {
  return (LABELS ? "<munder>" + (needsParentheses ? "" : "<mrow>") : "") + (needsParentheses ? "<mrow class=parenthetic><mo>(</mo>" : "") + terms.join("") + (needsParentheses ? `<mo>)</mo></mrow>` : "") + (LABELS ? (needsParentheses ? "" : "</mrow>") + `<munder><mo stretchy="true">&#x23df;</mo>${recurse(0, "none", false, false)}</munder></munder>` : "")
 })()
 
-// TODO: handle parenthesis!
-
 const showBracketBelow = DEPTH > 2
 
 return /* html */`${WRAP_IN_MATH_TAG ? "<math displaystyle=true><mrow>" : ""}${equationVariable}${expression}${equationValue}${WRAP_IN_MATH_TAG ? "</mrow></math>" : ""}`

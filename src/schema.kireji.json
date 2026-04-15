@@ -1,6 +1,6 @@
 {
  "$schema": "http://json-schema.org/draft-07/schema#",
- "title": "KirejiConfig",
+ "title": "Kireji Framework Config",
  "description": "Schema for the kireji.json configuration file.",
  "type": "object",
  "properties": {

@@ -1,0 +1,30 @@
+Implement dynamic part instancing. The final implementation should be able to act as the prototype for both a combination abstract and a permutation abstract. It should be possible to nest these abstracts. These new abstracts will then replace the kireji app tab group and the redundant functionality for the existing permutation abstract (and, by extension, windows.desktop.parts). Window stacking will then be implemented as a nested permutation inside of the outer open windows (open task list) permutation.
+
+During this process, investigate the most performant method of scanning and updating individual instances when comparing the rendered state to the newly set state. The current approach (seen in tab group and legacvy permutation parts) is a dead-simple approach and more performant approaches likely exist. Consider whether this should occur in the parent of a dynamic part during distribute view update or just view update.
+
+Suggestions and considerations:
+1. Instantiate a concrete instance of an abstract part per collection item. Offload all per-item logic there.
+   - Such a part will have optional subparts 'instance' and 'meta'
+   - "instance" corresponds to each instance part's statically-sized data model
+     - which also receives its specific subject assignment from the outside (not part of it's route ID)
+   - "meta" (name pending) corresponds to a non-instance-specific part whose cardinality is dependant upon the number of instances.
+     - get its implementation details by generalizing the active and preview tab data in the tab group. 
+     - At build time, the parent permutation will need to be able to query this part to get its cardinality once for every instance up to the max count.
+     - This part can support mixes, matches, etc. and might even be the ideal place to place a sub-permutation.
+2. Convert the tab group to use this abstract type.
+
+- How do we inspect the states of existing tab instances in `kireji.app`?
+  - Files will be easy: they are part of the abstract.
+  - Perhaps the state space box depicts an array of instance space states instead of the single state? Perhaps that is all that is needed?
+  - Then, how do we depict the states of subparts of the parent part? Do we simply have an array for the entire instance part's tree?
+  - We might need "push", "pop", "insert", "splice" and/or similar array methods to make it easier to modify the instance set on the fly.
+
+- What is the arithmetic of the taskbar and the windows?
+  + Outside of the per-window state, we have the following permutation data:
+    1. The data of which tasks are open, without considering order
+       (this is a simple subset of the available applications).
+    2. The data of the order of the given subset on the task bar
+    3. The data of the stacking order of the given subset on the desktop
+       - Special considerations need to be taken with regards to stacking of windows which are considered full-screened and those considered maximized. How can (and why should) full-screened applications have a window order when they always hide one another? Is it merely to keep their place when they depart from full screen?
+
+- The equation generation (mathML() method) will need to factor in all aspects when deciding how to expand to different depths.

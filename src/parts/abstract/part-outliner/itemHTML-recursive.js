@@ -9,5 +9,3 @@ return partOutliner.getChildren(SUBJECT).map((childPart, i, childArray) => {
  const summary = `<summary ${partOutliner.pointAttr("point", partIndex)} data-index="${partIndex}"${partOutliner.isActive(childPart) ? " data-active" : ""}${IS_LAST_OF_TYPE && !hasSubparts ? ' id="lastOutlinerItem"' : ""}><outliner-spacer style="--depth:${DEPTH + +!hasSubparts}"></outliner-spacer>${handle}${symbol}${label}</summary>`
  return `<details${hasSubparts ? "" : ` class=empty`} ${isOpen ? "open" : ""}>${summary}${recurse(childPart, DEPTH + 1, IS_LAST_OF_TYPE && i === childArray.length - 1)}</details>`
 }).join("")
-
-/* TODO: the children of collapsed outliner items should not be rendered into HTML as it bloats the fetch size. Instead, they should be rendered during hydration. */

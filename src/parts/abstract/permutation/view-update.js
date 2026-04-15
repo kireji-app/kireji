@@ -1,6 +1,4 @@
-// TODO: Consider if this should be distribute view update instead of just view update.
 if (permutation.instances.length !== permutation.viewedInstances.length || permutation.viewedPermutationRouteID !== permutation.permutationRouteID) {
- // TODO: This is a dead-simple approach ... more performant approaches exist.
  const existingInstanceCount = permutation.viewedInstances.length
  const targetInstanceCount = permutation.instances.length
  const maxLength = Math.max(existingInstanceCount, targetInstanceCount)

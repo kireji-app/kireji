@@ -1,0 +1,1 @@
+Create an issue tracker. This moves "TODO" comments out of code without losing track of these tasks. Consider approaches such as removing completed tasks from different versions of the framework. Consider how the chosen approach impacts user-generated issues and how those will mix with the framework's issues itself.

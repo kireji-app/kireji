@@ -1,0 +1,30 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "title": "Kireji Part Config",
+ "description": "Schema for part.json files defining component behavior and methods.",
+ "type": "object",
+ "properties": {
+  "abstract": {
+   "description": "If true, this part serves as a base and cannot be instantiated directly.",
+   "type": "boolean"
+  },
+  "extends": {
+   "description": "The relative or absolute host name of the part that this part inherits from. The default value is `part`.",
+   "type": "string"
+  },
+  "methods": {
+   "description": "A map of method names to their expected arguments.",
+   "type": "object",
+   "additionalProperties": {
+    "description": "An array of strings representing the parameter names for this method.",
+    "type": "array",
+    "items": {
+     "type": "string"
+    }
+   }
+  }
+ },
+ "additionalProperties": {
+  "description": "Custom property specific to this part implementation."
+ }
+}

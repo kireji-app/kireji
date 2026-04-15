@@ -64,6 +64,8 @@ declare interface IPart<TOwner, TSubpart>
  readonly cssVariableOfImage(IMAGE_NAME: string): string
  /** Collects every build function in the part's prototype chain and then calls them all on the part itself. */
  readonly startBuild(): void
+ /** Performs `part.modelToRouteID()` on MODEL and then performs `part.setRouteID()` on the resulting route ID. */
+ readonly setModel(MODEL: any)
  /** Sets the part's routeID, propagating it leafward and rootward and updating all views. If DELTA is true, then ROUTE_ID is added to the part's current route ID. */
  readonly setRouteID(ROUTE_ID: bigint, DELTA: boolean = false): void
  /** Recomputes and then updates the part's routeID in response to a change in the the given subpart's routeID.

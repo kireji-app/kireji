@@ -1,0 +1,5 @@
+Currently, browsers without any support for service worker or gpu (such as search engine indexing bots) will successfully fetch the page snapshot. However, users who don't have service worker support will find the page non-responsive. The page doesn't need to be responsive for these users, but rather a message can indicate as much. Hopefully, it can be done in such a way that doesn't impact SEO. Otherwise, skip it (almost all clients support service worker). For clients that don't support GPU (including search engine bots), there is currently an error that appears during gpu facet installation before the client hydration occurs: 
+
+`TypeError: Cannot read properties of null (reading 'requestDevice') at Object.value (eval at <anonymous>)`
+
+This will lock the system for those users. Consider approaches to resolve this.
