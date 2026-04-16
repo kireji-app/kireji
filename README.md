@@ -1,7 +1,7 @@
 # Kireji - *Web Framework*
 > **<sub>Part of the Kireji Project</sub>**<br><sup><i>omnia ex una linea</i></sup>
 
-The **Kireji Web Framework** is a reactive full-stack web framework that can build and serve web apps and multi-origin web app ecosystems. It stores its runtime state in its routing system, achieving the information-theoretic lower bound of data compression. This enables comprehensive deep linking, session bookmarking without user accounts or local storage, peer-to-peer data sharing without uploads or accounts, and cross-origin communication without cookies or CORS.
+The **Kireji Web Framework** is a reactive full-stack web framework that can build and serve web apps and multi-origin web ecosystems. It stores its runtime state in its routing system, achieving the information-theoretic lower bound of data compression. This enables comprehensive deep linking, session bookmarking without user accounts or local storage, peer-to-peer data sharing without uploads or accounts, and cross-origin communication without cookies or CORS.
 ## The Kireji Project
 The Kireji Project poses a question: **What if we could treat every web page as a point in a unified, mathematically mapped space?**
 
@@ -9,11 +9,11 @@ The Kireji Project poses a question: **What if we could treat every web page as 
 | ---- | -------
 | [MPHF](https://github.com/kireji-app/mphf#readme) | [Coordinate System<br><sup>A bijective coordinate system for hashing structured data</sup>](https://github.com/kireji-app/mphf#readme)
 | **Kireji** | **Web Framework - ★ You are here<br><sup>A reactive web framework with MPHF routing</sup>**
-| [Demo](https://github.com/kireji-app/demo#readme) | [App Ecosystem<br><sup>An example app ecosystem demonstrating the project](https://github.com/kireji-app/demo#readme)</sup>
+| [Demo](https://github.com/kireji-app/demo#readme) | [Ecosystem<br><sup>An example ecosystem demonstrating the project](https://github.com/kireji-app/demo#readme)</sup>
 
 ## Usage
 
-> <sub>Note: This framework is currently in alpha. Expect breaking changes with each version. Check out the [Demo App Ecosystem](https://github.com/kireji-app/demo#readme) to see a live project that uses this framework. Check back later to see if the framework has advanced into beta.</sub>
+> <sub>Note: This framework is currently in alpha. Expect breaking changes with each version. Check out the [Demo Ecosystem](https://github.com/kireji-app/demo#readme) to see a live project that uses this framework. Check back later to see if the framework has advanced into beta.</sub>
 
 ```bash
 # In an empty git repo.

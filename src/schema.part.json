@@ -5,7 +5,7 @@
  "type": "object",
  "properties": {
   "abstract": {
-   "description": "If true, this part serves as a base and cannot be instantiated directly.",
+   "description": "Whether or not the part should be considered a subpart of its parent part (abstract = false) or an uninstanceable prototype for other parts (abstract = true).",
    "type": "boolean"
   },
   "extends": {
@@ -21,6 +21,13 @@
     "items": {
      "type": "string"
     }
+   }
+  },
+  "order": {
+   "description": "An optional string array of subpart keys representing the explicit order that the subparts should take in the part's subpart array.\nThis affects how parts are iterated over and how they are integrated into the hash function.",
+   "type": "array",
+   "items": {
+    "type": "string"
    }
   }
  },

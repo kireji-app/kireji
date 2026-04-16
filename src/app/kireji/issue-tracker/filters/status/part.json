@@ -1,0 +1,8 @@
+{
+ "extends": "mix",
+ "order": [
+  "to-do",
+  "doing",
+  "done"
+ ]
+}

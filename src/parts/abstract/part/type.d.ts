@@ -201,10 +201,12 @@ declare type IRuntimePropertyDefinition<TOwner, TValue> = {
 declare interface IPartManifest {
  /** Whether or not the part should be considered a subpart of its parent part (abstract = false) or an uninstanceable prototype for other parts (abstract = true). */
  readonly abstract?: boolean
- /** Whether or not the part will be instanced (inherit = false) or retained (inherit = true) during the create step. */
- readonly inherit?: boolean
  /** The list of methods that the part adds. The prototype of the methods object is set to the part's prototype's manifest methods object. If no object is defined in a manifest, the empty object will be created automatically. */
- readonly methods: Record<string, string[]>
+ readonly methods?: Record<string, string[]>
+ /** The relative or absolute host name of the part that this part inherits from. The default value is `part`. */
+ readonly extends?: string
+ /** An optional string array of subpart keys representing the explicit order that the subparts should take in the part's subpart array. This affects how parts are iterated over and how they are integrated into the hash function. */
+ readonly order?: string[]
 }
 
 declare type IPartAny =

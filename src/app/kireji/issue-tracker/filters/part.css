@@ -1,0 +1,149 @@
+#issue-tracker_kireji_app .header svg {
+ display: block;
+ fill: none;
+ stroke: var(--fg);
+ stroke-width: 2;
+ height: var(--spacing);
+ stroke-linecap: round;
+ stroke-linejoin: round;
+ padding: 0 calc(var(--spacing) / 4);
+}
+
+body.modern #issue-tracker_kireji_app .header>span {
+ padding-left: calc(var(--spacing) * 1.5);
+}
+
+body.vintage #issue-tracker_kireji_app .header svg {
+ padding: 4px;
+ box-shadow: var(--deep-outset);
+ height: calc(8px + var(--spacing));
+ /* Modified version of `--deep-inset`. */
+ box-shadow:
+  inset -1px -1px black,
+  inset 0 1px var(--bg-light-er),
+  inset -2px -2px var(--bg-dark),
+  inset 1px 2px var(--bg-light-est);
+}
+
+body.vintage #issue-tracker_kireji_app .header>:is(.issue-status, .issue-priority) {
+ box-shadow:
+  inset 0 -1px black,
+  inset 1px 1px var(--bg-light-er),
+  inset -1px -2px var(--bg-dark),
+  inset 2px 2px var(--bg-light-est);
+}
+
+body.modern #issue-tracker_kireji_app .header {
+ --border-color: var(--bg);
+ border-bottom: 1px solid var(--border-color);
+}
+
+body.modern.dark #issue-tracker_kireji_app .header {
+ --border-color: var(--bg-un-mode);
+}
+
+body.vintage #issue-tracker_kireji_app .header {
+ margin-right: var(--scrollbar-width);
+}
+
+body.vintage #issue-tracker_kireji_app .header>* {
+ box-shadow: var(--deep-outset);
+}
+
+body.vintage #issue-tracker_kireji_app .header>[data-order]::before {
+ margin-right: 2px;
+}
+
+#issue-tracker_kireji_app .header>[data-order]::before {
+ content: "▼";
+}
+
+#issue-tracker_kireji_app .header.ascending>[data-order]::before {
+ content: "▲";
+}
+
+body.modern #issue-tracker_kireji_app .header>span:not([data-order]) {
+ content: "";
+}
+
+body.modern #issue-tracker_kireji_app .header>span::before {
+ position: absolute;
+ left: 0;
+ width: calc(1.5 * var(--spacing));
+ text-align: center;
+}
+
+body.vintage #issue-tracker_kireji_app .header:has(.issue-filter-dropdown-status)>.issue-filter-status,
+body.vintage #issue-tracker_kireji_app .header:has(.issue-filter-dropdown-priority)>.issue-filter-priority,
+body.vintage #issue-tracker_kireji_app .header>.down {
+ box-shadow: inset 0 0 0 1px var(--bg-dark-er);
+ background: var(--bg-checker), white;
+ padding: 5px 3px 3px 5px;
+}
+
+body.vintage #issue-tracker_kireji_app .header>.down {
+ background: transparent;
+}
+
+#issue-tracker_kireji_app #issue-filter-dropdown {
+ position: absolute;
+ top: 100%;
+}
+
+body.vintage #issue-tracker_kireji_app .issue-filter-dropdown-status {
+ right: calc(7 * var(--spacing));
+}
+
+body.vintage #issue-tracker_kireji_app .issue-filter-dropdown-priority {
+ right: 160px;
+}
+
+body.modern #issue-tracker_kireji_app .issue-filter-dropdown-status {
+ right: calc(7 * var(--spacing));
+}
+
+body.modern #issue-tracker_kireji_app .issue-filter-dropdown-priority {
+ right: calc(13 * var(--spacing));
+}
+
+#issue-tracker_kireji_app #issue-filter-dropdown {
+ background-color: var(--bg);
+ z-index: 1000;
+}
+
+body.vintage.dark #issue-tracker_kireji_app #issue-filter-dropdown {
+ background-color: var(--bg-dark);
+}
+
+body.modern #issue-tracker_kireji_app #issue-filter-dropdown {
+ padding: var(--spacing);
+ border-radius: calc(var(--spacing) / 2)
+}
+
+#issue-tracker_kireji_app:has(#issue-filter-dropdown) .issue-table {
+ pointer-events: none;
+}
+
+body.vintage #issue-tracker_kireji_app .header:after {
+ position: absolute;
+ right: calc(var(--scrollbar-width) * -1);
+ top: 0;
+ bottom: 0;
+ width: var(--scrollbar-width);
+ box-shadow: var(--deep-outset);
+ pointer-events: none;
+ content: "";
+}
+
+body.vintage #issue-tracker_kireji_app .header>:is(.issue-priority, .issue-status) {
+ width: calc(var(--column-width) - var(--spacing) - 8px);
+}
+
+body.modern #issue-tracker_kireji_app .header>:is(.issue-priority, .issue-status) {
+ width: calc(var(--column-width) - calc(1.5 * var(--spacing)));
+ text-align: center;
+}
+
+body.modern #issue-tracker_kireji_app .header>span:not(.issue-title) {
+ box-shadow: inset 0.5px 0 0 var(--border-color), -0.5px 0 0 var(--border-color);
+}

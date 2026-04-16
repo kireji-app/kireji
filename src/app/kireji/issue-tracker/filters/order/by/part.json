@@ -1,0 +1,9 @@
+{
+ "extends": "match",
+ "order": [
+  "title",
+  "priority",
+  "status",
+  "date"
+ ]
+}

@@ -1,0 +1,1 @@
+return kirejiIssueFilters.apply(kirejiIssueSections.issues).map(issue => issue["card.html"]).join("\n  ")

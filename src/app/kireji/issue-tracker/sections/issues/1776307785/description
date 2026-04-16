@@ -1,0 +1,1 @@
+In both vintage and modern modes, the issue modal of the issue tracker doesn't look finished. It's especially clear in vintage, though; the exit button in the top right can lead to accidentally clicking the actual exit button, closing the tracker app completely. Tidy up the UI and make the modal feel like a complete feature.

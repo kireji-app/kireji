@@ -104,7 +104,7 @@ declare interface IKirejiConfig {
  /** * Determines whether or not the Kireji IDE should be included in the ecosystem.
   * - `none`: kireji.app will never be included.
   * - `full`: kireji.app will only be included in local builds.
-  * - `demo`: kireji.app will always be included (used only for Demo App Ecosystem).
+  * - `demo`: kireji.app will always be included (used only for Demo Ecosystem).
   */
  readonly "includeKirejiApp": "none" | "full" | "demo";
 
@@ -113,7 +113,7 @@ declare interface IKirejiConfig {
   * - `menu-only`: Only the menu will be included, and it will always be included.
   * - `local-only`: The full desktop experience will only be included in local builds.
   * - `full`: The menu will always be included. The desktop experience will only be included in local builds.
-  * - `demo`: The full desktop experience will always be included (used only for Demo App Ecosystem).
+  * - `demo`: The full desktop experience will always be included (used only for Demo Ecosystem).
   */
  readonly "includeDesktop": "none" | "menu-only" | "local-only" | "full" | "demo";
 
@@ -463,7 +463,7 @@ declare type KirejiConfigKirejiApp =
  | "none"
  /** kireji.app will only be included in local builds. */
  | "full"
- /** kireji.app will always be included (used only for Demo App Ecosystem). */
+ /** kireji.app will always be included (used only for Demo Ecosystem). */
  | "demo"
 
 declare type KirejiConfigDesktop =
@@ -475,7 +475,7 @@ declare type KirejiConfigDesktop =
  | "local-only"
  /** The menu will always be included. The desktop experience will only be included in local builds. */
  | "full"
- /** The full desktop experience will always be included (used only for Demo App Ecosystem). */
+ /** The full desktop experience will always be included (used only for Demo Ecosystem). */
  | "demo"
 
 declare type KirejiConfigChange =

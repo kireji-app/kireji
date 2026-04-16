@@ -28,14 +28,12 @@ title-bar>.part-icon {
  margin: calc(var(--spacing) / 2);
 }
 
-#color-control,
-#era-control {
+.toggle-control {
  cursor: pointer;
  position: relative;
 }
 
-#color-control .base,
-#era-control .base {
+.toggle-control .base {
  width: 100%;
  border-radius: var(--spacing);
  background: var(--light-bg);
@@ -149,7 +147,8 @@ task-menu>* {
  background-color: var(--bg-dark);
 }
 
-#settings>span {
+#settings>span,
+.toggle-control {
  gap: 1ch;
  height: var(--spacing);
  box-sizing: content-box;
@@ -174,12 +173,8 @@ task-menu>* {
 }
 
 
-#settings>span[data-state="enabled"] .handle {
+.toggle-control[data-state="enabled"] .handle {
  left: calc(var(--spacing) + 2px);
-}
-
-#settings>span[data-state="partial"] .handle {
- left: calc(.5 * var(--spacing) + 2px);
 }
 
 .task-link[data-here]>a::before {

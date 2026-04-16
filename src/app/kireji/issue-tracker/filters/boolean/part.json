@@ -1,0 +1,10 @@
+{
+ "abstract": true,
+ "extends": "boolean",
+ "methods": {
+  "point": [
+   "POINTER_EVENT",
+   "TARGET_ELEMENT"
+  ]
+ }
+}

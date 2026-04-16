@@ -190,7 +190,8 @@ task-menu {
  flex-flow: column;
 }
 
-#settings>span {
+#settings>span,
+.toggle-control {
  display: flex;
  justify-content: space-between;
  padding: 5px;

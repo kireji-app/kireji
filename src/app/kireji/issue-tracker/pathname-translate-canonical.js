@@ -11,9 +11,6 @@ if (!("kireji" in model.app))
 if (!("issue-tracker" in model.app.kireji))
  model.app.kireji["issue-tracker"] = {}
 
-// todo: add scroller
-// model.app.kireji["issue-tracker"].scroller = 0
-
 if (PATHNAME === "/") {
 
  if (HASH !== "#top")

@@ -109,7 +109,7 @@
     },
     {
      "const": "demo",
-     "description": "kireji.app will always be included (used only for Demo App Ecosystem)."
+     "description": "kireji.app will always be included (used only for Demo Ecosystem)."
     }
    ]
   },
@@ -134,7 +134,7 @@
     },
     {
      "const": "demo",
-     "description": "The full desktop experience will always be included (used only for Demo App Ecosystem)."
+     "description": "The full desktop experience will always be included (used only for Demo Ecosystem)."
     }
    ]
   },

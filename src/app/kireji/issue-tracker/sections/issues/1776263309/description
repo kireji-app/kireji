@@ -1,0 +1,3 @@
+Mobile user interface/usability requires some additional feature support on top of the desktop architecture. This means making special consideration for the lack of a keyboard and the tap feature. Where possible, employ the same usability solutions across both platforms for a consistent look-and-feel across devices. For example, a tall and narrow browser window should look the same as the equivalent portrait layout on a mobile device. Where possible, let click-and-drag on screen feel and behave like tab-and-drag on mobile.
+
+This is an overall issue that links together all mobile-specific issues.
