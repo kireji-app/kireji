@@ -2,12 +2,17 @@ mesh.define({
  triTable: { value: [] },
  triIndex: { value: -1, writable: true },
  position: { value: { x: null, y: null } },
+ data: {
+  resolve() {
+   return mesh.getData()
+  }
+ },
  cardinality: {
   resolve() {
    let meshCardinality = 0n
 
-   // Obtain the raw data for this mesh.
-   const [pointList, tris] = mesh.getData()
+   // Obtain the raw data for this collision mesh.
+   const [pointList, tris] = this.data.collision
 
    // Iterate over each tri (array of three point indices) in the data.
    for (const tri of tris) {

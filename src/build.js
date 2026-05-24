@@ -76,7 +76,8 @@ function ƒ(_, compressedSubjectOrigins) {
   camelCase = (words, delimiter = "-") => (typeof words === "string" ? words.split(delimiter) : words).map((word, i) => (i ? word[0].toUpperCase() + word.slice(1) : word)).join(""),
   serialize = value => JSON.stringify(value, (k, v) => (typeof v === "bigint" ? v.toString() + "n" : v), 1),
   scientific = (x, html = false) => { x = x.toString(10); const log10 = x.length - 1; x = Math.round((x[0] ?? 0) + (x[1] ?? 0) + (x[2] ?? 0) + (x[3] ?? "0") + "." + (x[4] ?? "0")).toString(); const factor = `${x.slice(0, 1)}.${x.slice(1)}`; return html ? `<math><mn>${factor}</mn><mo>&sdot;</mo><msup><mn>10</mn><mn>${log10}</mn></msup></math>` : `${factor} × 10` + [...log10.toString()].map(n => '⁰¹²³⁴⁵⁶⁷⁸⁹'[n]).join("") },
-  btoaUnicode = string => btoa(new TextEncoder("utf-8").encode(string).reduce((data, byte) => data + String.fromCharCode(byte), "")),
+  btoaBuffer = b => (Uint8Array.fromBase64?.(b) ?? ([...b = atob(b)].reduce((A, c, i) => (A[i] = c.charCodeAt(0), A), new Uint8Array(b.length)))).buffer,
+  btoaUnicode = b => btoa(new TextEncoder("utf-8").encode(b).reduce((data, byte) => data + String.fromCharCode(byte), "")),
   sanitizeAttr = string => string.replaceAll(/&/g, '&amp;').replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;').replaceAll(/</g, '&lt;').replaceAll(/>/g, '&gt;')
 
  // Math Utilities
@@ -427,7 +428,7 @@ function ƒ(_, compressedSubjectOrigins) {
         part[itemName] = readRecursive([...domains, itemName])
        } else if (subject.isFile()) {
         stats.fileCount++
-        const isBinary = itemName.endsWith(".png") || itemName.endsWith(".gif")
+        const isBinary = itemName.endsWith(".png") || itemName.endsWith(".gif") || itemName.endsWith(".bin")
         bufferLog(3, "".padEnd(domains.length, " ") + `${isBinary ? "▣" : "≡"} ${itemName}`)
         subjectOrigins.set(host + "/" + itemName, path === projectPath)
         part[itemName] = readFile(resolve(path, itemName), isBinary ? "base64" : "utf-8")
@@ -655,6 +656,8 @@ function ƒ(_, compressedSubjectOrigins) {
          // Resolve late-bound properties in the order they were added to the descriptor map.
          for (const propertyKey of Reflect.ownKeys(descriptorMap)) {
           const propertyDescriptor = descriptorMap[propertyKey]
+          if (typeof propertyDescriptor !== "object")
+           throw new TypeError(`Part Define Error: property definition for "${propertyKey}" on part ${this.host} must be an object, not a primitive value (got ${typeof propertyDescriptor}).`)
           if ("resolve" in propertyDescriptor) {
            propertyDescriptor.value = propertyDescriptor.resolve.call(this)
            delete propertyDescriptor.resolve

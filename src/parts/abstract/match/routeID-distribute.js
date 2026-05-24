@@ -4,7 +4,7 @@ const arms = [...match]
 
 if (ROUTE_ID === -1n) {
  if (match.arm !== null)
-  match.arm.distributeRouteID(-1n)
+  match.arm.distributeRouteID(-1n, SKIP_RUNTIME_STATE_DISTRIBUTION)
  match.arm = null
 } else for (let index = 0; index < arms.length; index++) {
  const nextIndex = index + 1
@@ -15,9 +15,9 @@ if (ROUTE_ID === -1n) {
   const armRouteID = ROUTE_ID - match.offsets.get(newArm)
 
   if (oldArm && oldArm !== newArm)
-   oldArm.distributeRouteID(-1n)
+   oldArm.distributeRouteID(-1n, SKIP_RUNTIME_STATE_DISTRIBUTION)
 
-  newArm.distributeRouteID(armRouteID)
+  newArm.distributeRouteID(armRouteID, SKIP_RUNTIME_STATE_DISTRIBUTION)
   match.arm = newArm
   break
  }

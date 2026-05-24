@@ -27,6 +27,8 @@ declare interface IMesh<TOwner>
  /** The current position of the state in the mesh. */
  readonly position: IVector2
  readonly manifest: IMeshManifest
+ /** A cache of the pre-processed geometry data obtained by running the getData method. */
+ readonly data: IMeshData
 }
 
 declare interface IMeshTriData {
@@ -70,7 +72,9 @@ declare interface IMeshManifest
  readonly tris: number[]
 }
 
-declare type IMeshData = [IMeshPoint[], IMeshTri[]]
+declare type IMeshData = {
+ readonly collision: [IMeshPoint[], IMeshTri[]]
+}
 
 declare type IMeshTri =
  [IMeshPointIndex, IMeshPointIndex, IMeshPointIndex]

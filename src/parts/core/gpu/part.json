@@ -1,3 +1,9 @@
 {
- "extends": "facet"
+ "extends": "facet",
+ "methods": {
+  "buffer-create": [
+   "TYPED_ARRAY",
+   "USAGE = GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST"
+  ]
+ }
 }

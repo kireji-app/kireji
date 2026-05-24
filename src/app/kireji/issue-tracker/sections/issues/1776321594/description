@@ -1,0 +1,8 @@
+Currently, the project is read-only. The following problems need to be solved in order to implement the full IDE:
+
+1. How will modifications be stored so that they are not quickly lost? The user's local storage?
+2. How will modifications be made portable? JSON object export? Full git integration?
+3. How will the user be shown that the version of the project they are currently working in cannot be shared as a link (for example, a warning bar across the top of the screen)?
+4. How will the system know when and how to rebuild parts and hydrate views and states when parts are added, edited, moved or removed in real-time? Is there a mathematical way to structure this nicely? Do we start with obvious things (like CSS and HTML snippets) and expand upon the logic from there? Do we build an cause-effect network at build time for propagating an update signal?
+5. What should happen if the user breaks the entire framework by editing the framework parts? Will there be some sort of fallback? What if the ability to fallback is also borked? Will the editable framework actually be a second running copy of the read-only framework inside of a frame or something so that the preview can be cancelled? How can we enable recovery of a broken instance of the framework so that users don't lose work?
+6. Should the framework parts and the project parts be held separately (i.e. user can override framework parts from the project to augment the framework but cannot delete the framework's original parts)? If so, this would require keeping a copy of both the framework's versions of files and the project's versions which I don't really prefer.

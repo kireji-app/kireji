@@ -2,7 +2,7 @@ mix.updateRouteID(ROUTE_ID)
 
 if (ROUTE_ID === -1n) {
  for (const factor of mix)
-  factor.distributeRouteID(-1n)
+  factor.distributeRouteID(-1n, SKIP_RUNTIME_STATE_DISTRIBUTION)
 } else {
  const factors = [...mix]
 
@@ -12,7 +12,7 @@ if (ROUTE_ID === -1n) {
   const routeID = ROUTE_ID / placeValue
 
   if (factor.routeID !== routeID)
-   factor.distributeRouteID(routeID)
+   factor.distributeRouteID(routeID, SKIP_RUNTIME_STATE_DISTRIBUTION)
 
   ROUTE_ID %= placeValue
  }

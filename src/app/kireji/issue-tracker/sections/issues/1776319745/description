@@ -1,0 +1,7 @@
+Right now, the project-specific issues are mixed directly with the project's own issues.
+
+We know which issues are which thanks to a pass that detects the origin of all parts during the packing stage of the build process. This can be used to separate the two.
+
+Syncronize the name of the project using the repo name, which is also known during the build process. The framework project is always called kireji. Consider renaming all generic "ecosystem" items (such as the root of the domain outliner) with the project name.
+
+In the issue tracker, let the user filter by project and see at a glance whether the issue belongs to the repo project or the framework.

@@ -1,5 +1,8 @@
 permutation.updateRouteID(ROUTE_ID)
 
+if (SKIP_RUNTIME_STATE_DISTRIBUTION)
+ return
+
 // Extract the number of instances.
 const instanceCount = (() => {
  let estimate = permutation.instanceBitDepths[ROUTE_ID.toString(2).length]

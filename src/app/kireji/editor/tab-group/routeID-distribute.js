@@ -1,5 +1,8 @@
 tabGroup.updateRouteID(ROUTE_ID)
 
+if (SKIP_RUNTIME_STATE_DISTRIBUTION)
+ return
+
 // Extract the number of open tabs.
 const numberOfTabsOpen = (() => {
  let estimate = tabGroup.tabBitDepths[ROUTE_ID.toString(2).length]

@@ -9,7 +9,7 @@ const safeIterationResult = {
 // Obtain the speed of the force vector, which will be used later if we need to slide along the boundary.
 const speed = Vector.magnitude(FORCE_VECTOR)
 
-// If there's no motion, nothing will happen; return the safe result.
+// If there's no motion, nothing will happen. Return the safe result.
 if (speed === 0)
  return safeIterationResult
 
@@ -236,7 +236,7 @@ while (true) {
 
   } else {
 
-   // Discard the unsafe point and return the safe result data.
+   // Discard the unsafe point. Return the safe result data.
    safeIterationResult.hit = true
    return safeIterationResult
   }

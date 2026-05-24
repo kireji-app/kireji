@@ -1,0 +1,1 @@
+At build time (or at selection time, whichever is optimal), establish the relationship between parts and the issues that affect them. Then, render the list of issue links (visually consistent with the issue tracker summary) in the Issues section of the part's Kireji editor summary.

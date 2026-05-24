@@ -30,7 +30,7 @@ if (!newArm)
  throw new Error("An arm to enable could not be found.")
 
 if (oldArm && newArm !== oldArm && !disabledArm)
- oldArm.distributeRouteID(-1n)
+ oldArm.distributeRouteID(-1n, SKIP_RUNTIME_STATE_DISTRIBUTION)
 
 match.updateRouteID(match.offsets.get(newArm) + newArm.routeID)
 

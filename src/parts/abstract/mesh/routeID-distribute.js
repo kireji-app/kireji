@@ -1,5 +1,8 @@
 mesh.updateRouteID(ROUTE_ID)
 
+if (SKIP_RUNTIME_STATE_DISTRIBUTION)
+ return
+
 // Binary search better than embedded match.
 mesh.triIndex = (() => {
 

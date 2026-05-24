@@ -6,17 +6,20 @@
   "symbol-iterator": [],
   "routeID-set": [
    "ROUTE_ID",
-   "DELTA = false"
+   "DELTA = false",
+   "SKIP_RUNTIME_STATE_DISTRIBUTION = false"
   ],
   "model-set": [
-   "MODEL"
+   "MODEL",
+   "SKIP_RUNTIME_STATE_DISTRIBUTION = false"
   ],
   "routeID-collect": [
    "SUBPARTS",
    "DEPTH"
   ],
   "routeID-distribute": [
-   "ROUTE_ID"
+   "ROUTE_ID",
+   "SKIP_RUNTIME_STATE_DISTRIBUTION = false"
   ],
   "routeID-update": [
    "ROUTE_ID"

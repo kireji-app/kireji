@@ -1,7 +1,7 @@
 if (DELTA)
  ROUTE_ID = (ROUTE_ID + part.routeID) % part.cardinality
 
-part.distributeRouteID(ROUTE_ID)
+part.distributeRouteID(ROUTE_ID, SKIP_RUNTIME_STATE_DISTRIBUTION)
 part[".."]?.collectRouteID([part])
 
 if (environment === "client") {

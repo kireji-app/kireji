@@ -230,6 +230,8 @@ class SourceMappedFile {
 declare const environment: "client" | "worker" | "node-main" | "node-module"
 /** True if the framework was built on the cloud from the main branch. */
 declare const production: boolean
+/** Converts a base64-encoded string to an ArrayBuffer. */
+declare function btoaBuffer(BODY: string): string
 /** A unicode-safe replacement for btoa. */
 declare function btoaUnicode(BODY: string): string
 declare function warn(...DATA: any[]): void

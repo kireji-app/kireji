@@ -1,0 +1,5 @@
+Right now, there is sometimes visible FOUC when loading server-rendered pages because of missing early-load artwork.
+
+All .png and .gif files should have a corresponding, maximally compressed early-load png preview.
+
+The problem is especially noticable on glowstick.click.

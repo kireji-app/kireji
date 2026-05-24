@@ -17,6 +17,8 @@ for (const code of hotKeys.pressed)
   terminalKeys.add(code.toLowerCase())
  else if (!production && code === "F8")
   debugger
+ else if (!production && code === "F5")
+  location.reload()
  else debug("Unhandled Key Code: " + code)
 
 const combo = [...terminalKeys].sort()

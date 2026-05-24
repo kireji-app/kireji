@@ -3,6 +3,7 @@ declare interface IKirejiAppEditorSections
 
  // Subparts.
  readonly about: IKirejiAppEditorSection
+ readonly issues: IKirejiAppEditorSection
  readonly state: IKirejiAppEditorSection
  readonly stateSpace: IKirejiAppEditorSection
  readonly properties: IKirejiAppEditorSection

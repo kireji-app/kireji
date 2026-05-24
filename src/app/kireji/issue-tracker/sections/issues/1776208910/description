@@ -1,1 +1,7 @@
 Add alt attributes for all images. Allow deep zoom for low-vision users. Headings shouldn't skip levels (for example, an h4 appearing after an h1 with no h2 or h3 in-between).
+
+Do a full pass on all apps examining their tab behavior. Consider assigning tabindex=0 to all and only the first primary element of each region that the user should be able to tab between. For example, having only the first item of a list of icons be tabbable. Then, perhaps try "moving" that tabindex attribute to other items in the same set when other keyboard keys are used (such as arrow keys).
+
+Can the keyboard be used to control each app? What is it like to work with apps without a pointing device?
+
+What do apps sound like when spoken aloud by a screen reader?

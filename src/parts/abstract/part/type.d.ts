@@ -65,9 +65,13 @@ declare interface IPart<TOwner, TSubpart>
  /** Collects every build function in the part's prototype chain and then calls them all on the part itself. */
  readonly startBuild(): void
  /** Performs `part.modelToRouteID()` on MODEL and then performs `part.setRouteID()` on the resulting route ID. */
- readonly setModel(MODEL: any)
- /** Sets the part's routeID, propagating it leafward and rootward and updating all views. If DELTA is true, then ROUTE_ID is added to the part's current route ID. */
- readonly setRouteID(ROUTE_ID: bigint, DELTA: boolean = false): void
+ readonly setModel(MODEL: any, SKIP_RUNTIME_STATE_DISTRIBUTION: boolean = false)
+ /** Sets the part's routeID, propagating it leafward and rootward and updating all views.
+  * 
+  * If DELTA is true, ROUTE_ID is added to the part's current route ID.
+  * 
+  * If SKIP_RUNTIME_STATE_DISTRIBUTION is true, the distribution flow will skip setting certain properties. It is assumed that these properties are being managed elsewhere. This is useful when a part's runtime state precision is greater than it's cardinality ("lossy" parts). */
+ readonly setRouteID(ROUTE_ID: bigint, DELTA: boolean = false, SKIP_RUNTIME_STATE_DISTRIBUTION: boolean = false): void
  /** Recomputes and then updates the part's routeID in response to a change in the the given subpart's routeID.
   * 
   * If the part has a parent, it calls collectRoute on that parent, passing the signal rootward.
@@ -79,7 +83,7 @@ declare interface IPart<TOwner, TSubpart>
   * For any active subparts, it calls distributeRoute on them, passing the signal leafward.
   * 
   * To avoid redistributing the same route, **check for route ID changes *before* calling distributeRoute**. */
- readonly distributeRouteID(ROUTE_ID: bigint): void
+ readonly distributeRouteID(ROUTE_ID: bigint, SKIP_RUNTIME_STATE_DISTRIBUTION: boolean = false): void
  /** If ROUTE_ID is in the part's range, sets the part to that routeID while caching information about the previous routeID. Otherwise, throws an error.
   * 
   * This method is called by both collectRoute and distributeRoute. It does not propagate the routeID or update any views. */
