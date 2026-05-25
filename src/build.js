@@ -1064,7 +1064,7 @@ function ƒ(_, compressedSubjectOrigins) {
  includeColor: "full",
  includeEra: "full",
  includeMenuApps: "full",
- includeUpdates: "full",
+ // includeUpdates: "full",
  includeKirejiApp: "full",
  includeDesktop: "full"
 })

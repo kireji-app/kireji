@@ -2,8 +2,8 @@ const
  controls = [],
  sections = []
 
-if (_.includeUpdates === "full" || (!production && _.includeUpdates === "local-only"))
- controls.push(update["part.html"])
+// if (_.includeUpdates === "full" || (!production && _.includeUpdates === "local-only"))
+// controls.push(update["part.html"])
 
 if (_.includeColor === "full" || (!production && _.includeColor.startsWith("debug-")))
  controls.push(color["part.html"])

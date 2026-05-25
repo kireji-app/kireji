@@ -1,5 +1,5 @@
 const menuApplicationsCount = Object.keys(_.menuApplications).length
-const controlLinesCount = 4
+const controlLinesCount = 2
 const separatorCount = 2
 return part["static.css"] + `
 task-menu::after {
