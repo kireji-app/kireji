@@ -33,8 +33,10 @@ declare interface IPart<TOwner, TSubpart>
  readonly "runtimeReference": string
  /** An optional display name for the part. */
  readonly "title"?: string
- /** Generates the attribute string that sets up an onpointerdown listener that calls `part[METHOD_NAME](event,this,...ARGS)`. */
+ /** Generates the attribute string that sets up an onpointerdown listener that calls `part[METHOD_NAME](event,this,...ARGS)`. Typically, use `pointer.handle({ ... })` within that method to react to manage complex events drag-and-drop, clicks, double clicks, etc. @remarks This approach will always use the pointer events (not click, touch or mouse events). Use `clickAttr` instead of `pointAttr` to create a traditional click event handler. */
  readonly pointAttr(METHOD_NAME: string = "point", ...ARGS: any[])
+ /** Generates the attribute string that sets up an onclick listener that calls `part[METHOD_NAME](event,this,...ARGS)`. Using `pointAttr` with `pointer.handle({ ... })` is the preferred method of reacting to clicks but this event can be used for special cases like requesting a pointerlock, where the browser requires a proper click event. */
+ readonly clickAttr(METHOD_NAME: string = "onclick", ...ARGS: any[])
  /** Registers a listener that calls RECEIVER[CALLBACK_NAME](this) after the event of the given type occurs. */
  readonly attach(EVENT_TYPE: string, RECEIVER: IPartAny, CALLBACK_NAME: string): void
  /** Unregisters the listener that calls RECEIVER[CALLBACK_NAME](this) after the event of the given type occurs. */

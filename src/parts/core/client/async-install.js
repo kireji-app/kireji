@@ -61,10 +61,7 @@ logScope(0, "Finalizing Hydration", log => {
  })
 
  // Prevent normal click events to ensure the pointerdown event always takes precedence.
- document.addEventListener("click", pointerEvent => {
-  pointerEvent.preventDefault()
-  pointerEvent.stopPropagation()
- }, { capture: true })
+ document.addEventListener("click", client.blockClicks, { capture: true })
 
  log("Setting Initial State")
  // Propagate the initial state (matched to the snapshot exactly).

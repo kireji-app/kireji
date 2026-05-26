@@ -4,6 +4,8 @@ declare interface IClient
  // Serialized Properties.
  /** Requests an animation frame that distributes the loop function throughout the ecosystem and calls itself again. @remarks Can only be run on the client. */
  readonly requestLoop(REQUEST_TIME: DOMHighResTimeStamp): void
+ /** The click event handler that is used globally on the client to prevent the click event from taking precedence over pointer events. */
+ readonly blockClicks(POINTER_EVENT: PointerEvent): void
 
  // Runtime Properties.
  /** Whether or not the server-rendered page has been fully "taken over" by the client-side framework. @remarks Can only become true in the client environment. */

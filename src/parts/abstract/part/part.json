@@ -73,6 +73,10 @@
    "METHOD_NAME = 'point'",
    "...ARGS"
   ],
+  "attr-click": [
+   "METHOD_NAME = 'onclick'",
+   "...ARGS"
+  ],
   "manifest-resolve-owner-of": [
    "PROPERTY_KEY"
   ],

@@ -3,6 +3,9 @@
  "methods": {
   "loop-request": [
    "REQUEST_TIME"
+  ],
+  "clicks-block": [
+   "POINTER_EVENT"
   ]
  }
 }
