@@ -112,7 +112,7 @@ scroll-bar>thumb- {
 }
 
 .task-link>a:hover,
-#update-control:hover {
+#settings>a:not([disabled]):hover {
  background: var(--accent);
  color: var(--bg-mode-est);
 }
@@ -255,13 +255,14 @@ hr {
 }
 
 [disabled],
-[disabled] * {
+[disabled] *,
+a[disabled] {
  pointer-events: none;
  color: var(--bg-dark-er);
  text-shadow: 1px 1px var(--bg-light-est);
 }
 
-body.dark :is([disabled], [disabled] *) {
+body.dark :is([disabled], [disabled] *, a[disabled]) {
  color: var(--bg-dark-est);
  text-shadow: 1px 1px var(--bg-light-er);
 }

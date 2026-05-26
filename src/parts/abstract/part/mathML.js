@@ -9,8 +9,6 @@ const expression = (() => {
 
  const needsParentheses = PARENTHESIZE && terms.length > 1
 
- debug(terms)
-
  // Allow "<mrow>" tag nesting for parentheses.
  return (LABELS ? "<munder>" + (needsParentheses ? "" : "<mrow>") : "") + (needsParentheses ? "<mrow class=parenthetic><mo>(</mo>" : "") + terms.join("") + (needsParentheses ? `<mo>)</mo></mrow>` : "") + (LABELS ? (needsParentheses ? "" : "</mrow>") + `<munder><mo stretchy="true">&#x23df;</mo>${recurse(0, "none", false, false)}</munder></munder>` : "")
 })()

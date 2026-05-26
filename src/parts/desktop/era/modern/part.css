@@ -33,6 +33,10 @@ title-bar>.part-icon {
  position: relative;
 }
 
+.toggle-control:hover {
+ color: var(--accent);
+}
+
 .toggle-control .base {
  width: 100%;
  border-radius: var(--spacing);
@@ -115,10 +119,6 @@ task-menu {
  width: auto;
 }
 
-task-menu [disabled] {
- display: none !important;
-}
-
 task-menu hr {
  display: none;
 }
@@ -148,6 +148,7 @@ task-menu>* {
 }
 
 #settings>span,
+#settings>a,
 .toggle-control {
  gap: 1ch;
  height: var(--spacing);
@@ -171,7 +172,6 @@ task-menu>* {
  left: 2px;
  top: 2px;
 }
-
 
 .toggle-control[data-state="enabled"] .handle {
  left: calc(var(--spacing) + 2px);
@@ -199,8 +199,13 @@ task-menu>* {
  color: var(--accent);
 }
 
+#settings>a[disabled] {
+ color: var(--fg-mode-er);
+ cursor: default;
+}
+
 .task-link:not([data-here]):hover,
-#update-control:hover {
+#settings>a:not([disabled]):hover {
  color: var(--accent);
  cursor: pointer;
 }

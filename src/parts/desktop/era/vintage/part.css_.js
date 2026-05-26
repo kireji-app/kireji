@@ -1,6 +1,6 @@
 const menuApplicationsCount = Object.keys(_.menuApplications).length
-const controlLinesCount = 2
-const separatorCount = 2
+const controlLinesCount = 3
+const separatorCount = 1
 return part["static.css"] + `
 task-menu::after {
  content: "${_.application.fancyTitle}";

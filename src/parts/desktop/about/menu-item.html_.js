@@ -1,0 +1,1 @@
+return `<a ${_.application === aboutEcosystem ? "disabled" : _.pointAttr()} href=https://${aboutEcosystem.host}>About</a>`

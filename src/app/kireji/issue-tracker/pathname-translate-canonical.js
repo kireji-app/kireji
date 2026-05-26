@@ -1,7 +1,5 @@
 const { model } = _
 
-debug('yes, it is translating ...')
-
 if (!("app" in model))
  model.app = {}
 
@@ -20,14 +18,6 @@ if (PATHNAME === "/") {
 
  const parts = PATHNAME.split("/").slice(1)
 
- debug({
-  parts,
-  badSubpath: parts[0] !== "issues",
-  missingCode: !parts[1],
-  wrongLength: parts.length !== 2,
-  isNaN: isNaN(parts[1]),
-  notFound: !(parts[1] in kirejiIssueTracker.sections.issues)
- })
  if (parts[0] !== "issues" || !parts[1] || parts.length !== 2 || isNaN(parts[1]) || !(parts[1] in kirejiIssueTracker.sections.issues))
   throw "Unknown Canonical Path: " + PATHNAME
 

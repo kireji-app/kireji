@@ -35,11 +35,11 @@ for (const row of mesh.triTable[mesh.triIndex].rows) {
  if (!row)
   continue
 
- const rowWidth = BigInt(row.range.max - row.range.min + 1)
+ const rowWidth = BigInt(row.xyRange.max.x - row.xyRange.min.x + 1)
 
  if (ROUTE_ID < row.offset + rowWidth) {
-  mesh.position.y = row.y
-  mesh.position.x = row.range.min + Number(ROUTE_ID - row.offset)
+  mesh.position.x = row.xyRange.min.x + Number(ROUTE_ID - row.offset)
+  mesh.position.z = row.z
   break
  }
 }

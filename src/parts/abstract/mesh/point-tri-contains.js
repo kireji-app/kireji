@@ -1,14 +1,14 @@
-const roundedY = Math.floor(POINT.y)
+const flooredZ = Math.floor(POINT.z)
 const triData = mesh.triTable[TRI_INDEX]
 
-if (roundedY < triData.range.min || roundedY > triData.range.max)
+if (flooredZ < triData.zRange.min || flooredZ > triData.zRange.max)
  return false
 
-const row = triData.rows[roundedY - triData.range.min]
+const row = triData.rows[flooredZ - triData.zRange.min]
 
 if (!row)
  return false
 
 const roundedX = Math.floor(POINT.x)
 
-return roundedX >= row.range.min && roundedX <= row.range.max
+return roundedX >= row.xyRange.min.x && roundedX <= row.xyRange.max.x

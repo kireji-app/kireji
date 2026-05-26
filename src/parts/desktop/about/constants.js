@@ -1,0 +1,1 @@
+const aboutEcosystem = this

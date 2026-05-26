@@ -191,11 +191,20 @@ task-menu {
 }
 
 #settings>span,
+#settings>a,
 .toggle-control {
  display: flex;
  justify-content: space-between;
  padding: 5px;
  gap: 5px;
+}
+
+#settings>a:not([disabled]) {
+ color: inherit;
+}
+
+#settings>a {
+ text-decoration: none;
 }
 
 .task-link {

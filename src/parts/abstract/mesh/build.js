@@ -1,7 +1,7 @@
 mesh.define({
  triTable: { value: [] },
  triIndex: { value: -1, writable: true },
- position: { value: { x: null, y: null } },
+ position: { value: { x: null, y: null, z: null } },
  data: {
   resolve() {
    return mesh.getData()
@@ -23,21 +23,21 @@ mesh.define({
     // Recover the true points of the tri.
     const points = tri.map(pointID => pointList[pointID])
 
-    // Get just the y-coordinate of all the points.
-    const yPoints = points.map(point => point[1])
+    // Get just the z-coordinate of all the points.
+    const zPoints = points.map(point => point[2])
 
-    // Estimate the y-range of this tri.
-    const range = {
-     min: Math.min(...yPoints),
-     max: Math.max(...yPoints)
+    // Estimate the z-range of this tri.
+    const zRange = {
+     min: Math.min(...zPoints),
+     max: Math.max(...zPoints)
     }
 
     // Iterate over the range inclusively to populate each row subspace.
     const rows = []
-    for (let rowID = range.min; rowID <= range.max; rowID++) {
+    for (let z = zRange.min; z <= zRange.max; z++) {
 
      // This irrational offset ensures that all grid points lie vertically in at most one triangular region.
-     const offsetRowID = rowID + (Math.PI / 3.141 - 0.5)
+     const offsetRowID = z + (Math.PI / 3.141 - 0.5)
 
      // Iterate over the 3 lines in order to determine where the edges intersect the given row.
      const intersections = []
@@ -46,35 +46,45 @@ mesh.define({
       const pointA = points[edgeID]
       const pointB = points[(edgeID + 1) % 3]
 
-      if ((pointA[1] <= offsetRowID && pointB[1] > offsetRowID) || (pointB[1] <= offsetRowID && pointA[1] > offsetRowID))
-       intersections.push(pointA[0] + ((offsetRowID - pointA[1]) / (pointB[1] - pointA[1])) * (pointB[0] - pointA[0]))
+      if ((pointA[2] <= offsetRowID && pointB[2] > offsetRowID) || (pointB[2] <= offsetRowID && pointA[2] > offsetRowID)) {
+       const t = (offsetRowID - pointA[2]) / (pointB[2] - pointA[2])
+       intersections.push({
+        x: pointA[0] + t * (pointB[0] - pointA[0]),
+        y: pointA[1] + t * (pointB[1] - pointA[1])
+       })
+      }
      }
 
      if (intersections.length < 2) {
-      // This row doesn't have a full pixel. Adjust the range.
-      if (rowID <= range.min + 1) range.min = rowID + 1
-      else if (rowID >= range.max - 1) range.max = rowID - 1
+      // This row doesn't have a full pixel. Adjust the z-range.
+      if (z <= zRange.min + 1) zRange.min = z + 1
+      else if (z >= zRange.max - 1) zRange.max = z - 1
       else throw new Error("Unexpected tri geometry found in mesh.")
       continue
      }
 
+     const [min, max] = intersections[0].x <= intersections[1].x
+      ? [intersections[0], intersections[1]]
+      : [intersections[1], intersections[0]]
+
+     min.x = Math.ceil(min.x)
+     max.x = Math.ceil(max.x) - 1
+
      /** @type {IMeshTriDataRow} */
      const row = {
-      y: rowID,
-      range: {
-       min: Math.ceil(Math.min(...intersections)),
-       max: Math.ceil(Math.max(...intersections)) - 1,
-      },
-      offset: triCardinality
+      z,
+      xyRange: { min, max },
+      offset: triCardinality,
+      cardinality: BigInt(max.x - min.x + 1)
      }
      rows.push(row)
-     triCardinality += BigInt(row.range.max - row.range.min + 1)
+     triCardinality += row.cardinality
     }
 
     // Store the tri.
     mesh.triTable.push({
      points,
-     range,
+     zRange,
      rows,
      offset: meshCardinality,
      cardinality: triCardinality

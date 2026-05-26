@@ -415,6 +415,7 @@ declare class Vector {
 
 declare type IVector = Record<string, number>
 declare type IVector2 = { x: number, y: number }
+declare type IVector3 = { x: number, y: number, z: number }
 
 declare type KirejiConfigColor =
  /** The color component will never be included. */

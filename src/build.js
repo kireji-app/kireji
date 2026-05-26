@@ -147,7 +147,16 @@ function ƒ(_, compressedSubjectOrigins) {
    return this.operate(value1, value2, (a, b) => a * b)
   }
   static dot(vector1, vector2) {
-   return vector1.x * vector2.x + vector1.y * vector2.y
+   let result = 0
+   const dimensions = Object.keys(vector1)
+
+   if (dimensions.some(key => !(key in vector2)) || Object.keys(vector2).some(key => !(key in vector1)))
+    throw new Error(`Vector Dot Product Error: the two vectors do not have the same keys.`)
+
+   for (const dimension of dimensions)
+    result += vector1[dimension] * vector2[dimension]
+
+   return result
   }
  }
  class FenwickTree {
