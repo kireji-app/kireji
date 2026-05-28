@@ -1,13 +1,13 @@
 // Define a safe result: the current position before casting.
-/** @type {IMeshRayCastResult} */
+/** @type {IWalkableRayCastResult} */
 const safeIterationResult = {
  hit: false,
- triIndex: mesh.triIndex,
- point: {
-  x: mesh.position.x,
-  y: 0, // Exclude y from ray cast calculations for now.
-  z: mesh.position.z
- },
+ triIndex: walkable.triIndex,
+ point: Vector[3](
+  walkable.position.x,
+  0, // Exclude y coordinate from the ray casting algorithm for now.
+  walkable.position.z
+ ),
  forceVector: FORCE_VECTOR
 }
 
@@ -18,7 +18,7 @@ const speed = Vector.magnitude(FORCE_VECTOR)
 if (speed !== 0) {
 
  // Initialize timing data as though the vector doesn't intersect any grid lines.
- const timeOfNextIntersection = { x: Infinity, z: Infinity }
+ const timeOfNextIntersection = Vector[3](Infinity, Infinity, Infinity)
  const timeBetweenIntersections = { ...timeOfNextIntersection }
 
  // Set the clock to zero.
@@ -62,7 +62,7 @@ if (speed !== 0) {
 
   // Emergency exit the loop.
   if (_.now - start >= 2000) {
-   warn("Mesh ray cast calculation exceeded the maximum allowable processing time of 2 seconds.", { processingTime: _.now - start, iteration, DELTA_TIME, FORCE_VECTOR, speed, safeIterationResult, timeOfNextIntersection, timeBetweenIntersections })
+   warn("Walkable ray cast calculation exceeded the maximum allowable processing time of 2 seconds.", { processingTime: _.now - start, iteration, DELTA_TIME, FORCE_VECTOR, speed, safeIterationResult, timeOfNextIntersection, timeBetweenIntersections })
    break castRay
   }
 
@@ -94,8 +94,8 @@ if (speed !== 0) {
   // Construct the next point along the ray, given the elapsed time.
   const point = Vector.add(safeIterationResult.point, Vector.multiply(FORCE_VECTOR, timeElapsedDuringThisIteration))
 
-  // Check if the point is outside the mesh boundary.
-  const triIndex = mesh.triThatContainsPoint(point)
+  // Check if the point is outside the walkable boundary.
+  const triIndex = walkable.triThatContainsPoint(point)
 
   // If it is...
   if (triIndex === -1) {
@@ -113,10 +113,7 @@ if (speed !== 0) {
      dot: -Infinity,
      point: null,
      triIndex: null,
-     direction: {
-      x: null,
-      z: null
-     }
+     direction: Vector[3](null, null, null)
     }
 
     let boundaryAppearsFlat = false
@@ -139,9 +136,9 @@ if (speed !== 0) {
 
      // Get the position of the center of the neighbor.
      const point = Vector.add(Vector.floor(Vector.add(safeIterationResult.point, direction)), 0.5)
-     const triIndex = mesh.triThatContainsPoint(point)
+     const triIndex = walkable.triThatContainsPoint(point)
 
-     // If it isn't part of the mesh, exclude it from consideration.
+     // If it isn't part of the walkable, exclude it from consideration.
      if (triIndex === -1)
       continue
 
@@ -199,7 +196,7 @@ if (speed !== 0) {
 
      // Construct the point along the way to the neighbor.
      const point = Vector.add(safeIterationResult.point, Vector.multiply(forceVectorToNeighbor, timeElapsedDuringThisIteration))
-     const triIndex = mesh.triThatContainsPoint(point)
+     const triIndex = walkable.triThatContainsPoint(point)
      safeIterationResult.forceVector = forceVectorToNeighbor
 
      if (triIndex === -1) {
@@ -265,8 +262,8 @@ if (speed !== 0) {
  }
 }
 
-// Interpolate the y position of the collision mesh at the given { x, y } coordinates.
-const triData = mesh.triTable[safeIterationResult.triIndex]
+// Interpolate the y position of the walkable at the given { x, y } coordinates.
+const triData = walkable.triTable[safeIterationResult.triIndex]
 const flooredZ = Math.floor(safeIterationResult.point.z)
 const row = triData.rows[flooredZ - triData.zRange.min]
 const t = (safeIterationResult.point.x - row.xyRange.min.x) / Number(row.cardinality)

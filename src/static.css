@@ -47,6 +47,30 @@ body {
  -ms-user-select: none;
 }
 
+html {
+ /* Default safe fallback (1x screens or older browsers) */
+ --dppx: 1;
+ --css-length-of-device-pixel: calc(1px / var(--dppx));
+}
+
+@media (min-resolution: 2dppx) {
+ html {
+  --dppx: 2;
+ }
+}
+
+@media (min-resolution: 3dppx) {
+ html {
+  --dppx: 3;
+ }
+}
+
+@media (min-resolution: 4dppx) {
+ html {
+  --dppx: 4;
+ }
+}
+
 wallpaper- {
  --app-height: var(--wallpaper-height);
  --app-width: var(--wallpaper-width);
@@ -58,6 +82,120 @@ wallpaper- {
  overflow: hidden;
  overflow: clip;
  touch-action: manipulation;
+ container-type: size;
+ container-name: design;
+}
+
+@container design (aspect-ratio >1 / 1) {
+
+ wallpaper->* {
+  --design-tiles-along-app-width: 16;
+  --design-tiles-along-app-height: 9;
+ }
+}
+
+@container design (aspect-ratio <=1 / 1) {
+
+ wallpaper->* {
+  --design-tiles-along-app-width: 9;
+  --design-tiles-along-app-height: 16;
+ }
+}
+
+wallpaper->* {
+
+ /* UI Design based on a simple 16 x 9 or 9 x 16 square layout,
+    with each tile having this many "design pixels". */
+ --design-pixels-per-tile: 20;
+
+ --design-pixels-along-app-width:
+  calc(var(--design-tiles-along-app-width) * var(--design-pixels-per-tile));
+
+ --design-pixels-along-app-height:
+  calc(var(--design-tiles-along-app-height) * var(--design-pixels-per-tile));
+
+ --css-length-of-design-pixel-if-using-app-width:
+  calc(var(--app-width) / var(--design-pixels-along-app-width));
+
+ --css-length-of-design-pixel-if-using-app-height:
+  calc(var(--app-height) / var(--design-pixels-along-app-height));
+
+ --css-length-of-design-pixel:
+  min(var(--css-length-of-design-pixel-if-using-app-width), var(--css-length-of-design-pixel-if-using-app-height));
+
+
+ /* Now, round the design pixel down to align the pixel art to
+  the user device's physical screen pixels. */
+ --design-pixel:
+  max(var(--css-length-of-device-pixel), round(down, var(--css-length-of-design-pixel), var(--css-length-of-device-pixel)));
+
+ /* Now, we can define the actual size of the design area in CSS pixels. */
+ --ui-width: calc(var(--d1px) * var(--design-pixels-along-app-width));
+ --ui-height: calc(var(--d1px) * var(--design-pixels-along-app-height));
+
+ /* The design area is likely smaller than the actual container,
+    so we determine the offset needed to center it. */
+ --ui-left: calc((var(--app-width) - var(--ui-width)) / 2);
+ --ui-top: calc((var(--app-height) - var(--ui-height)) / 2);
+
+ /* Add some shortcuts to common design pixel amounts. */
+ --d1px: calc(1 * var(--design-pixel));
+ --d2px: calc(2 * var(--d1px));
+ --d3px: calc(3 * var(--d1px));
+ --d4px: calc(4 * var(--d1px));
+ --d5px: calc(5 * var(--d1px));
+ --d6px: calc(6 * var(--d1px));
+ --d7px: calc(7 * var(--d1px));
+ --d8px: calc(8 * var(--d1px));
+ --d16px: calc(16 * var(--d1px));
+ --d-1px: calc(-1 * var(--d1px));
+ --d-2px: calc(-2 * var(--d1px));
+ --d-3px: calc(-3 * var(--d1px));
+ --d-4px: calc(-4 * var(--d1px));
+ --d-5px: calc(-5 * var(--d1px));
+ --d-6px: calc(-6 * var(--d1px));
+ --d-7px: calc(-7 * var(--d1px));
+ --d-8px: calc(-8 * var(--d1px));
+ --d-16px: calc(-16 * var(--d1px));
+
+ /* Compute the scalar ratio between a CSS pixel and a design pixel. */
+ --design-scale: calc(var(--d1px) / 1px);
+}
+
+@property --ui-width {
+ syntax: "<length>";
+ initial-value: 0px;
+ inherits: true;
+}
+
+@property --ui-height {
+ syntax: "<length>";
+ initial-value: 0px;
+ inherits: true;
+}
+
+@property --ui-left {
+ syntax: "<length>";
+ initial-value: 0px;
+ inherits: true;
+}
+
+@property --ui-top {
+ syntax: "<length>";
+ initial-value: 0px;
+ inherits: true;
+}
+
+@property --d1px {
+ syntax: "<length>";
+ initial-value: 0px;
+ inherits: true;
+}
+
+wallpaper->* {
+ /* Cross-platform bug fix for Firefox's inability
+ to divide two values if both have units. */
+ --design-scale: calc(10000 * tan(atan2(var(--d1px), 10000px))) !important;
 }
 
 @media (width < 640px) {
@@ -136,7 +274,7 @@ scroll-bar>:is(.scroll-up, thumb-, .scroll-down) {
 
 scroll-bar>thumb- {
  top: calc(var(--thumb-start) + var(--track-height) * var(--fraction));
- height: calc(var(--track-height) / var(--ratio));
+ height: calc(var(--track-height) / var(--design-scale));
 }
 
 body:not(.unhydrated) scroller- {

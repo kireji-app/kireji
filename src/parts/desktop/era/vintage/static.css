@@ -6,6 +6,40 @@ html {
   linear-gradient(45deg, var(--bg) 25%, transparent 25%, transparent 75%, var(--bg) 75%, var(--bg)) 1px 1px / 2px 2px;
 }
 
+wallpaper->* {
+ --deep-inset-dpx:
+  inset var(--d-1px) var(--d-1px) var(--bg-light-est),
+  inset var(--d1px) var(--d1px) var(--bg-dark),
+  inset var(--d-2px) var(--d-2px) var(--bg-light-er),
+  inset var(--d2px) var(--d2px) black;
+ --deep-outset-dpx:
+  inset var(--d-1px) var(--d-1px) black,
+  inset var(--d1px) var(--d1px) var(--bg-light-er),
+  inset var(--d-2px) var(--d-2px) var(--bg-dark),
+  inset var(--d2px) var(--d2px) var(--bg-light-est);
+ --bg-checker-dpx-color: var(--bg);
+ --bg-checker-dpx:
+  linear-gradient(45deg, var(--bg-checker-dpx-color) 25%, transparent 25%, transparent 75%, var(--bg-checker-dpx-color) 75%, var(--bg-checker-dpx-color)) 0 0 / var(--d2px) var(--d2px),
+  linear-gradient(45deg, var(--bg-checker-dpx-color) 25%, transparent 25%, transparent 75%, var(--bg-checker-dpx-color) 75%, var(--bg-checker-dpx-color)) var(--d1px) var(--d1px) / var(--d2px) var(--d2px);
+}
+
+body.dark wallpaper->* {
+ --deep-inset-dpx:
+  inset var(--d-1px) var(--d-1px) var(--bg-light-est),
+  inset var(--d1px) var(--d1px) var(--bg-dark),
+  inset var(--d-2px) var(--d-2px) var(--bg-light-er),
+  inset var(--d2px) var(--d2px) black;
+ --deep-outset-dpx:
+  inset var(--d-1px) var(--d-1px) black,
+  inset var(--d1px) var(--d1px) var(--bg-light),
+  inset var(--d-2px) var(--d-2px) var(--bg-dark),
+  inset var(--d2px) var(--d2px) var(--bg-light-er);
+ --bg-checker-dpx-color: var(--bg);
+ --bg-checker-dpx:
+  linear-gradient(45deg, var(--bg-checker-dpx-color) 25%, transparent 25%, transparent 75%, var(--bg-checker-dpx-color) 75%, var(--bg-checker-dpx-color)) 0 0 / var(--d2px) var(--d2px),
+  linear-gradient(45deg, var(--bg-checker-dpx-color) 25%, transparent 25%, transparent 75%, var(--bg-checker-dpx-color) 75%, var(--bg-checker-dpx-color)) var(--d1px) var(--d1px) / var(--d2px) var(--d2px);
+}
+
 scroll-bar {
  background: var(--bg-checker), white;
 }
@@ -197,11 +231,6 @@ task-bar {
 }
 
 body.dark {
- --deep-inset:
-  inset -1px -1px var(--bg-light-est),
-  inset 1px 1px var(--bg-dark),
-  inset -2px -2px var(--bg-light-er),
-  inset 2px 2px black;
  --deep-outset:
   inset -1px -1px black,
   inset 1px 1px var(--bg-light),

@@ -94,9 +94,11 @@ const
 document.addEventListener("pointermove", drag, { capture: true, signal: controller.signal })
 document.addEventListener("pointerup", drop, { capture: true, signal: controller.signal })
 document.addEventListener("pointercancel", reset, { capture: true, signal: controller.signal })
+pointer.id = POINTER_CONFIG.POINTER_EVENT.pointerId
 
 // Don't allow anything else to start picking up events.
-POINTER_CONFIG.TARGET_ELEMENT.setPointerCapture(pointer.id = POINTER_CONFIG.POINTER_EVENT.pointerId)
+if (!document.pointerLockElement)
+ POINTER_CONFIG.TARGET_ELEMENT.setPointerCapture(pointer.id)
 
 // Allow CSS styles to target the element while its down.
 POINTER_CONFIG.TARGET_ELEMENT.classList.add("down")

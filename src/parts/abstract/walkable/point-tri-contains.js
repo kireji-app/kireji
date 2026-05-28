@@ -1,5 +1,5 @@
 const flooredZ = Math.floor(POINT.z)
-const triData = mesh.triTable[TRI_INDEX]
+const triData = walkable.triTable[TRI_INDEX]
 
 if (flooredZ < triData.zRange.min || flooredZ > triData.zRange.max)
  return false

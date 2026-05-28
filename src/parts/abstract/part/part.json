@@ -13,6 +13,7 @@
    "MODEL",
    "SKIP_RUNTIME_STATE_DISTRIBUTION = false"
   ],
+  "model-reset": [],
   "routeID-collect": [
    "SUBPARTS",
    "DEPTH"

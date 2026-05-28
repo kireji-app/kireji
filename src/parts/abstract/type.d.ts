@@ -11,7 +11,7 @@ declare interface IAbstract
  readonly facet: IFacet<IAbstract, null>
  readonly issue: ITrackedIssue<IAbstract>
  readonly match: IMatch<IAbstract, null>
- readonly mesh: IMesh<IAbstract>
+ readonly walkable: IWalkable<IAbstract>
  readonly mix: IMix<IAbstract, null>
  readonly part: IPart<IAbstract, null>
  readonly partMask: IPartMask<IAbstract, null>

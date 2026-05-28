@@ -1,3 +1,3 @@
 return [
- _.parts.abstract.mesh
+ _.parts.abstract.walkable
 ]

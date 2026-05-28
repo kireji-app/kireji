@@ -1,18 +1,18 @@
-mesh.define({
+walkable.define({
  triTable: { value: [] },
  triIndex: { value: -1, writable: true },
- position: { value: { x: null, y: null, z: null } },
+ position: { value: Vector[3]() },
  data: {
   resolve() {
-   return mesh.getData()
+   return walkable.getData()
   }
  },
  cardinality: {
   resolve() {
-   let meshCardinality = 0n
+   let walkableCardinality = 0n
 
-   // Obtain the raw data for this collision mesh.
-   const [pointList, tris] = this.data.collision
+   // Obtain the raw data for this walkable.
+   const [pointList, tris] = this.data.walkable
 
    // Iterate over each tri (array of three point indices) in the data.
    for (const tri of tris) {
@@ -59,7 +59,7 @@ mesh.define({
       // This row doesn't have a full pixel. Adjust the z-range.
       if (z <= zRange.min + 1) zRange.min = z + 1
       else if (z >= zRange.max - 1) zRange.max = z - 1
-      else throw new Error("Unexpected tri geometry found in mesh.")
+      else throw new Error("Unexpected tri geometry found in walkable.")
       continue
      }
 
@@ -70,7 +70,7 @@ mesh.define({
      min.x = Math.ceil(min.x)
      max.x = Math.ceil(max.x) - 1
 
-     /** @type {IMeshTriDataRow} */
+     /** @type {IWalkableTriDataRow} */
      const row = {
       z,
       xyRange: { min, max },
@@ -82,18 +82,18 @@ mesh.define({
     }
 
     // Store the tri.
-    mesh.triTable.push({
+    walkable.triTable.push({
      points,
      zRange,
      rows,
-     offset: meshCardinality,
+     offset: walkableCardinality,
      cardinality: triCardinality
     })
 
-    meshCardinality += triCardinality
+    walkableCardinality += triCardinality
    }
 
-   return meshCardinality
+   return walkableCardinality
   }
  }
 })

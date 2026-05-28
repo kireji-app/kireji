@@ -68,6 +68,8 @@ declare interface IPart<TOwner, TSubpart>
  readonly startBuild(): void
  /** Performs `part.modelToRouteID()` on MODEL and then performs `part.setRouteID()` on the resulting route ID. */
  readonly setModel(MODEL: any, SKIP_RUNTIME_STATE_DISTRIBUTION: boolean = false)
+ /** Sets the route ID on the part to match the landing model (or route ID 0n, if the part is not mentioned in the landing model). */
+ readonly resetModel(MODEL: any, SKIP_RUNTIME_STATE_DISTRIBUTION: boolean = false)
  /** Sets the part's routeID, propagating it leafward and rootward and updating all views.
   * 
   * If DELTA is true, ROUTE_ID is added to the part's current route ID.

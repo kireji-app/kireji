@@ -56,7 +56,7 @@ declare interface IEcosystem
  /** The hash of the desired landing page, as computed from data parameters during the initial boot process. */
  readonly landingHash: string
  /** The model of the desired landing page, used during the initial boot process to compute `_.landingHash` and `_.landingRouteID`. */
- readonly landingModel: string
+ readonly landingModel: object
  /** The routeID of the desired landing page, as computed from data parameters during the initial boot process. */
  readonly landingRouteID: bigint
  /** A boolean that is set to `true` as soon as the route ID is set for the first time. */
@@ -398,20 +398,62 @@ declare class FenwickTree {
 }
 /** A utility class for handling arbitrary-length vectors. Any object with entirely numeric values can be treated as a vector. */
 declare class Vector {
- static magnitude(vector: IVector): number
- static normalize(vector: IVector): IVector
- static sign(vector: IVector): IVector
- static floor(vector: IVector): IVector
- /** Performs the given binary operation on the two values, which can each be either a vector or a number. If at least one of the values is a vector, returns a vector. Otherwise, returns a number. */
- static operate(value1: IVector | number, value2: IVector | number, operation: (a, b) => number): IVector | number
- /** Adds the two values, which can each be either a vector or a number. If at least one of the values is a vector, returns a vector. Otherwise, returns a number. */
- static add(value1: IVector | number, value2: IVector | number): IVector | number
- /** Subtracts the two values, which can each be either a vector or a number. If at least one of the values is a vector, returns a vector. Otherwise, returns a number. */
- static subtract(value1: IVector | number, value2: IVector | number): IVector | number
- /** Multiplies the two values, which can each be either a vector or a number. If at least one of the values is a vector, returns a vector. Otherwise, returns a number. */
- static multiply(value1: IVector | number, value2: IVector | number): IVector | number
- static dot(vector1: IVector, vector2: IVector): number
+
+ /** Creates the vector object `{ x, y }`. */
+ static 2(x: number = 0, y: number = 0): IVector2
+ /** Creates the vector object `{ x: 0, y: 0, z: 0 }`. */
+ static 3(x: number = 0, y: number = 0, z: number = 0): IVector3
+
+ /** Provides the absolute value (length) of the the given vector. Returns a number. */
+ static magnitude<TVector extends IVector>(vector: TVector): number
+ /** Normalizes the given vector so that its magnitude is exactly 1. Returns a vector of the same dimension. */
+ static normalize<TVector extends IVector>(vector: TVector): TVector
+ /** Returns the sign of the given vector. Returns a vector of the same dimension. */
+ static sign<TVector extends IVector>(vector: TVector): TVector
+ /** Returns a vector of the same dimension with all components floored. */
+ static floor<TVector extends IVector>(vector: TVector): TVector
+
+ /** Performs the given binary operation on vector a and number b. Returns a vector of the same dimension as vector a. */
+ static operate<TVector extends IVector>(a: TVector, b: number, operation: TOperation): TVector
+ /** Performs the given binary operation on number a and vector b. Returns a vector of the same dimension as vector b. */
+ static operate<TVector extends IVector>(a: number, b: TVector, operation: TOperation): TVector
+ /** Performs the given binary operation on vectors a and b. They must have the same dimension. Returns a vector of the same dimension. */
+ static operate<TVector extends IVector>(a: TVector, b: TVector, operation: TOperation): TVector
+ /** Performs the given binary operation on numbers a and b. Returns a number. */
+ static operate(a: number, b: number, operation: TOperation): number
+
+ /** Adds vector a to number b. Returns a vector of the same dimension as vector a. */
+ static add<TVector extends IVector>(a: TVector, b: number): TVector
+ /** Adds number a to bector b. Returns a vector of the same dimension as vector b. */
+ static add<TVector extends IVector>(a: number, b: TVector): TVector
+ /** Adds vectors a to b. They must have the same dimension. Returns a vector of the same dimension. */
+ static add<TVector extends IVector>(a: TVector, b: TVector): TVector
+ /** Adds numbers a to b. Returns a number. */
+ static add(a: number, b: number): number
+
+ /** Subtracts number b from vector a. Returns a vector of the same dimension as vector a. */
+ static subtract<TVector extends IVector>(a: TVector, b: number): TVector
+ /** Subtracts vector b from number a. Returns a vector of the same dimension as vector b. */
+ static subtract<TVector extends IVector>(a: number, b: TVector): TVector
+ /** Subtracts vector b from vector a. They must have the same dimension. Returns a vector of the same dimension. */
+ static subtract<TVector extends IVector>(a: TVector, b: TVector): TVector
+ /** Subtracts number b from number a. Returns a number. */
+ static subtract(a: number, b: number): number
+
+ /** Multiplies vector a by number b. Returns a vector of the same dimension as vector a. */
+ static multiply<TVector extends IVector>(a: TVector, b: number): TVector
+ /** Multiplies number a by bector b. Returns a vector of the same dimension as vector b. */
+ static multiply<TVector extends IVector>(a: number, b: TVector): TVector
+ /** Multiplies vectors a and b. They must have the same dimension. Returns a vector of the same dimension. */
+ static multiply<TVector extends IVector>(a: TVector, b: TVector): TVector
+ /** Multiplies numbers a and b. Returns a number. */
+ static multiply(a: number, b: number): number
+
+ /** Returns the dot product of the two vectors. The vectors must have the same dimension. Returns a number. */
+ static dot<TVector>(vector1: TVector, vector2: TVector): number
 }
+
+declare type TOperation = (a: number, b: number) => number
 
 declare type IVector = Record<string, number>
 declare type IVector2 = { x: number, y: number }

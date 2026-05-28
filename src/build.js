@@ -82,6 +82,12 @@ function ƒ(_, compressedSubjectOrigins) {
 
  // Math Utilities
  class Vector {
+  static 2(x = 0, y = 0) {
+   return { x, y }
+  }
+  static 3(x = 0, y = 0, z = 0) {
+   return { x, y, z }
+  }
   static magnitude(vector) {
    return Math.hypot(...Object.values(vector))
   }
@@ -757,6 +763,8 @@ function ƒ(_, compressedSubjectOrigins) {
           const constant = this
           constant.path = SOURCE_PATH
           constant.line = SOURCE_LINE
+          if (!constant.line.endsWith(";"))
+           constant.line += ";"
           constant.lineNumber = SOURCE_LINE_NUMBER
           constant.source = sourceFile.addSource(SOURCE_PATH, SOURCE_LINE)
           constant.equalsIndex = SOURCE_LINE.indexOf("=")

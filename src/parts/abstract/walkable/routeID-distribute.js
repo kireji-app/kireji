@@ -1,19 +1,19 @@
-mesh.updateRouteID(ROUTE_ID)
+walkable.updateRouteID(ROUTE_ID)
 
 if (SKIP_RUNTIME_STATE_DISTRIBUTION)
  return
 
 // Binary search better than embedded match.
-mesh.triIndex = (() => {
+walkable.triIndex = (() => {
 
  let low = 0
- let high = mesh.triTable.length - 1
+ let high = walkable.triTable.length - 1
 
  while (low <= high) {
 
   const mid = (low + high) >>> 1
-  const triData = mesh.triTable[mid]
-  const nextTriData = mesh.triTable[mid + 1]
+  const triData = walkable.triTable[mid]
+  const nextTriData = walkable.triTable[mid + 1]
 
   if (ROUTE_ID < triData.offset)
    high = mid - 1
@@ -27,10 +27,10 @@ mesh.triIndex = (() => {
  return 0
 })()
 
-ROUTE_ID -= mesh.triTable[mesh.triIndex].offset
+ROUTE_ID -= walkable.triTable[walkable.triIndex].offset
 
 // Embedded match can become binary search later.
-for (const row of mesh.triTable[mesh.triIndex].rows) {
+for (const row of walkable.triTable[walkable.triIndex].rows) {
 
  if (!row)
   continue
@@ -38,8 +38,8 @@ for (const row of mesh.triTable[mesh.triIndex].rows) {
  const rowWidth = BigInt(row.xyRange.max.x - row.xyRange.min.x + 1)
 
  if (ROUTE_ID < row.offset + rowWidth) {
-  mesh.position.x = row.xyRange.min.x + Number(ROUTE_ID - row.offset)
-  mesh.position.z = row.z
+  walkable.position.x = row.xyRange.min.x + Number(ROUTE_ID - row.offset)
+  walkable.position.z = row.z
   break
  }
 }
