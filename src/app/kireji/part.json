@@ -1,3 +1,10 @@
 {
- "extends": "application"
+ "name": "KirejiApp",
+ "extends": "app",
+ "actions": {
+  "HTML-render-component": [
+   "COMPONENT_OWNER",
+   "COMPONENT_KEY"
+  ]
+ }
 }

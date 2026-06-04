@@ -1,5 +1,5 @@
-clip.playbackStartTime = undefined
-clip.playbackStartFrame = undefined
-clip.elapsedTime = undefined
-clip.elapsedFrames = undefined
-clip.playing = false
+thisClip.playbackStartTime = undefined
+thisClip.playbackStartFrame = undefined
+thisClip.elapsedTime = undefined
+thisClip.elapsedFrames = undefined
+thisClip.playing = false

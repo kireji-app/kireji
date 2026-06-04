@@ -12,4 +12,5 @@ declare interface IVersionedExports {
  encode(model: any): string
 }
 
-declare const server: IServer
+declare const Server: IServer
+type Server = T

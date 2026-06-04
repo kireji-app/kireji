@@ -1,1 +1,1 @@
-return "#" + color.blendHex(color.unAccent.slice(1), "cfcfcf", "multiply")
+return "#" + Color.blendHex(Color.unAccent.slice(1), "cfcfcf", "multiply")

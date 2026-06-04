@@ -1,4 +1,4 @@
-client.define({
+define(Client, {
  hydrated: { value: false, writable: true },
  fps: { value: 60, writable: true },
  now: { value: null, writable: true },

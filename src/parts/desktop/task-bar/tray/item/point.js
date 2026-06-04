@@ -1,15 +1,15 @@
-pointer.handle({
+Pointer.handle({
  down() {
-  debug(part.host + ' down (unhandled)')
+  debug(thisTrayItem.host + ' down (unhandled)')
  },
  drag() {
-  debug(part.host + ' drag (unhandled)')
+  debug(thisTrayItem.host + ' drag (unhandled)')
  },
  drop() {
-  debug(part.host + ' drop (unhandled)')
+  debug(thisTrayItem.host + ' drop (unhandled)')
  },
  click() {
-  debug(part.host + ' click (unhandled)')
+  debug(thisTrayItem.host + ' click (unhandled)')
  },
  POINTER_EVENT,
  TARGET_ELEMENT,

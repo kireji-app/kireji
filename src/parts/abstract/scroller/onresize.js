@@ -1,10 +1,13 @@
-scroller.onscroll()
-const ratio = scroller.container.scrollHeight / scroller.container.clientHeight
+if (thisScroller.container.classList.contains("locked"))
+ return
+
+thisScroller.onscroll()
+const ratio = thisScroller.container.scrollHeight / thisScroller.container.clientHeight
 const precisionFactor = 100_000
 
-scroller.scrollBar.style.setProperty("--scroll-thumb-ratio", ratio)
+thisScroller.scrollBar.style.setProperty("--scroll-thumb-ratio", ratio)
 
 if (Math.round(ratio * precisionFactor) === precisionFactor)
- scroller.scrollBar.setAttribute("disabled", "")
-else if (scroller.scrollBar.hasAttribute("disabled"))
- scroller.scrollBar.removeAttribute("disabled")
+ thisScroller.scrollBar.setAttribute("disabled", "")
+else if (thisScroller.scrollBar.hasAttribute("disabled"))
+ thisScroller.scrollBar.removeAttribute("disabled")

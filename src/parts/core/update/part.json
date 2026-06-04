@@ -1,6 +1,7 @@
 {
+ "name": "Update",
  "extends": "facet",
- "methods": {
+ "actions": {
   "version-is-newer": [
    "INCOMING_VERSION"
   ],

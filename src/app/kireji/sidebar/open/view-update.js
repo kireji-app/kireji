@@ -1,10 +1,9 @@
 /** @type {IScroller<IPartOutliner<IKirejiAppSidebar>>} */
-const scroller = sidebar.view.scroller
 
-if (part.routeID === 0n) {
- scroller.removeView()
- sidebar.element.remove()
+if (thisPart.rid === 0n) {
+ KirejiSidebar.view.scroller.removeView()
+ KirejiSidebar.element.remove()
 } else {
- Q("tool-bar").after(sidebar.element)
- scroller.addView()
+ Q("tool-bar").after(KirejiSidebar.element)
+ KirejiSidebar.view.scroller.addView()
 }

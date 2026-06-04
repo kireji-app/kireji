@@ -1,24 +1,24 @@
 /** @type {IKirejiAppSidebarWidthPointerConfig} */
 const pointerConfig = {
  toolBarWidth: Q("tool-bar").clientWidth,
- sidebarWidthRouteIDCache: sidebarWidth.routeID,
+ sidebarWidthRIDCache: KirejiSidebarWidth.rid,
  down() {
   document.body.classList.add("dragging-width-handle")
  },
  drag(pointerEvent) {
-  if (pointerEvent.clientX < (sidebarWidth.min / 2 + this.toolBarWidth)) {
-   if (sidebar.open.routeID === 1n) {
-    sidebar.open.setRouteID(0n)
-    if (sidebarWidth.routeID !== this.sidebarWidthRouteIDCache)
-     sidebarWidth.setRouteID(this.sidebarWidthRouteIDCache)
+  if (pointerEvent.clientX < (KirejiSidebarWidth.min / 2 + this.toolBarWidth)) {
+   if (KirejiSidebar.open.rid === 1n) {
+    KirejiSidebar.open.setRID(0n)
+    if (KirejiSidebarWidth.rid !== this.sidebarWidthRIDCache)
+     KirejiSidebarWidth.setRID(this.sidebarWidthRIDCache)
    }
   } else {
-   const targetWidth = Math.min(Number(sidebarWidth.cardinality) - 1, Math.max(0, Math.trunc(pointerEvent.clientX) - sidebarWidth.min - this.toolBarWidth))
-   if (sidebar.open.routeID === 0n)
-    sidebar.open.setRouteID(1n)
-   const targetRouteID = BigInt(targetWidth)
-   if (sidebarWidth.routeID !== targetRouteID)
-    sidebarWidth.setRouteID(targetRouteID)
+   const targetWidth = Math.min(Number(KirejiSidebarWidth.cardinality) - 1, Math.max(0, Math.trunc(pointerEvent.clientX) - KirejiSidebarWidth.min - this.toolBarWidth))
+   if (KirejiSidebar.open.rid === 0n)
+    KirejiSidebar.open.setRID(1n)
+   const targetRID = BigInt(targetWidth)
+   if (KirejiSidebarWidth.rid !== targetRID)
+    KirejiSidebarWidth.setRID(targetRID)
   }
  },
  reset() {
@@ -28,4 +28,4 @@ const pointerConfig = {
  TARGET_ELEMENT
 }
 
-pointer.handle(pointerConfig)
+Pointer.handle(pointerConfig)

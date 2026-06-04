@@ -1,11 +1,11 @@
 declare interface IPointer
  extends IFacet<ICore> {
 
- // Serialized Properties.
+ // Components.
  /** The universal interaction handler for clicking, dragging-and-dropping, selecting, etc. */
  readonly handle(POINTER_CONFIG: IPointerConfig): void
 
- // Runtime Properties.
+ // Properties.
  /** If there is a pointer session active, the ID of the pointer that controls it. Otherwise, `null`. */
  readonly id: number | null
  /** A helper object that holds information about the double click state of the pointer handler. A double click is only tracked and confirmed when there has been a pointer interaction with an element whose handler has a defined `doubleClick` action. */
@@ -44,7 +44,8 @@ declare interface IPointerConfig {
  readonly focus?: "none" | "down" | "click",
 }
 
-declare const pointer: IPointer
+declare const Pointer: IPointer
+type Pointer = T
 
 declare const POINTER_CONFIG: IPointerConfig
 /** The pointerdown event that the current listener is reacting to. @remarks Only in pointerdown event listeners. */

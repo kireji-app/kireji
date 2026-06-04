@@ -1,1 +1,1 @@
-return part[".."].isOpen
+return thisPart[".."].isOpen

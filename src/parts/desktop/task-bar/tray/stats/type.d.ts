@@ -4,4 +4,5 @@ declare interface IStats
 }
 
 /** The framerate monitor, which sits in the taskbar tray. */
-declare const stats: IStats
+declare const Stats: IStats
+type Stats = T

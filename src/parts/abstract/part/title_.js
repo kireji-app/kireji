@@ -1,1 +1,1 @@
-return Object.hasOwn(part, "abstractTitle") ? part.abstractTitle : undefined
+return Object.hasOwn(thisPart, "abstractTitle") ? thisPart.abstractTitle : undefined

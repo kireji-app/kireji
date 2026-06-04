@@ -1,4 +1,4 @@
 if (environment === "client")
- return client.fps
+ return Client.fps
 
 return 60

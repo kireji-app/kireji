@@ -1,6 +1,13 @@
-const boilerplate = ƒ.toString()
-const sourceFile = new SourceMappedFile("../", undefined, "build.js")
-sourceFile.addSection(boilerplate, sourceFile.addSource("build.js", boilerplate))
-sourceFile.addSection(`\nƒ(${serialize(_)}, ${serialize(compressedSubjectOrigins)})`, sourceFile.addSource(property.filename, property.content))
-const script = sourceFile.packAndMap()
-return script
+const sourceFile = new SourceMappedFile()
+
+// Copy the entire build function.
+sourceFile.copyFrom({})
+
+// Copy the build function call and serialized archive.
+sourceFile.copyFrom({
+ part: thisPart,
+ filename: components[componentKey].filename,
+ literal: `@json@\nƒ(${serialize(_)})`
+})
+
+return sourceFile.packAndMap()

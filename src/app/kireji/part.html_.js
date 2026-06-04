@@ -1,1 +1,1 @@
-return toolBar["part.html"] + sidebar["part.html"] + editor["part.html"]
+return KirejiToolBar["part.html"] + KirejiSidebar["part.html"] + KirejiEditor["part.html"]

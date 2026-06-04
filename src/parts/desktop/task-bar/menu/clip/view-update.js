@@ -1,1 +1,1 @@
-menu.element.setAttribute("style", menu.arm.style)
+Menu.element.setAttribute("style", Menu.arm.style)

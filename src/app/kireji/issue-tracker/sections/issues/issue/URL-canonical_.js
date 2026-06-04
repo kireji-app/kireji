@@ -1,1 +1,1 @@
-return `https://${kirejiIssueTracker.host}${kirejiIssue.canonicalPathname}`
+return `https://${KirejiIssueTracker.host}${thisKirejiIssue.canonicalPathname}`

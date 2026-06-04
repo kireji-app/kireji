@@ -1,1 +1,1 @@
-return INSTANCE.application
+return INSTANCE.part

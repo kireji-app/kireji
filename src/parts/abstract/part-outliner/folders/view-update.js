@@ -1,6 +1,6 @@
-const partsToOpen = new Set(folders.chosenParts)
+const partsToOpen = new Set(thisFolders.chosenParts)
 
-for (const alreadyOpenView of document.querySelectorAll(`#${folders[".."].id} details[open]>summary`)) {
+for (const alreadyOpenView of document.querySelectorAll(`#${thisFolders[".."].id} details[open]>summary`)) {
  const folderPart = allParts[alreadyOpenView.getAttribute("data-index")]
  if (partsToOpen.has(folderPart))
   partsToOpen.delete(folderPart)
@@ -12,7 +12,7 @@ for (const alreadyOpenView of document.querySelectorAll(`#${folders[".."].id} de
 }
 
 for (const partToOpen of partsToOpen) {
- const closedView = Q(`#${folders[".."].id} details>summary[data-index="${allParts.indexOf(partToOpen)}"]`)
+ const closedView = Q(`#${thisFolders[".."].id} details>summary[data-index="${allParts.indexOf(partToOpen)}"]`)
  closedView.parentElement.setAttribute("open", "")
  closedView.querySelector("svg").innerHTML = `<line x1="-0.41" y1="0" x2="0.41" y2="0" stroke-width="0.2" stroke-linecap="round" />`
 }

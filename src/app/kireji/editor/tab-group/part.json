@@ -1,5 +1,6 @@
 {
- "methods": {
+ "name": "KirejiTabGroup",
+ "actions": {
   "HTML-render-tab": [
    "TAB_PART",
    "TAB_FILENAME",
@@ -9,20 +10,18 @@
   "listener": [
    "SENDER"
   ],
-  "routeID-get-permutation": [
+  "RID-get-permutation": [
    "TABS"
   ],
-  "routeID-get-payload": [
+  "RID-get-payload": [
    "TABS"
   ],
-  "routeID-recompute": [
+  "RID-recompute": [
    "RECOMPUTE_OPEN_TABS"
   ],
   "factor-get-permutation": [
    "NUMBER_OF_TABS_OPEN",
    "CURRENT_TAB_INDEX"
-  ],
-  "listeners-attach": [],
-  "listeners-detach": []
+  ]
  }
 }

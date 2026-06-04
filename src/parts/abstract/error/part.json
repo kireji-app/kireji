@@ -1,7 +1,7 @@
 {
  "abstract": true,
- "extends": "application",
- "methods": {
+ "extends": "app",
+ "actions": {
   "CSS-get-error": [
    "MESSAGE"
   ],

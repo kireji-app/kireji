@@ -1,2 +1,2 @@
-if (scroller.routeID !== 0n)
- scroller.setRouteID(0n)
+if (thisScroller.rid !== 0n)
+ thisScroller.setRID(0n)

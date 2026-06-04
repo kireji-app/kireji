@@ -1,1 +1,1 @@
-return sidebar["header.html"] + sidebar.view["part.html"]
+return KirejiSidebar["header.html"] + KirejiSidebar.view["part.html"]

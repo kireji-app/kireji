@@ -1,12 +1,12 @@
 let landingModel = _.landingModel
 
-for (const domain of [...part.domains].reverse()) {
+for (const domain of [...thisPart.domains].reverse()) {
  if (domain in landingModel)
   landingModel = landingModel[domain]
  else {
-  part.setRouteID(0n)
+  thisPart.setRID(0n)
   return
  }
 }
 
-part.setModel(landingModel)
+thisPart.setModel(landingModel)

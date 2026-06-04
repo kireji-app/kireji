@@ -6,7 +6,6 @@
   // "moduleDetection": "force"
  },
  "exclude": [
-  "build.js",
-  "*/**/constants.js",
+  // "build.js"
  ]
 }

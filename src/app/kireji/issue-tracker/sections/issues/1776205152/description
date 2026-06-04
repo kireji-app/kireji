@@ -6,7 +6,7 @@ Suggestions and considerations:
 1. Instantiate a concrete instance of an abstract part per collection item. Offload all per-item logic there.
    - Such a part will have optional subparts 'instance' and 'meta'
    - "instance" corresponds to each instance part's statically-sized data model
-     - which also receives its specific subject assignment from the outside (not part of it's route ID)
+     - which also receives its specific subject assignment from the outside (not part of it's RID)
    - "meta" (name pending) corresponds to a non-instance-specific part whose cardinality is dependant upon the number of instances.
      - get its implementation details by generalizing the active and preview tab data in the tab group. 
      - At build time, the parent permutation will need to be able to query this part to get its cardinality once for every instance up to the max count.
@@ -17,14 +17,14 @@ Suggestions and considerations:
   - Files will be easy: they are part of the abstract.
   - Perhaps the state space box depicts an array of instance space states instead of the single state? Perhaps that is all that is needed?
   - Then, how do we depict the states of subparts of the parent part? Do we simply have an array for the entire instance part's tree?
-  - We might need "push", "pop", "insert", "splice" and/or similar array methods to make it easier to modify the instance set on the fly.
+  - We might need "push", "pop", "insert", "splice" and/or similar array actions to make it easier to modify the instance set on the fly.
 
 - What is the arithmetic of the taskbar and the windows?
   + Outside of the per-window state, we have the following permutation data:
     1. The data of which tasks are open, without considering order
-       (this is a simple subset of the available applications).
+       (this is a simple subset of the available public hosts).
     2. The data of the order of the given subset on the task bar
     3. The data of the stacking order of the given subset on the desktop
-       - Special considerations need to be taken with regards to stacking of windows which are considered full-screened and those considered maximized. How can (and why should) full-screened applications have a window order when they always hide one another? Is it merely to keep their place when they depart from full screen?
+       - Special considerations need to be taken with regards to stacking of windows which are considered full-screened and those considered maximized. How can (and why should) full-screened parts have a window order when they always hide one another? Is it merely to keep their place when they depart from full screen?
 
-- The equation generation (mathML() method) will need to factor in all aspects when deciding how to expand to different depths.
+- The equation generation (mathML() action) will need to factor in all aspects when deciding how to expand to different depths.

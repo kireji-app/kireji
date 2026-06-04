@@ -1,3 +1,3 @@
 return [
- `style="${sidebar.width.style}"`
+ `style="${KirejiSidebarWidth.style}"`
 ]

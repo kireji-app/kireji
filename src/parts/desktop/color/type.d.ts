@@ -1,12 +1,12 @@
 declare interface IColor
  extends IMatch<IDesktop, IBodyMode<IColor>>,
- IWebComponent {
+ IWebView {
 
  // Subparts.
  readonly light: IBodyMode<IColor>
  readonly dark: IBodyMode<IColor>
 
- // Serialized Properties.
+ // Components.
  readonly "lightEstAccent": string
  readonly "lightErAccent": string
  readonly "lightAccent": string
@@ -53,7 +53,7 @@ declare interface IColor
  readonly "unModeBg": string
  readonly "unModeErBg": string
  readonly "unModeEstBg": string
- /** Returns true of the framework environment is in light mode. */
+ /** Returns true if the ecosystem is in light mode. */
  readonly "isLight": boolean
  /** Blends two color hex codes (A and B) using the given MODE.
   * 
@@ -65,4 +65,5 @@ declare interface IColor
  readonly rgbToHex(R: number, G: number, B: number): string
 }
 
-declare const color: IColor
+declare const Color: IColor
+type Color = T

@@ -1,4 +1,4 @@
-const newRouteID = part.modelToRouteID(MODEL)
+const newRID = thisPart.modelToRID(MODEL)
 
-if (part.routeID !== newRouteID)
- part.setRouteID(newRouteID)
+if (thisPart.rid !== newRID)
+ thisPart.setRID(newRID)

@@ -1,4 +1,4 @@
-mix.define({
+define(thisMix, {
  placeValues: { value: new Map() },
  cardinality: {
   resolve() {

@@ -1,1 +1,1 @@
-menuClip.initiatePlayback()
+thisMenuClip.initiatePlayback()

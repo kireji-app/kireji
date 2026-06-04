@@ -1,7 +1,7 @@
-const adapter = await nav.gpu.requestAdapter()
+const adapter = await navigator.gpu.requestAdapter()
 const device = await adapter.requestDevice()
 
-gpu.define({
+define(Graphics, {
  adapter: { value: adapter },
  device: { value: device }
 })

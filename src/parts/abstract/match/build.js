@@ -1,4 +1,4 @@
-match.define({
+define(thisMatch, {
  arm: { value: null, writable: true },
  offsets: { value: new Map() },
  cardinality: {

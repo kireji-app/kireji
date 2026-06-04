@@ -1,5 +1,5 @@
-clip.playbackStartFrame = clip.routeID
-clip.playbackStartTime = _.now
-clip.elapsedTime = 0
-clip.elapsedFrames = 0
-clip.playing = true
+thisClip.playbackStartFrame = thisClip.rid
+thisClip.playbackStartTime = _.now
+thisClip.elapsedTime = 0
+thisClip.elapsedFrames = 0
+thisClip.playing = true

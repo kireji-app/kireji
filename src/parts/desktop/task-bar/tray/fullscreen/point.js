@@ -1,6 +1,6 @@
-pointer.handle({
+Pointer.handle({
  click() {
-  _.parts.core.agent.toggleFullScreen()
+  Agent.toggleFullScreen()
  },
  POINTER_EVENT,
  TARGET_ELEMENT,

@@ -1,8 +1,8 @@
 {
  "abstract": true,
- "methods": {
-  "routeID-collect": [
-   "CHANGED_ARMS",
+ "actions": {
+  "RID-collect": [
+   "ARMS",
    "DEPTH"
   ]
  }

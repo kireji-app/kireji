@@ -1,1 +1,1 @@
-return `<button class=menu ${menu.pointAttr()} tabIndex=0 class="btn">𑁔</button>`
+return `<button class=menu ${Menu.pointAttr()} tabIndex=0 class="btn">𑁔</button>`

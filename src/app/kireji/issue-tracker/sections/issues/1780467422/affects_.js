@@ -1,0 +1,5 @@
+return [
+ KirejiIssueTracker,
+ KirejiIssuesSections,
+ KirejiIssues
+]

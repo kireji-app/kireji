@@ -1,0 +1,1 @@
+return environment === "offline-server" ? ` href="/${_.version}/pwa.json"` : ""

@@ -1,1 +1,1 @@
-return clock.time
+return Clock.time

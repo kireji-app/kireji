@@ -1,12 +1,12 @@
-if (clip.playing) {
- clip.elapsedTime = _.now - clip.playbackStartTime
- const newElapsedFrames = Math.round(clip.elapsedTime / clip.frameTime)
+if (thisClip.playing) {
+ thisClip.elapsedTime = _.now - thisClip.playbackStartTime
+ const newElapsedFrames = Math.round(thisClip.elapsedTime / thisClip.frameTime)
 
- if (clip.elapsedFrames !== newElapsedFrames) {
-  clip.elapsedFrames = newElapsedFrames
-  const nextFrame = clip.playbackStartFrame + BigInt(clip.elapsedFrames)
-  if (nextFrame < clip.cardinality)
-   clip.setRouteID(nextFrame)
-  else clip.handleEndPlayback()
+ if (thisClip.elapsedFrames !== newElapsedFrames) {
+  thisClip.elapsedFrames = newElapsedFrames
+  const nextFrame = thisClip.playbackStartFrame + BigInt(thisClip.elapsedFrames)
+  if (nextFrame < thisClip.cardinality)
+   thisClip.setRID(nextFrame)
+  else thisClip.handleEndPlayback()
  }
 }

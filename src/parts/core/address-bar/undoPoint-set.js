@@ -1,1 +1,1 @@
-history.pushState(null, null, location.origin + encodePathname(_.routeID))
+history.pushState(null, null, location.origin + RID.toPath(_.rid))

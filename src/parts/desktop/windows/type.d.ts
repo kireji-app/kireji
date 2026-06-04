@@ -1,14 +1,14 @@
 declare interface IDesktopWindows
- extends IPermutation<IDesktop, IDesktopWindow, IDesktopWindowModel, IApplicationAny>,
- IWebComponent {
+ extends IPermutation<IDesktop, IDesktopWindow, IDesktopWindowModel, IAppAny>,
+ IWebView {
 
- // Serialized Properties.
- readonly renderTabHTML(INSTANCE: IDesktopWindow, INSTANCE_INDEX: number): string
+ // Components.
+ readonly renderTaskHTML(INSTANCE: IDesktopWindow, INSTANCE_INDEX: number): string
 
 }
 
 declare interface IDesktopWindow {
- readonly application: IApplicationAny
+ readonly app: IPartAny
  readonly top: number
  readonly left: number
  readonly width: number
@@ -23,8 +23,9 @@ declare interface IDesktopWindowModel {
  readonly height: number
 }
 
-/** The host of the application to render. @remarks Only in `renderTaskHTML` methods. */
-declare const APPLICATION_HOST: string
+/** The host of the part to render. @remarks Only in `renderTaskHTML` actions. */
+declare const TASK_HOST: string
 declare const INSTANCES: IDesktopWindow[]
 declare const INSTANCE: IDesktopWindow
-declare const windows: IDesktopWindows
+declare const Windows: IDesktopWindows
+type Windows = T

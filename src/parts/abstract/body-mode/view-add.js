@@ -1,2 +1,2 @@
-document.body.classList.add(bodyMode.key)
-Q("#" + bodyMode.id)?.setAttribute("data-state", bodyMode.stateData)
+document.body.classList.add(thisBodyMode.key)
+Q("#" + thisBodyMode.id)?.setAttribute("data-state", thisBodyMode.stateData)

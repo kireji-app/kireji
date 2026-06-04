@@ -1,8 +1,8 @@
 {
  "abstract": true,
- "methods": {
-  "routeID-collect": [
-   "CHANGED_FACTORS",
+ "actions": {
+  "RID-collect": [
+   "FACTORS",
    "DEPTH"
   ]
  }

@@ -1,3 +1,13 @@
 {
- "extends": "mix"
+ "name": "KirejiEditorSections",
+ "extends": "mix",
+ "order": [
+  "about",
+  "state-space",
+  "state",
+  "issues",
+  "child-part-list",
+  "component-list",
+  "inherited"
+ ]
 }

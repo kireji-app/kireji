@@ -1,3 +1,3 @@
 return [
- kirejiIssues[1776263309],
+ KirejiIssues[1776263309],
 ]

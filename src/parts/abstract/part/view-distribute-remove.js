@@ -1,14 +1,14 @@
-if (part.dirty) {
+if (thisPart.dirty) {
 
  // Remove subpart views before removing own.
- for (const subpart of part)
+ for (const subpart of thisPart)
   subpart.distributeRemoveView()
 
- if (!part.enabled) {
+ if (!thisPart.enabled) {
 
-  if (part.isOpen)
-   part.removeView()
+  if (thisPart.isOpen)
+   thisPart.removeView()
 
-  part.notify("remove")
+  thisPart.notify("remove")
  }
 }

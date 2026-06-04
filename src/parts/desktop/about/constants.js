@@ -1,1 +1,0 @@
-const aboutEcosystem = this

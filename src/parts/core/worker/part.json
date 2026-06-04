@@ -1,9 +1,0 @@
-{
- "extends": "facet",
- "methods": {
-  "async-bootstrap": [
-   "VERSION"
-  ],
-  "async-take-control": []
- }
-}

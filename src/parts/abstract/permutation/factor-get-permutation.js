@@ -1,4 +1,4 @@
-const indexOfLastPossibleInstanceSubject = permutation.supersetSize - 1n
+const indexOfLastPossibleInstanceSubject = thisPermutation.supersetSize - 1n
 const indexOfLastInstance = INSTANCE_COUNT - 1n
 
 let permutationFactorOfCurrentInstanceIndex = 1n

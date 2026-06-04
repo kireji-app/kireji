@@ -1,6 +1,6 @@
-if (part.dirty) {
- part.dirty = false
+if (thisPart.dirty) {
+ thisPart.dirty = false
 
- for (const subpart of part)
+ for (const subpart of thisPart)
   subpart.distributeClean()
 }

@@ -1,6 +1,7 @@
 {
+ "name": "Era",
  "extends": "match",
- "methods": {
+ "actions": {
   "point": [
    "POINTER_EVENT",
    "TARGET_ELEMENT"

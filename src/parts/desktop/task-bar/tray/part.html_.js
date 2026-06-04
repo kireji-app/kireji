@@ -1,1 +1,1 @@
-return `<tray->${tray.stats["tray.html"]}${tray.share["tray.html"]}${tray.fullscreen["tray.html"]}${tray.clock["tray.html"]}</tray->`
+return `<tray->${Stats["tray.html"]}${Tray.share["tray.html"]}${Tray.fullscreen["tray.html"]}${Clock["tray.html"]}</tray->`

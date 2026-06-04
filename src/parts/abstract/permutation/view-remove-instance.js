@@ -1,1 +1,1 @@
-warn(new ReferenceError(`Permutation Error: part instance does not have a defined "${PROPERTY_ID}" method.`))
+warn(error(`can't find action "${componentKey}"`))

@@ -1,1 +1,1 @@
-return section.canonicalURL
+return thisSections.arm.canonicalURL

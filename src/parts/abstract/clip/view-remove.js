@@ -1,1 +1,1 @@
-clip.stopPlayback()
+thisClip.stopPlayback()

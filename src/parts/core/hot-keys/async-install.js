@@ -1,9 +1,9 @@
-await agent.promise
+await Agent.promise
 
-hotKeys.define({
- table: { value: JSON.parse(hotKeys["table.json"]) },
+define(HotKeys, {
+ table: { value: JSON.parse(HotKeys["table.json"]) },
  pressed: { value: new Set(), writable: true },
- contextPrefix: { value: agent.isMac ? 'Meta' : 'Control' }
+ contextPrefix: { value: Agent.isMac ? 'Meta' : 'Control' }
 })
 
 /** In macOS, while the context key is pressed, the OS doesn't report non-
@@ -19,20 +19,20 @@ hotKeys.define({
 let nonModifierKey = null
 
 const
- isInPostContext = () => [...hotKeys.pressed].some(code => code.startsWith(hotKeys.contextPrefix)),
- isInPostShift = () => [...hotKeys.pressed].some(code => code.startsWith("Shift")),
+ isInPostContext = () => [...HotKeys.pressed].some(code => code.startsWith(HotKeys.contextPrefix)),
+ isInPostShift = () => [...HotKeys.pressed].some(code => code.startsWith("Shift")),
  setNonModifierKey = code => {
-  hotKeys.pressed.delete(nonModifierKey)
+  HotKeys.pressed.delete(nonModifierKey)
   nonModifierKey = code
  }
 
 globalThis.addEventListener("blur", () => {
- hotKeys.pressed.clear()
+ HotKeys.pressed.clear()
  setNonModifierKey(null)
 })
 
 globalThis.addEventListener("keyup", keyboardEvent => {
- hotKeys.pressed.delete(keyboardEvent.code)
+ HotKeys.pressed.delete(keyboardEvent.code)
  setNonModifierKey(null)
 })
 
@@ -41,17 +41,17 @@ globalThis.addEventListener("keydown", keyboardEvent => {
  if (!keyboardEvent.repeat) {
   /* This handles the edge case when the user is holding modifier keys that
    * they pressed while not focused on this instance of the ecosystem. */
-  if (!isInPostContext() && !keyboardEvent.code.startsWith(hotKeys.contextPrefix) && (agent.isMac ? keyboardEvent.metaKey : keyboardEvent.ctrlKey))
-   hotKeys.pressed.add(hotKeys.contextPrefix + "Left")
+  if (!isInPostContext() && !keyboardEvent.code.startsWith(HotKeys.contextPrefix) && (Agent.isMac ? keyboardEvent.metaKey : keyboardEvent.ctrlKey))
+   HotKeys.pressed.add(HotKeys.contextPrefix + "Left")
 
   if (!isInPostShift() && !keyboardEvent.code.startsWith("Shift") && keyboardEvent.shiftKey)
-   hotKeys.pressed.add("ShiftLeft")
+   HotKeys.pressed.add("ShiftLeft")
 
   /* When the user presses a context key, drop all prior keys. The user is
    * required to press and hold a context key before they add on other keys.*/
-  if (keyboardEvent.code.startsWith(hotKeys.contextPrefix)) {
+  if (keyboardEvent.code.startsWith(HotKeys.contextPrefix)) {
    setNonModifierKey(null)
-   hotKeys.pressed.clear()
+   HotKeys.pressed.clear()
   }
   /* When a context key is held, only retain the most recently pushed
    * non-modifier key, erasing all previous non-modifiers that may have
@@ -63,26 +63,24 @@ globalThis.addEventListener("keydown", keyboardEvent => {
    setNonModifierKey(isModifier ? null : keyboardEvent.code)
   }
 
-  hotKeys.pressed.add(keyboardEvent.code)
+  HotKeys.pressed.add(keyboardEvent.code)
 
   const doCombo = () => {
-   const combo = hotKeys.combo
-   const methodName = JSON.parse(_.application["hot-keys.json"] ?? "{}")[combo] ?? hotKeys.table[combo]
-   const method = methodName && (_.application[methodName] ?? hotKeys[methodName])
+   const combo = HotKeys.combo
+   const actionName = JSON.parse(_.openTask["hot-keys.json"] ?? "{}")[combo] ?? HotKeys.table[combo]
+   const action = actionName && (_.openTask[actionName] ?? HotKeys[actionName])
 
-   if (methodName) {
+   if (actionName) {
     keyboardEvent.preventDefault()
-    if (typeof method === "function")
-     method()
-    // else warn(`Hot Keys Warning: method called ${methodName} is not defined on either the hot keys manager or the current application.`)
+    if (typeof action === "function")
+     action()
+    // else warn(`Hot Keys Warning: action called ${actionName} is not defined on either the hot keys manager or the current open part.`)
    }
   }
 
   // Prevent a bug when the user presses keys too early.
-  if (client.hydrated)
-   doCombo()
-  else
-   client.promise.then(doCombo)
+  if (Client.hydrated) doCombo()
+  else Client.promise.then(doCombo)
 
  }
 })

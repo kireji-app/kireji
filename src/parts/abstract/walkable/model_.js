@@ -1,1 +1,1 @@
-return { ...walkable.position }
+return { ...thisWalkable.position }

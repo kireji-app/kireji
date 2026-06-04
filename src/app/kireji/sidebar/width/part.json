@@ -1,5 +1,6 @@
 {
- "methods": {
+ "name": "KirejiSidebarWidth",
+ "actions": {
   "point": [
    "POINTER_EVENT",
    "TARGET_ELEMENT"

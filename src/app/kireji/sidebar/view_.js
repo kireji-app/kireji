@@ -1,1 +1,1 @@
-return sidebar[toolBar.arm.key]
+return KirejiSidebar[KirejiToolBar.arm.key]

@@ -1,56 +1,65 @@
 /** @type {IKirejiAppEditorPointerConfig} */
 const pointerConfig = {
- activeTabIndexOfDraggedItem: Array.prototype.indexOf.call(tabGroup.container.children, TARGET_ELEMENT.parentElement),
- dropTargetElement: null,
+ activeTabIndexOfDraggedItem: Array.prototype.indexOf.call(KirejiTabGroup.container.children, TARGET_ELEMENT.parentElement),
  dragPreviewElement: null,
+ dropTargetElement: TARGET_ELEMENT,
+ scroller: null,
  down() {
-  if (![-1, tabGroup.activeTabIndex].includes(this.activeTabIndexOfDraggedItem)) {
-   tabGroup.activeTabIndex = this.activeTabIndexOfDraggedItem
-   tabGroup.recomputeRouteID()
+  if (![-1, KirejiTabGroup.activeTabIndex].includes(this.activeTabIndexOfDraggedItem)) {
+   KirejiTabGroup.activeTabIndex = this.activeTabIndexOfDraggedItem
+   KirejiTabGroup.recomputeRID()
   }
+
+  if (TARGET_ELEMENT.closest("part-outliner"))
+   this.scroller = KirejiSidebar.view.scroller
+  else if (TARGET_ELEMENT.closest("editor-view"))
+   this.scroller = KirejiEditor.scroller
+
+  this.scroller?.lock()
+
+  TARGET_ELEMENT.setAttribute("data-drop-target", "")
  },
  drag(pointerEvent) {
-  const isOverTabGroup = inRect(pointerEvent, tabGroup.container.getBoundingClientRect())
-  if (isOverTabGroup) {
-   if (tabGroup.container.parentElement.hasAttribute("data-drop-target"))
-    tabGroup.container.parentElement.removeAttribute("data-drop-target")
+  let resolvedTargetDropElement = null
+  let resolvedDropTargetProperty = ""
+
+  if (inRect(pointerEvent, KirejiTabGroup.container.getBoundingClientRect())) {
+
    const currentElement = document.elementFromPoint(pointerEvent.clientX, pointerEvent.clientY)
    if (currentElement) {
-    const currentTab = currentElement.closest("tab-")
-    if (this.dropTargetElement !== currentTab) {
-     this.dropTargetElement?.removeAttribute("data-drop-target")
-     this.dropTargetElement = currentTab
-    }
-    if (this.dropTargetElement) {
-     const { left: tabLeft, right: tabRight } = currentTab.getBoundingClientRect()
+    resolvedTargetDropElement = currentElement.closest("tab-")
+    if (resolvedTargetDropElement) {
+     const { left: tabLeft, right: tabRight } = resolvedTargetDropElement.getBoundingClientRect()
      const center = (tabLeft + tabRight) / 2
-     this.dropTargetElement.setAttribute("data-drop-target", center >= pointerEvent.clientX ? "before" : "after")
+     resolvedDropTargetProperty = center >= pointerEvent.clientX ? "before" : "after"
     } else {
-     const { right: lastTabRight } = tabGroup.container.lastElementChild.getBoundingClientRect()
-     if (lastTabRight <= pointerEvent.clientX) {
-      this.dropTargetElement = tabGroup.container.lastElementChild
-      this.dropTargetElement.setAttribute("data-drop-target", "after")
+     const { right: lastTabRight } = KirejiTabGroup.container.lastElementChild.getBoundingClientRect()
+     if (lastTabRight > pointerEvent.clientX) {
+      resolvedTargetDropElement = KirejiTabGroup.container.firstElementChild
+      resolvedDropTargetProperty = "before"
      } else {
-      this.dropTargetElement = tabGroup.container.firstElementChild
-      this.dropTargetElement.setAttribute("data-drop-target", "before")
+      resolvedTargetDropElement = KirejiTabGroup.container.lastElementChild
+      resolvedDropTargetProperty = "after"
      }
     }
    }
-  } else {
-   const draggedItemIsOverEditor = inRect(pointerEvent, tabGroup.container.parentElement.getBoundingClientRect())
-   if (draggedItemIsOverEditor && !tabGroup.container.parentElement.hasAttribute("data-drop-target"))
-    tabGroup.container.parentElement.setAttribute("data-drop-target", "")
-   else if (!draggedItemIsOverEditor && tabGroup.container.parentElement.hasAttribute("data-drop-target"))
-    tabGroup.container.parentElement.removeAttribute("data-drop-target")
-   if (this.dropTargetElement) {
-    this.dropTargetElement.removeAttribute("data-drop-target")
-    this.dropTargetElement = null
-   }
   }
+  else if (inRect(pointerEvent, TARGET_ELEMENT.getBoundingClientRect()))
+   resolvedTargetDropElement = TARGET_ELEMENT
+  else if (inRect(pointerEvent, KirejiTabGroup.container.parentElement.getBoundingClientRect()))
+   resolvedTargetDropElement = KirejiTabGroup.container.parentElement
+
+  if (this.dropTargetElement !== resolvedTargetDropElement) {
+   this.dropTargetElement?.removeAttribute("data-drop-target")
+   this.dropTargetElement = resolvedTargetDropElement
+  }
+
+  this.dropTargetElement?.setAttribute("data-drop-target", resolvedDropTargetProperty)
+
   if (!this.dragPreviewElement) {
    this.dragPreviewElement = this.activeTabIndexOfDraggedItem === -1 ? (() => {
     const offscreen = document.createElement("div")
-    offscreen.innerHTML = tabGroup.renderTabHTML(allParts[PART_INDEX], isNaN(FILE_INDEX) ? undefined : allParts[PART_INDEX].filenames[FILE_INDEX], 0n, -1)
+    offscreen.innerHTML = KirejiTabGroup.renderTabHTML(allParts[PART_INDEX], isNaN(FILE_INDEX) ? undefined : allParts[PART_INDEX].filenames[FILE_INDEX], 0n, -1)
     return offscreen.querySelector("tab-")
    })() : TARGET_ELEMENT.parentElement.cloneNode(true)
    this.dragPreviewElement.setAttribute("data-drag-preview", "")
@@ -58,70 +67,70 @@ const pointerConfig = {
    this.dragPreviewElement.removeAttribute("data-drop-target")
    document.body.appendChild(this.dragPreviewElement)
   }
-  this.dragPreviewElement.style = `left:${pointerEvent.clientX}px;top:${pointerEvent.clientY - this.dragPreviewElement.clientHeight}px`
+  this.dragPreviewElement.style = `left:${pointerEvent.clientX}px;top:${pointerEvent.clientY - this.dragPreviewElement.clientHeight}px;${this.dropTargetElement === TARGET_ELEMENT ? "visibility:hidden" : ""}`
  },
  drop(pointerEvent) {
   const
    draggedItemWasDroppedOntoItself = inRect(pointerEvent, TARGET_ELEMENT.getBoundingClientRect()),
-   draggedItemWasDroppedOntoTabGroup = inRect(pointerEvent, tabGroup.container.getBoundingClientRect()),
-   draggedItemWasDroppedOntoEditor = inRect(pointerEvent, tabGroup.container.parentElement.getBoundingClientRect()),
+   draggedItemWasDroppedOntoTabGroup = inRect(pointerEvent, KirejiTabGroup.container.getBoundingClientRect()),
+   draggedItemWasDroppedOntoEditor = inRect(pointerEvent, KirejiTabGroup.container.parentElement.getBoundingClientRect()),
    draggedItemIsAlreadyTheActiveTab = this.activeTabIndexOfDraggedItem !== -1,
-   draggedItemFileData = draggedItemIsAlreadyTheActiveTab ? tabGroup.openTabs[this.activeTabIndexOfDraggedItem] : { part: allParts[PART_INDEX], filename: isNaN(FILE_INDEX) ? undefined : allParts[PART_INDEX].filenames[FILE_INDEX], payload: TAB_PAYLOAD },
-   existingTabIndexOfFileData = draggedItemIsAlreadyTheActiveTab ? this.activeTabIndexOfDraggedItem : tabGroup.openTabs.findIndex(tab => tab.part === draggedItemFileData.part && tab.filename === draggedItemFileData.filename),
+   draggedItemFileData = draggedItemIsAlreadyTheActiveTab ? KirejiTabGroup.openTabs[this.activeTabIndexOfDraggedItem] : { part: allParts[PART_INDEX], filename: isNaN(FILE_INDEX) ? undefined : allParts[PART_INDEX].filenames[FILE_INDEX], payload: TAB_PAYLOAD },
+   existingTabIndexOfFileData = draggedItemIsAlreadyTheActiveTab ? this.activeTabIndexOfDraggedItem : KirejiTabGroup.openTabs.findIndex(tab => tab.part === draggedItemFileData.part && tab.filename === draggedItemFileData.filename),
    tabAlreadyExistsForFileData = existingTabIndexOfFileData !== -1,
-   numberOfTabsOpen = tabGroup.openTabs.length,
+   numberOfTabsOpen = KirejiTabGroup.openTabs.length,
    handleItemClick = droppedOntoEditor => {
     if (draggedItemIsAlreadyTheActiveTab)
      return
 
     if (tabAlreadyExistsForFileData) {
-     let recomputeTabGroupRouteID = false
+     let recomputeTabGroupRID = false
 
-     if (droppedOntoEditor && existingTabIndexOfFileData === tabGroup.previewTabIndex) {
-      recomputeTabGroupRouteID = true
-      tabGroup.previewTabIndex = null
+     if (droppedOntoEditor && existingTabIndexOfFileData === KirejiTabGroup.previewTabIndex) {
+      recomputeTabGroupRID = true
+      KirejiTabGroup.previewTabIndex = null
      }
 
-     if (existingTabIndexOfFileData !== tabGroup.activeTabIndex) {
-      recomputeTabGroupRouteID = true
-      tabGroup.activeTabIndex = existingTabIndexOfFileData
+     if (existingTabIndexOfFileData !== KirejiTabGroup.activeTabIndex) {
+      recomputeTabGroupRID = true
+      KirejiTabGroup.activeTabIndex = existingTabIndexOfFileData
      }
 
-     if (recomputeTabGroupRouteID)
-      tabGroup.recomputeRouteID()
+     if (recomputeTabGroupRID)
+      KirejiTabGroup.recomputeRID()
 
      return
     }
 
-    if ((tabGroup.previewTabIndex === null || droppedOntoEditor) && BigInt(tabGroup.openTabs.length) === tabGroup.maxTabCount) {
+    if ((KirejiTabGroup.previewTabIndex === null || droppedOntoEditor) && BigInt(KirejiTabGroup.openTabs.length) === KirejiTabGroup.maxTabCount) {
      alert("You have too many tabs open!")
      return
     }
 
-    let indexOfNewlyCreatedTab = numberOfTabsOpen === 0 ? 0 : tabGroup.activeTabIndex + 1
+    let indexOfNewlyCreatedTab = numberOfTabsOpen === 0 ? 0 : KirejiTabGroup.activeTabIndex + 1
     let newPreviewTabIndex = null
 
-    if (tabGroup.previewTabIndex === null) {
+    if (KirejiTabGroup.previewTabIndex === null) {
      if (!droppedOntoEditor)
       newPreviewTabIndex = indexOfNewlyCreatedTab
     } else {
      if (droppedOntoEditor) {
-      newPreviewTabIndex = tabGroup.previewTabIndex + (indexOfNewlyCreatedTab <= tabGroup.previewTabIndex)
+      newPreviewTabIndex = KirejiTabGroup.previewTabIndex + (indexOfNewlyCreatedTab <= KirejiTabGroup.previewTabIndex)
      } else {
-      tabGroup.openTabs.splice(tabGroup.previewTabIndex, 1)
-      if (tabGroup.previewTabIndex < indexOfNewlyCreatedTab)
+      KirejiTabGroup.openTabs.splice(KirejiTabGroup.previewTabIndex, 1)
+      if (KirejiTabGroup.previewTabIndex < indexOfNewlyCreatedTab)
        indexOfNewlyCreatedTab--
       newPreviewTabIndex = indexOfNewlyCreatedTab
      }
     }
 
-    tabGroup.openTabs.splice(indexOfNewlyCreatedTab, 0, draggedItemFileData)
-    tabGroup.activeTabIndex = indexOfNewlyCreatedTab
-    tabGroup.previewTabIndex = newPreviewTabIndex
-    tabGroup.recomputeRouteID(true)
+    KirejiTabGroup.openTabs.splice(indexOfNewlyCreatedTab, 0, draggedItemFileData)
+    KirejiTabGroup.activeTabIndex = indexOfNewlyCreatedTab
+    KirejiTabGroup.previewTabIndex = newPreviewTabIndex
+    KirejiTabGroup.recomputeRID(true)
    },
    handleTabGroupDragAndDrop = () => {
-    const indexWhereItemWasDropped = Array.prototype.indexOf.call(tabGroup.container.children, this.dropTargetElement) + (this.dropTargetElement.getAttribute("data-drop-target") === "before" ? 0 : 1)
+    const indexWhereItemWasDropped = Array.prototype.indexOf.call(KirejiTabGroup.container.children, this.dropTargetElement) + (this.dropTargetElement.getAttribute("data-drop-target") === "before" ? 0 : 1)
 
     if (draggedItemIsAlreadyTheActiveTab || tabAlreadyExistsForFileData) {
 
@@ -129,54 +138,54 @@ const pointerConfig = {
      const adjustedIndexWhereItemWasDropped = indexWhereItemWasDropped - +itemWasDroppedToTheRightOfItself
 
      if (adjustedIndexWhereItemWasDropped === existingTabIndexOfFileData) {
-      let recomputeTabGroupRouteID = false
+      let recomputeTabGroupRID = false
 
-      if (existingTabIndexOfFileData === tabGroup.previewTabIndex) {
-       recomputeTabGroupRouteID = true
-       tabGroup.previewTabIndex = null
+      if (existingTabIndexOfFileData === KirejiTabGroup.previewTabIndex) {
+       recomputeTabGroupRID = true
+       KirejiTabGroup.previewTabIndex = null
       }
 
-      if (existingTabIndexOfFileData !== tabGroup.activeTabIndex) {
-       recomputeTabGroupRouteID = true
-       tabGroup.activeTabIndex = existingTabIndexOfFileData
+      if (existingTabIndexOfFileData !== KirejiTabGroup.activeTabIndex) {
+       recomputeTabGroupRID = true
+       KirejiTabGroup.activeTabIndex = existingTabIndexOfFileData
       }
 
-      if (recomputeTabGroupRouteID)
-       tabGroup.recomputeRouteID()
+      if (recomputeTabGroupRID)
+       KirejiTabGroup.recomputeRID()
 
       return
      }
 
-     const previewTab = tabGroup.previewTab
+     const previewTab = KirejiTabGroup.previewTab
 
      // Remove the original tab.
-     tabGroup.openTabs.splice(existingTabIndexOfFileData, 1)
+     KirejiTabGroup.openTabs.splice(existingTabIndexOfFileData, 1)
 
      // Add the new tab.
-     tabGroup.openTabs.splice(adjustedIndexWhereItemWasDropped, 0, draggedItemFileData)
+     KirejiTabGroup.openTabs.splice(adjustedIndexWhereItemWasDropped, 0, draggedItemFileData)
 
      // Compute the new preview tab index.
-     const adjustedPreviewTabIndex = (tabGroup.previewTabIndex === existingTabIndexOfFileData || tabGroup.previewTabIndex === null) ? null : tabGroup.openTabs.indexOf(previewTab)
-     tabGroup.activeTabIndex = adjustedIndexWhereItemWasDropped
-     tabGroup.previewTabIndex = adjustedPreviewTabIndex
-     tabGroup.recomputeRouteID(true)
+     const adjustedPreviewTabIndex = (KirejiTabGroup.previewTabIndex === existingTabIndexOfFileData || KirejiTabGroup.previewTabIndex === null) ? null : KirejiTabGroup.openTabs.indexOf(previewTab)
+     KirejiTabGroup.activeTabIndex = adjustedIndexWhereItemWasDropped
+     KirejiTabGroup.previewTabIndex = adjustedPreviewTabIndex
+     KirejiTabGroup.recomputeRID(true)
     } else {
 
-     if (BigInt(tabGroup.openTabs.length) === tabGroup.maxTabCount) {
+     if (BigInt(KirejiTabGroup.openTabs.length) === KirejiTabGroup.maxTabCount) {
       alert("You have too many tabs open!")
       return
      }
 
-     const previewTab = tabGroup.previewTab
+     const previewTab = KirejiTabGroup.previewTab
 
      // Add the new tab.
-     tabGroup.openTabs.splice(indexWhereItemWasDropped, 0, draggedItemFileData)
+     KirejiTabGroup.openTabs.splice(indexWhereItemWasDropped, 0, draggedItemFileData)
 
      // Compute the new preview tab index.
-     const adjustedPreviewTabIndex = tabGroup.previewTabIndex === null ? null : tabGroup.openTabs.indexOf(previewTab)
-     tabGroup.activeTabIndex = indexWhereItemWasDropped
-     tabGroup.previewTabIndex = adjustedPreviewTabIndex
-     tabGroup.recomputeRouteID(true)
+     const adjustedPreviewTabIndex = KirejiTabGroup.previewTabIndex === null ? null : KirejiTabGroup.openTabs.indexOf(previewTab)
+     KirejiTabGroup.activeTabIndex = indexWhereItemWasDropped
+     KirejiTabGroup.previewTabIndex = adjustedPreviewTabIndex
+     KirejiTabGroup.recomputeRID(true)
     }
    }
 
@@ -187,12 +196,13 @@ const pointerConfig = {
  },
  reset() {
   this.dropTargetElement?.removeAttribute("data-drop-target")
-  tabGroup.container.parentElement.removeAttribute("data-drop-target")
   this.dragPreviewElement?.remove()
+
+  this.scroller?.unlock()
  },
  POINTER_EVENT,
  TARGET_ELEMENT,
  focus: "down"
 }
 
-pointer.handle(pointerConfig)
+Pointer.handle(pointerConfig)

@@ -1,1 +1,1 @@
-return (sidebar.open.routeID === 0n ? "" : `<side-bar>${sidebar["view.html"]}</side-bar>`) + sidebar.width["part.html"]
+return (KirejiSidebar.open.rid === 0n ? "" : `<side-bar>${KirejiSidebar["view.html"]}</side-bar>`) + KirejiSidebar.width["part.html"]

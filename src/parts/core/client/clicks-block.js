@@ -2,13 +2,13 @@ const clickHandler = POINTER_EVENT.target.getAttribute("data-onclick")
 
 if (clickHandler) {
 
- const [partHost, methodName, ...args] = JSON.parse(clickHandler)
- const part = partsByHost[partHost]
+ const [partHost, actionName, ...args] = JSON.parse(clickHandler)
+ const part = lookup(partHost)
 
- if (part[methodName] && typeof part[methodName] === "function")
-  part[methodName](...args)
+ if (part[actionName] && typeof part[actionName] === "function")
+  part[actionName](...args)
  else
-  throw new ReferenceError(`ClickAttr Error: could not find a method called "${methodName}" on part ${partHost}.`)
+  throw error(`can't find action "${actionName}"`)
 
  return
 }

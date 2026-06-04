@@ -1,10 +1,10 @@
-tabGroup.viewedActiveTab = tabGroup.activeTab
-tabGroup.viewedPreviewTab = tabGroup.previewTab
-tabGroup.viewedPermutationRouteID = tabGroup.permutationRouteID
-tabGroup.viewedPayloadRouteID = tabGroup.payloadRouteID
-tabGroup.viewedOpenTabs = [...tabGroup.openTabs]
-tabGroup.container = Q("#tab-group")
-tabGroup.attachListeners()
+KirejiTabGroup.viewedActiveTab = KirejiTabGroup.activeTab
+KirejiTabGroup.viewedPreviewTab = KirejiTabGroup.previewTab
+KirejiTabGroup.viewedPermutationRID = KirejiTabGroup.permutationRID
+KirejiTabGroup.viewedPayloadRID = KirejiTabGroup.payloadRID
+KirejiTabGroup.viewedOpenTabs = [...KirejiTabGroup.openTabs]
+KirejiTabGroup.container = Q("#tab-group")
+KirejiTabGroup.attachListeners()
 Q(`tab-[data-active]`)?.scrollIntoView({
  behavior: 'smooth',
  inline: 'nearest',

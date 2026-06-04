@@ -1,21 +1,21 @@
-client.promise.then(() => {
+Client.promise.then(() => {
 
- taskBar.element = Q("task-bar")
+ TaskBar.element = Q("task-bar")
 
- if (taskBar.menu.arm !== taskBar.menu.closed)
+ if (Menu.arm !== Menu.closed)
   Q("task-bar>button.menu").focus()
  else
   Q("title-bar")?.focus()
 
  document.addEventListener('pointerdown', pointerEvent => {
-  if (taskBar.menu.arm !== taskBar.menu.closed && !inRect(pointerEvent, taskBar.menu.element.getBoundingClientRect())) {
+  if (Menu.arm !== Menu.closed && !inRect(pointerEvent, Menu.element.getBoundingClientRect())) {
 
-   if (inRect(pointerEvent, taskBar.element.getBoundingClientRect())) {
+   if (inRect(pointerEvent, TaskBar.element.getBoundingClientRect())) {
     pointerEvent.stopPropagation()
     pointerEvent.preventDefault()
    }
 
-   taskBar.menu.setModel("closed")
+   Menu.setModel("closed")
   }
  }, { capture: true })
 })

@@ -1,1 +1,1 @@
-document.body.classList.remove(bodyMode.key)
+document.body.classList.remove(thisBodyMode.key)

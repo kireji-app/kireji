@@ -1,13 +1,14 @@
 declare interface IKirejiIssueTrackerApp
- extends IApplication<IKirejiApp, IPartAny> {
+ extends IApp<IKirejiApp, IPartAny> {
 
  // Subparts.
  readonly scroller: IScroller<IKirejiIssueTrackerApp>
- readonly sections: IKirejiIssueSections
+ readonly sections: IKirejiIssuesSections
  readonly filters: IKirejiIssueFilters
 
- // Serialized Properties.
+ // Components.
  readonly "issues.html": string
 }
 
-declare const kirejiIssueTracker: IKirejiIssueTrackerApp
+declare const KirejiIssueTracker: IKirejiIssueTrackerApp
+type KirejiIssueTracker = T

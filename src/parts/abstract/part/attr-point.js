@@ -1,1 +1,1 @@
-return `onpointerdown="${part.runtimeReference}.${METHOD_NAME}(event,this${ARGS ? "," + ARGS.join(",") : ""})"`
+return `onpointerdown="${thisPart.runtimeReference}.${ACTION_NAME}(event,this${ARGS ? "," + ARGS.join(",") : ""})"`

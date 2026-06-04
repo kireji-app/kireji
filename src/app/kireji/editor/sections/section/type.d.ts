@@ -1,5 +1,7 @@
 declare interface IKirejiAppEditorSection
  extends IBoolean<IKirejiAppEditorSections>,
- IWebComponent {
+ IWebView {
 
 }
+
+declare const thisKirejiEditorSection: IKirejiAppEditorSection

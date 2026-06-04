@@ -8,4 +8,5 @@ declare interface IKirejiIssueFiltersOrderBy
  readonly title: IPart<IKirejiIssueFiltersOrderBy, null>
 }
 
-declare const kirejiIssueFiltersOrderBy: IKirejiIssueFiltersOrderBy
+declare const KirejiIssueFiltersOrderBy: IKirejiIssueFiltersOrderBy
+type KirejiIssueFiltersOrderBy = T

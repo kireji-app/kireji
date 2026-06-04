@@ -1,0 +1,1 @@
+return thisPart[".."].path + "/" + thisPart.key

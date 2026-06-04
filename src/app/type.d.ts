@@ -1,9 +1,9 @@
-declare interface IApp
- extends ITopLevelDomain<IAppApplication> {
+declare interface IAppTLD
+ extends ITopLevelDomain<IAppTLDApp> {
 
  // Subparts.
  readonly kireji: IKirejiApp
 }
 
-declare type IAppApplication =
- IApplication<IApp, IPart<IAppApplication, IPartAny>>
+declare type IAppTLDApp =
+ IApp<IApp, IPart<IAppTLDApp, IPartAny>>

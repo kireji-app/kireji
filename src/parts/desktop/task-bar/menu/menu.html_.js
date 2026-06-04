@@ -2,23 +2,22 @@ const
  controls = [],
  sections = []
 
-// if (_.includeUpdates === "full" || (!production && _.includeUpdates === "local-only"))
-controls.push(aboutEcosystem["menu-item.html"])
+controls.push(AboutApp["menu-item.html"])
 
-if (_.includeColor === "full" || (!production && _.includeColor.startsWith("debug-")))
- controls.push(color["part.html"])
+if (_.includeColor === "full" || (_.command === "debug" && _.includeColor.startsWith("debug-")))
+ controls.push(Color["part.html"])
 
-if (_.includeEra === "full" || (!production && _.includeEra.startsWith("debug-")))
- controls.push(era["part.html"])
+if (_.includeEra === "full" || (_.command === "debug" && _.includeEra.startsWith("debug-")))
+ controls.push(Era["part.html"])
 
-if (_.includeMenuApps === "full" || (!production && _.includeMenuApps === "local-only"))
- sections.push(`<ul id=application-control>${Object.entries(_.menuApplications).map(([host, application]) => {
-  const isCurrentApplication = application === _.application
+if (_.includeMenuItems === "full" || (_.command === "debug" && _.includeMenuItems === "local-only"))
+ sections.push(`<ul id=app-control>${Menu.items.map(app => {
+  const isCurrentOpenPart = app === _.openTask
   return `
- <li class=task-link${isCurrentApplication ? ` data-here` : ""}>
-  <a ${isCurrentApplication ? "" : _.pointAttr()} href=https://${host}>
-   <img src="${application.placeholderImage("part.png")}" class=part-icon />
-   <span class=label>${application.titleMenu ?? application.title}</span>
+ <li class=task-link${isCurrentOpenPart ? ` data-here` : ""}>
+  <a ${isCurrentOpenPart ? "" : _.pointAttr()} href=https://${app.host}>
+   <img src="${app.placeholderImage("part.png")}" class=part-icon />
+   <span class=label>${app.titleMenu ?? app.title}</span>
   </a>
  </li>`
  }).join("")}</ul>`)
@@ -26,4 +25,4 @@ if (_.includeMenuApps === "full" || (!production && _.includeMenuApps === "local
 if (controls.length)
  sections.push(`\n <hr>\n <section id="settings">${controls.join(`\n  `)}</section>`)
 
-return `<task-menu style="${menu.arm.style}">${sections.join(`\n `)}</task-menu>`
+return `<task-menu style="${Menu.arm.style}">${sections.join(`\n `)}</task-menu>`

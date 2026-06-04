@@ -1,6 +1,6 @@
 return "<editor->" + (
- `<crumbs->${editor["crumbs.html"]}</crumbs-><editor-view>` + editor.scroller.wrap(
-  editor[`${tabGroup.openTabs.length ? (tabGroup.activeTab.filename ? "file" : "summary") : "empty"}-view.html`]
+ `<crumbs->${KirejiEditor["crumbs.html"]}</crumbs-><editor-view>` + KirejiEditor.scroller.wrap(
+  KirejiEditor[`${KirejiTabGroup.openTabs.length ? (KirejiTabGroup.activeTab.filename ? "file" : "summary") : "empty"}-view.html`]
  ) + "</editor-view>" +
- tabGroup["part.html"]
+ KirejiTabGroup["part.html"]
 ) + "</editor->"

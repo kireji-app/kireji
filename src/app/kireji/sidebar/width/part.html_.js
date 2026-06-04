@@ -1,1 +1,1 @@
-return `<width-handle ${sidebarWidth.pointAttr()}></width-handle>`
+return `<width-handle ${KirejiSidebarWidth.pointAttr()}></width-handle>`

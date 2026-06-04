@@ -1,1 +1,1 @@
-return "--menu-tween:" + (Number(part.routeID) / Number(part.cardinality))
+return "--menu-tween:" + (Number(thisPart.rid) / Number(thisPart.cardinality))

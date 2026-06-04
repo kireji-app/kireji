@@ -1,1 +1,1 @@
-return part.subparts[Symbol.iterator]()
+return thisPart.subparts[Symbol.iterator]()

@@ -1,1 +1,0 @@
-const walkable = this

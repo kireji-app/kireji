@@ -1,1 +1,1 @@
-debug('remove ' + INSTANCE.application.host + ' from windows views')
+debug('remove ' + INSTANCE.part.host + ' from windows views')

@@ -1,10 +1,10 @@
 const dragStart = { x: POINTER_EVENT.clientX, y: POINTER_EVENT.clientY }
-const isOnContainer = TARGET_ELEMENT === desktop.container
-const selectionStart = desktopIcons.routeID
+const isOnContainer = TARGET_ELEMENT === Desktop.container
+const selectionStart = DesktopIcons.rid
 const iconElements = document.querySelectorAll(`#desktop_parts>desktop-icon`)
 const focusIcon = document.activeElement.tagName === "desktop-icon" ? document.activeElement : null
 
-pointer.handle({
+Pointer.handle({
  down() {
   let mask = selectionStart
 
@@ -12,22 +12,22 @@ pointer.handle({
 
    const itemMask = 1n << BigInt(TARGET_ELEMENT.getAttribute("data-index"))
 
-   if (_.parts.core.hotKeys.combo === "shift") {
+   if (HotKeys.combo === "shift") {
     debug('handle ranged selection here')
-   } else if (_.parts.core.hotKeys.combo === "context") {
+   } else if (HotKeys.combo === "context") {
     mask ^= itemMask
    } else {
     mask = itemMask
    }
    TARGET_ELEMENT.focus()
-  } else if (!["context", "shift"].includes(_.parts.core.hotKeys.combo))
+  } else if (!["context", "shift"].includes(HotKeys.combo))
    mask = 0n
 
-  if (desktopIcons.routeID !== mask)
-   desktopIcons.setRouteID(mask)
+  if (DesktopIcons.rid !== mask)
+   DesktopIcons.setRID(mask)
 
   if (isOnContainer) {
-   this.dragBox ??= desktop.container.appendChild(document.createElement("div"))
+   this.dragBox ??= Desktop.container.appendChild(document.createElement("div"))
    this.dragBox.setAttribute("id", "selection-box")
    this.dragBox.setAttribute("style", `--x:${dragStart.x}px;--y:${dragStart.y};--w:0px;--h:0px`)
   }
@@ -40,23 +40,23 @@ pointer.handle({
    this.dragBox.setAttribute("style", `--x:${Math.min(dragStart.x, pointerEvent.clientX)}px;--y:${Math.min(dragStart.y, pointerEvent.clientY)}px;--w:${Math.abs(pointerEvent.clientX - dragStart.x)}px;--h:${Math.abs(pointerEvent.clientY - dragStart.y)}px`)
    const intersectionMask = this.getIntersectionMask()
 
-   if (_.parts.core.hotKeys.combo === "context") {
+   if (HotKeys.combo === "context") {
     mask ^= intersectionMask
-   } else if (_.parts.core.hotKeys.combo === "shift") {
+   } else if (HotKeys.combo === "shift") {
     mask |= intersectionMask
    } else {
     mask = intersectionMask
    }
 
-   if (desktopIcons.routeID !== mask)
-    desktopIcons.setRouteID(mask)
+   if (DesktopIcons.rid !== mask)
+    DesktopIcons.setRID(mask)
   }
  },
  reset() {
   if (isOnContainer) {
    this.dragBox?.remove()
    this.dragBox = null
-   if (desktopIcons.routeID !== selectionStart) {
+   if (DesktopIcons.rid !== selectionStart) {
     debug('determine new focus item now')
    } else {
     focusIcon?.focus()
@@ -64,13 +64,13 @@ pointer.handle({
   }
  },
  doubleClick() {
-  if (TARGET_ELEMENT === desktop.container || ["shift", "alt", "context"].includes(_.parts.core.hotKeys.combo))
+  if (TARGET_ELEMENT === Desktop.container || ["shift", "alt", "context"].includes(HotKeys.combo))
    return
 
-  desktopIcons.setRouteID(0n)
+  DesktopIcons.setRID(0n)
 
-  const application = desktopIcons.superset[Number(TARGET_ELEMENT.getAttribute("data-index"))]
-  const targetLocation = (+_.local ? `http://${application.host}.localhost:${_.port}` : `https://${application.host}`) + encodePathname(_.routeID)
+  const iconPart = lookup(DesktopIcons.superset[Number(TARGET_ELEMENT.getAttribute("data-index"))])
+  const targetLocation = (_.command === "debug" ? `http://${iconPart.host}.localhost:${_.port}` : `https://${iconPart.host}`) + RID.toPath(_.rid)
   location = targetLocation
  },
  getIntersectionMask() {

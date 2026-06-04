@@ -1,11 +1,11 @@
 declare interface IMenuClip
  extends IClip<IMenu> {
 
- // Serialized Properties.
+ // Components.
  /** The key for the clip which should play next when autoplaying the clip. */
  readonly "nextKey": string
- /** Returns the correct style attribute for the menu, computed from the clip's routeID, allowing the current clip to drive the menu's css. */
+ /** Returns the correct style attribute for the menu, computed from the clip's RID, allowing the current clip to drive the menu's css. */
  readonly "style": string
 }
 
-declare const menuClip: IMenuClip
+declare const thisMenuClip: IMenuClip

@@ -1,10 +1,10 @@
-walkable.define({
+define(thisWalkable, {
  triTable: { value: [] },
  triIndex: { value: -1, writable: true },
  position: { value: Vector[3]() },
  data: {
   resolve() {
-   return walkable.getData()
+   return thisWalkable.getData()
   }
  },
  cardinality: {
@@ -59,7 +59,7 @@ walkable.define({
       // This row doesn't have a full pixel. Adjust the z-range.
       if (z <= zRange.min + 1) zRange.min = z + 1
       else if (z >= zRange.max - 1) zRange.max = z - 1
-      else throw new Error("Unexpected tri geometry found in walkable.")
+      else throw error("unexpected tri geometry")
       continue
      }
 
@@ -82,7 +82,7 @@ walkable.define({
     }
 
     // Store the tri.
-    walkable.triTable.push({
+    thisWalkable.triTable.push({
      points,
      zRange,
      rows,

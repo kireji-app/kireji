@@ -1,1 +1,1 @@
-return color.isLight ? color.lightEstAccent : color.darkEstAccent
+return Color.isLight ? Color.lightEstAccent : Color.darkEstAccent

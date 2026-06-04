@@ -1,0 +1,1 @@
+thisScroller.container.classList.add("locked")

@@ -1,0 +1,1 @@
+An app is a part located at an origin which provides all of the necessary components to create the web app which is accessible from the web. Part domains require DNS A records to be accessible from the web. An app can't be named "www" because the server strips this subdomain automatically. All apps extend the `mix.abstract.parts` prototype.

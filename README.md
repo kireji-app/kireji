@@ -27,10 +27,10 @@ npx kireji example
 
 # The following commands require at least one git commit to work:
 
-# Build a local development server.
-npx kireji dev
+# Build a local testing server (enables debug tools and appends `.localhost:<port>` suffix to all origins).
+npx kireji debug
 
-# Build a production server.
+# Build a production server (no debug tools or locahost origin suffix).
 npx kireji build
 
 # Get the project and package version info:
@@ -42,24 +42,24 @@ npx kireji
 npx kireji help
 ```
 
-More documentation is coming soon about how to define components, work with the framework's premade components, and make use of the framework's premade applications (which intimately integrate with your own app and allow you to inspect it in real-time) in development builds.
+More documentation is coming soon about how to define parts and components, work with the framework's premade parts and components, and make use of the framework's premade apps (which intimately integrate with your own app and allow you to inspect it in real-time) in development builds.
 
 ## Implementation
 
-This framework uses the **MPHF Coordinate System** to assign a unique, gap-free coordinate to every valid point in a space constrained by its component definitions. It uses the **MVC paradigm** to efficiently update the DOM. It uses a **packing mechanism** to create single-artifact builds. It provides a library of **premade components** including a **web server** and **service worker** to bootstrap the development process.
+This framework uses the **MPHF Coordinate System** to assign a unique, gap-free coordinate to every valid point in a space constrained by its part definitions. It uses the **MVC paradigm** to efficiently update the DOM. It uses a **packing mechanism** to create single-artifact builds. It provides a library of **premade parts and components** including a **web server** and **service worker** to bootstrap the development process.
 
-### Components
-Components act to refine the "Total Software Space" into a manageable set of **algebraically constrained, functional applications.**
+### Parts
+Parts act to refine the "Total Software Space" into a manageable set of **algebraically constrained, functional apps.**
 
 This refinement is designed to provide:
-- **Guaranteed Functionality:** Ensuring every coordinate represents a stable, working application (no "one sandal, one stiletto" combinations).
+- **Guaranteed Functionality:** Ensuring every coordinate represents a stable, working app.
 - **Comprehensive Deep Linking:** Allowing every coordinate to be bookmarked and shared, retaining a full, multi-origin session state in the most compressed URL possible without reliance on cookies, servers, or user tracking.
-- **Component Encapsulation:** Defining all applications as assemblies of stateful components (called **parts**) built on the MPHF-MVC backbone. Parts then assemble like LEGO® bricks, each assembly representing its own configuration space.
+- **Part Encapsulation:** Defining apps as assemblies of stateful parts built on the MPHF-MVC backbone. Parts then assemble like LEGO® bricks, each assembly representing its own configuration space.
 - **Reactive Navigation:** Ensuring navigation from one coordinate to another changes only the page elements that need to change to reflect the new position.
 
 ### Namespacing
 
-Parts are assigned a unique namespace that relates them to a web application's origin, for example:
+Parts are assigned a unique namespace that relates them to a web app's origin, for example:
 
 ```js
 _.com.example
@@ -70,9 +70,9 @@ _.com.example.www.blog
 
 ### Built-in Parts
 
-The framework's main part is the root part, a global object identified by `_`. This part is the root of the application component hierarchy, hosting both built-in and user-defined components.
+The framework's main part is the root part, a global object identified by `_`. This part is the root of the ecosystem part hierarchy, hosting both built-in and user-defined parts and components.
 
-#### Core Components
+#### Core Parts
 These parts are provided by the framework to act as MVC abstracts that handle MPHF arithmetic under the hood:
 
 ```js
@@ -82,13 +82,13 @@ _.parts.core.clip
 ...
 ```
 
-#### Desktop Components
+#### Desktop Parts
 These parts are a collection of parts for bootstrapping, a Node.js server, server- and client-side rendering, a service worker and other functionality:
 ```js
 _
 _.parts.desktop.server
 _.parts.desktop.client
-_.parts.desktop.worker
+_.parts.desktop.offlineServer
 _.parts.desktop.addressBar
 ...
 ```

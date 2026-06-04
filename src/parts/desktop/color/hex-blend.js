@@ -1,6 +1,6 @@
-B = color.rgbFromHex(B)
+B = Color.rgbFromHex(B)
 
-return color.rgbToHex(...color.rgbFromHex(A).map((n, i) => {
+return Color.rgbToHex(...Color.rgbFromHex(A).map((n, i) => {
  const m = B[i]
  const k = 255
  switch (MODE) {
@@ -14,6 +14,6 @@ return color.rgbToHex(...color.rgbFromHex(A).map((n, i) => {
    return k - (((k - n) * (k - m)) / k)
 
   default:
-   throw new RangeError("Unsupported Blend Mode: " + MODE)
+   throw error(`unsupported blend mode "${MODE}"`)
  }
 }))

@@ -1,5 +1,5 @@
-if (tabGroup.activeTab && !tabGroup.activeTab.filename && !tabGroup.activeTab.part.isAbstract) {
- tabGroup.activeTab.part.attach("add", tabGroup, "listener")
- tabGroup.activeTab.part.attach("update", tabGroup, "listener")
- tabGroup.activeTab.part.attach("remove", tabGroup, "listener")
+if (KirejiTabGroup.activeTab && !KirejiTabGroup.activeTab.filename && !KirejiTabGroup.activePart.isAbstract) {
+ KirejiTabGroup.activePart.attach("add", KirejiTabGroup, "listener")
+ KirejiTabGroup.activePart.attach("update", KirejiTabGroup, "listener")
+ KirejiTabGroup.activePart.attach("remove", KirejiTabGroup, "listener")
 }

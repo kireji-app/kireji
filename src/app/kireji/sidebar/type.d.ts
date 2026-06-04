@@ -1,6 +1,6 @@
 declare interface IKirejiAppSidebar
  extends IMix<IKirejiApp, IKirejiAppSidebarPart>,
- IWebComponent {
+ IWebView {
 
  // Subparts.
  readonly open: IKirejiAppSidebarOpen
@@ -8,8 +8,7 @@ declare interface IKirejiAppSidebar
  readonly outlinerTypes: IPartOutliner<IKirejiAppSidebar>
  readonly width: IKirejiAppSidebarWidth
 
- // Serialized Properties.
- readonly "static.css": string
+ // Components.
  readonly "header.html": string
  readonly "view.html": string
  /** The part outliner currently assigned to the sidebar (resolves to a view even when the sidebar is hidden). */
@@ -17,12 +16,13 @@ declare interface IKirejiAppSidebar
  /** Opens any closed parent folders of and scrolls (if necessary) to the element corresponding to the currently active tab. Does nothing if the sidebar is closed or there are no tabs open. @remarks Client-only */
  readonly frameActiveTab(): void
 
- // Runtime Properties.
+ // Properties.
  readonly element: HTMLElement
 }
 
 declare type IKirejiAppSidebarPart =
  IPart<IKirejiAppSidebar, IPart<IKirejiAppSidebarPart, IPartAny>>
 
-declare const sidebar: IKirejiAppSidebar
+declare const KirejiSidebar: IKirejiAppSidebar
+type KirejiSidebar = T
 declare const SUBJECT: IPartAny

@@ -1,1 +1,1 @@
-trayItem.element = Q(`#${trayItem.key}-tray-item`)
+thisTrayItem.element = Q(`#${thisTrayItem.key}-tray-item`)

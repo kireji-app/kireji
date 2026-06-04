@@ -1,13 +1,13 @@
-pointer.handle({
+Pointer.handle({
  click() {
   const closing = TARGET_ELEMENT.parentElement.parentElement.hasAttribute("open")
 
   let toggleMask = 0n
-  const triggerPart = folders.superset[FOLDER_INDEX]
+  const triggerPart = thisPartOutliner.folders.superset[FOLDER_INDEX]
 
-  if (["shift", "alt", "context"].includes(_.parts.core.hotKeys.combo)) {
+  if (["shift", "alt", "context"].includes(HotKeys.combo)) {
    function gatherRecursively(part) {
-    const folderIndex = folders.superset.indexOf(part)
+    const folderIndex = thisPartOutliner.folders.superset.indexOf(part)
 
     if (folderIndex === -1)
      return
@@ -15,24 +15,24 @@ pointer.handle({
     toggleMask |= 1n << BigInt(folderIndex)
 
     if (closing) {
-     if (folders.chosenParts.has(part))
-      folders.chosenParts.delete(part)
-    } else if (!folders.chosenParts.has(part))
-     folders.chosenParts.add(part)
+     if (thisPartOutliner.folders.chosenParts.has(part))
+      thisPartOutliner.folders.chosenParts.delete(part)
+    } else if (!thisPartOutliner.folders.chosenParts.has(part))
+     thisPartOutliner.folders.chosenParts.add(part)
 
-    partOutliner.getChildren(part).map(childPart => gatherRecursively(childPart))
+    thisPartOutliner.getChildren(part).map(childPart => gatherRecursively(childPart))
    }
    gatherRecursively(triggerPart)
   } else {
    toggleMask = 1n << BigInt(FOLDER_INDEX)
    if (closing) {
-    if (folders.chosenParts.has(triggerPart))
-     folders.chosenParts.delete(triggerPart)
-   } else if (!folders.chosenParts.has(triggerPart))
-    folders.chosenParts.add(triggerPart)
+    if (thisPartOutliner.folders.chosenParts.has(triggerPart))
+     thisPartOutliner.folders.chosenParts.delete(triggerPart)
+   } else if (!thisPartOutliner.folders.chosenParts.has(triggerPart))
+    thisPartOutliner.folders.chosenParts.add(triggerPart)
   }
 
-  folders.setRouteID(closing ? ~toggleMask & folders.routeID : toggleMask | folders.routeID)
+  thisPartOutliner.folders.setRID(closing ? ~toggleMask & thisPartOutliner.folders.rid : toggleMask | thisPartOutliner.folders.rid)
  },
  POINTER_EVENT,
  TARGET_ELEMENT,

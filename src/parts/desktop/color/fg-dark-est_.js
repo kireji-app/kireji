@@ -1,1 +1,1 @@
-return "#" + color.blendHex(color.fg.slice(1), "3f3f3f", "multiply")
+return "#" + Color.blendHex(Color.fg.slice(1), "3f3f3f", "multiply")

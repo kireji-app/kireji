@@ -1,20 +1,20 @@
-if (!facet.environments)
- throw new Error(`Facet ${facet.title} is missing an environments array (${facet.host}).`)
+if (!thisFacet.environments)
+ throw error(`missing environments array`)
 
-const environments = facet.environments.split("\n")
+const environments = thisFacet.environments.split("\n")
 
-facet.define({
- isAsync: { value: "installAsync" in facet }
+define(thisFacet, {
+ isAsync: { value: "installAsync" in thisFacet }
 })
 
 if (environments.includes(environment)) {
- facet.define({
-  supported: { value: facet.checkSupport() }
+ define(thisFacet, {
+  supported: { value: thisFacet.checkSupport() }
  })
- if (!facet.supported)
-  facet.define({
+ if (!thisFacet.supported)
+  define(thisFacet, {
    error: { value: "support check failed" }
   })
-} else facet.define({
- error: { value: "wrong environment" }
+} else define(thisFacet, {
+ error: { value: `wrong environment (${environment} -> [${environments}]` }
 })

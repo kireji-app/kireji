@@ -1,7 +1,7 @@
 declare interface IMatch<TOwner, TArm>
  extends IPart<TOwner, TArm> {
 
- // Runtime Properties.
+ // Properties.
  /** The subpart which is currently chosen. */
  readonly arm?: TArm
  /** A map storing the arm position offsets. */
@@ -14,6 +14,6 @@ declare type IMatchAny =
 declare type IMatchArm =
  IPart<IMatchAny, IPartAny>
 
-declare const match: IMatchAny
+declare const thisMatch: IMatchAny
 
-declare const CHANGED_ARMS: IMatchArm[]
+declare const ARMS: IMatchArm[]

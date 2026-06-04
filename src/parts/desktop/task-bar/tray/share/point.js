@@ -1,11 +1,11 @@
-pointer.handle({
+Pointer.handle({
  click() {
-  nav.share({
+  navigator.share({
    title: document.title,
    url: location.href
   }).catch(shareError => {
    if (shareError.name !== "AbortError")
-    throw shareError
+    throw error("native share failed", shareError)
   })
  },
  POINTER_EVENT,

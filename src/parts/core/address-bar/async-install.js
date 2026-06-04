@@ -1,6 +1,6 @@
-await agent.promise
+await Agent.promise
 
-addressBar.define({
- throttleDuration: { value: agent.isSafari ? 350 : 75 },
+define(AddressBar, {
+ throttleDuration: { value: Agent.isSafari ? 350 : 75 },
  throttleStartTime: { value: _.now, writable: true }
 })

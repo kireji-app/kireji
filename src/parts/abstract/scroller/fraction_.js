@@ -1,1 +1,1 @@
-return Number(scroller.routeID) / Number(scroller.cardinality - 1n)
+return Number(thisScroller.rid) / Number(thisScroller.cardinality - 1n)

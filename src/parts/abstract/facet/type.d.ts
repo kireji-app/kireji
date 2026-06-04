@@ -2,7 +2,7 @@
 declare interface IFacet<TOwner>
  extends IPart<TOwner, null> {
 
- // Serialized Properties
+ // Components
  /** A line-separated list of environments which support the given facet. */
  readonly "environments": string[]
  /** Installs the given facet asynchronously. If it's not defined, install() must be defined. */
@@ -12,7 +12,7 @@ declare interface IFacet<TOwner>
  /** Returns whether the given facet is supported. Defaults to "true".*/
  readonly checkSupport(): boolean
 
- // Runtime Properties.
+ // Properties.
  /** The reason, if any, that the facet is not supported. */
  readonly error?: string
  /** Whether or not the facet requires an asynchronous installation. */
@@ -23,7 +23,7 @@ declare interface IFacet<TOwner>
  readonly supported: boolean
 }
 
-declare const facet: IFacet<IApplicationAny>
+declare const thisFacet: IFacet<IAppAny>
 
 /** A promise with resolvers that doesn't resolve until all of the facets have been installed or enqueued. */
 declare const GATE: PromiseWithResolvers<void>

@@ -6,6 +6,6 @@ const oneMinute = 60000
 const securityDelay = 3
 
 setTimeout(() => {
- clock.element.textContent = clock.time;
- setInterval(() => clock.element.textContent = clock.time, oneMinute)
+ Clock.element.textContent = Clock.time;
+ setInterval(() => Clock.element.textContent = Clock.time, oneMinute)
 }, oneMinute - new Date().getSeconds() * 1000 + securityDelay)

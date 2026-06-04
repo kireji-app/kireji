@@ -1,1 +1,1 @@
-return SUBJECT === _ ? "ecosystem" : SUBJECT.key
+return SUBJECT === _ ? _.name : SUBJECT.key

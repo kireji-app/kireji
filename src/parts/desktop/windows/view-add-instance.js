@@ -1,6 +1,6 @@
 const newTaskButton = (() => {
  const offscreen = document.createElement("div")
- offscreen.innerHTML = windows.renderTaskHTML(INSTANCE, INSTANCE_INDEX)
+ offscreen.innerHTML = Windows.renderTaskHTML(INSTANCE, INSTANCE_INDEX)
  return offscreen.querySelector("button")
 })()
 

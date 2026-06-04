@@ -1,27 +1,27 @@
-pointer.handle({
+Pointer.handle({
  click() {
-  const { host, pathname, hash } = new URL(TARGET_ELEMENT.href, `https://${_.application.host}${encodePathname(_.routeID)}`)
+  const { host, pathname, hash } = new URL(TARGET_ELEMENT.href, `https://${_.openTask.host}${RID.toPath(_.rid)}`)
 
   const destinationVersion = pathname.match(/^\/(\d+\.\d+\.\d+)/)?.[1]
 
   if (destinationVersion)
-   throw `Internal Hyperlink Error: Internal links should be canonical links, not versioned links (linking to "${TARGET_ELEMENT.href}").`
+   throw error(`unexpected versioned link\n\t${TARGET_ELEMENT.href}`)
 
-  if (host !== _.application.host) {
-   if (host in _.applications) {
+  if (host !== _.openTask.host) {
+   if (lookup(host)) {
     if (pathname === "/" && !hash) {
-     _.gotoApplication(host)
-    } else warn(`Cross-host navigation and canonical pathname are not yet handled because of ambiguity between simply changing applications and linking to a canonical home page (while attempting to navigate to "${TARGET_ELEMENT.href}").`)
+     _.gotoPart(host)
+    } else warn(`Cross-host navigation and canonical pathname are not yet handled because of ambiguity between simply changing the open part and linking to a canonical home state of the given part (while attempting to navigate to "${TARGET_ELEMENT.href}").`)
    } else window.open(TARGET_ELEMENT.href, '_blank')
    return
   }
 
-  const translatedPathname = _.translateCanonicalPathname(_.application.host, pathname, hash)
-  const translatedRouteID = decodePathname(translatedPathname)
+  const translatedPathname = _.translateCanonicalPathname(_.openTask.host, pathname, hash)
+  const translatedRID = RID.fromPath(translatedPathname)
 
-  if (_.routeID !== translatedRouteID) {
+  if (_.rid !== translatedRID) {
    setUndoPoint()
-   _.setRouteID(translatedRouteID)
+   _.setRID(translatedRID)
   }
  },
  POINTER_EVENT,

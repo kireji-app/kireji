@@ -1,1 +1,1 @@
-return color.isLight ? color.lightFg : color.darkFg
+return Color.isLight ? Color.lightFg : Color.darkFg

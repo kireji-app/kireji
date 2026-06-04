@@ -1,1 +1,1 @@
-return color.isLight ? color.darkEstBg : color.lightEstBg
+return Color.isLight ? Color.darkEstBg : Color.lightEstBg

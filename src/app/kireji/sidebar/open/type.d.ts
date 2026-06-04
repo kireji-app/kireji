@@ -1,2 +1,2 @@
 declare type IKirejiAppSidebarOpen
- = IBoolean<IApplicationSubpart>
+ = IBoolean<IAppSubpart>

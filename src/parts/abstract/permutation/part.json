@@ -1,27 +1,25 @@
 {
  "abstract": true,
- "methods": {
-  "superset-get": [],
+ "actions": {
   "model-validate-instance": [
    "MODEL"
   ],
-  "routeID-get-permutation": [
+  "RID-get-permutation": [
    "INSTANCES"
   ],
-  "routeID-distribute-instance": [
+  "RID-distribute-instance": [
    "SUBJECT_INDEX",
-   "ROUTE_ID"
+   "NEW_RID"
   ],
-  "routeID-collect-instance": [
+  "RID-collect-instance": [
    "INSTANCE"
   ],
   "subject-instance-to": [
    "INSTANCE"
   ],
-  "routeID-get-payload": [
+  "RID-get-payload": [
    "INSTANCES"
   ],
-  "routeID-recompute": [],
   "factor-get-permutation": [
    "INSTANCE_COUNT",
    "CURRENT_INSTANCE_INDEX"

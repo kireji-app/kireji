@@ -1,1 +1,1 @@
-return [kirejiIssues[1776205544]]
+return [KirejiIssues[1776205544]]

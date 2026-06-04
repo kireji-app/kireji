@@ -1,9 +1,4 @@
 {
- "extends": "facet",
- "methods": {
-  "update": [],
-  "push": [],
-  "route-use": [],
-  "undoPoint-set": []
- }
+ "name": "AddressBar",
+ "extends": "facet"
 }

@@ -1,18 +1,17 @@
 return (
  "<div id=part-intro>" + (
-  `<img src="${activePart.placeholderImage("part.png")}"/>` +
+  `<img src="${KirejiTabGroup.activePart.placeholderImage("part.png")}"/>` +
   "<div>" + (
    "<h3>" + (
-    activePart.title ?? activePart.key
+    KirejiTabGroup.activePart.title ?? KirejiTabGroup.activePart.key
    ) + "</h3>" + (
-    activePart.host === "part.abstract.parts" ?
+    KirejiTabGroup.activePart.host === "part.abstract.parts" ?
      "<span disabled>This part has no prototype.</span>" :
-     `Extends <a ${editor.pointAttr("point", allParts.indexOf(activePart.prototype))} href="/">` + (
-      activePart.prototype.title ?? activePart.prototype.key
-     ) + '</a>'
+     `Extends <button ${KirejiEditor.pointAttr("point", allParts.indexOf(KirejiTabGroup.activePart.prototype))}>` + (
+      KirejiTabGroup.activePart.prototype.title ?? KirejiTabGroup.activePart.prototype.key
+     ) + '</button>'
    )
   ) + "</div>"
  ) + "</div>" +
- "<hr>" +
- `<p id=description${activePart.description ? "" : " disabled"}>${activePart.description ?? "This part has no description."}</p>`
+ `<p id=description${KirejiTabGroup.activePart.description ? "" : " disabled"}>${KirejiTabGroup.activePart.description ?? "This part has no description."}</p>`
 )

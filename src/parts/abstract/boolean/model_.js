@@ -1,1 +1,1 @@
-return !!part.routeID
+return !!thisBoolean.rid

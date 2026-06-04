@@ -1,6 +1,7 @@
-declare interface IAboutApplication
- extends IApplication<IDesktop> {
+declare interface IAboutApp
+ extends IApp<IDesktop, null> {
 
 }
 
-declare const aboutEcosystem: IAboutApplication
+declare const AboutApp: IAboutApp
+type AboutApp = T

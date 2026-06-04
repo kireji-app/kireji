@@ -1,11 +1,14 @@
-if (scroller.skipRouteIDUpdate || !client.hydrated) {
- scroller.skipRouteIDUpdate = false
+if (thisScroller.container.classList.contains("locked"))
+ return
+
+if (thisScroller.skipRIDUpdate || !Client.hydrated) {
+ thisScroller.skipRIDUpdate = false
 } else {
- const maxY = scroller.container.scrollHeight
- const newY = scroller.container.scrollTop
- const scrollRouteID = BigInt(Math.trunc(Math.max(Math.min(maxY, newY), 0) / maxY * Number(scroller.cardinality - 1n)))
- if (scroller.routeID !== scrollRouteID) {
-  scroller.skipDOMUpdate = true
-  scroller.setRouteID(scrollRouteID)
+ const maxY = thisScroller.container.scrollHeight
+ const newY = thisScroller.container.scrollTop
+ const scrollRID = BigInt(Math.trunc(Math.max(Math.min(maxY, newY), 0) / maxY * Number(thisScroller.cardinality - 1n)))
+ if (thisScroller.rid !== scrollRID) {
+  thisScroller.skipDOMUpdate = true
+  thisScroller.setRID(scrollRID)
  }
 }

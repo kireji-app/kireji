@@ -1,1 +1,1 @@
-return _.application[`theme-${color.isLight ? "light" : "dark"}-bg`]
+return _.openTask[`theme-${Color.isLight ? "light" : "dark"}-bg`]

@@ -1,6 +1,6 @@
 declare interface IKirejiIssueFiltersStatus
  extends IMix<IKirejiIssueFilters, IPartAny>,
- IWebComponent {
+ IWebView {
 
  // Subparts
  readonly a: IBoolean<IKirejiIssueFiltersPriority>
@@ -8,4 +8,5 @@ declare interface IKirejiIssueFiltersStatus
  readonly c: IBoolean<IKirejiIssueFiltersPriority>
 }
 
-declare const kirejiIssueFiltersStatus: IKirejiIssueFiltersStatus
+declare const KirejiIssueFiltersStatus: IKirejiIssueFiltersStatus
+type KirejiIssueFiltersStatus = T

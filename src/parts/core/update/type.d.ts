@@ -1,24 +1,25 @@
 declare interface IUpdateManager
  extends IFacet<ICore>,
- IWebComponent {
+ IWebView {
 
- // Serialized Properties.
+ // Components.
  /** Reacts to clicking the update button.
   * 
-  * If an update is available, gracefully fades the screen, locally stores the current application data model (using the nonce as a key) and then navigates to the new scope.
+  * If an update is available, navigates to a URL that tells the server how to perform the upgrade without losing state data.
   * 
   * Otherwise, fetches the latest version from the server, compares it to the current version and optionally sets the update version and reflects it in the UI. */
  readonly point(POINTER_EVENT: PointerEvent, TARGET_ELEMENT: HTMLElement): void
  /** Takes a single version number string and returns true of the incoming version represents a newer version number than the currently running version.
   * 
-  * Throws a TypeError if the input is not a string. Throws a syntax error if the input is not a correctly formatted semantic version number. */
+  * Throws an error if the input is not a string. Throws a syntax error if the input is not a correctly formatted semantic version number. */
  readonly isNewerVersion(INCOMING_VERSION: string): boolean
 
- // Runtime Properties.
+ // Properties.
  /** If an update is found, the latest version number. Otherwise, `null`. */
  readonly version?: string
- /** The array of service worker registrations that is currently active for the current application. */
+ /** The array of service worker registrations that is active for the current host. */
  readonly registrations: ServiceWorkerRegistration[]
 }
 
-declare const update: IUpdateManager
+declare const Update: IUpdateManager
+type Update = T

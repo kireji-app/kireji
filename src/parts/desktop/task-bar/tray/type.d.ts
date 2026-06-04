@@ -1,6 +1,6 @@
 declare interface ITray
  extends IMix<IMenu, ITrayItem>,
- IWebComponent {
+ IWebView {
 
  // Subparts.
  /** A part representing the fullscreen button. */
@@ -14,4 +14,5 @@ declare interface ITray
 }
 
 /** The taskbar's tray, displayed in the bottom-right corner of the screen. */
-declare const tray: ITray
+declare const Tray: ITray
+type Tray = T

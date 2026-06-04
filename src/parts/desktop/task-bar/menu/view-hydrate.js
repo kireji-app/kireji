@@ -1,7 +1,7 @@
-menu.element = Q("task-menu") ?? (() => {
+Menu.element = Q("task-menu") ?? (() => {
  const offscreen = document.createElement("div")
- offscreen.innerHTML = menu["menu.html"]
+ offscreen.innerHTML = Menu["menu.html"]
  return offscreen.querySelector("task-menu")
 })()
 
-menu.button = Q("button.menu")
+Menu.button = Q("button.menu")

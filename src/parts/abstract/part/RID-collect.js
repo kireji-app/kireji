@@ -1,0 +1,1 @@
+throw error("root type can't collect RID")

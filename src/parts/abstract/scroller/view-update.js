@@ -1,7 +1,8 @@
-if (scroller.skipDOMUpdate) {
- scroller.skipDOMUpdate = false
+if (thisScroller.skipDOMUpdate) {
+ thisScroller.skipDOMUpdate = false
 } else {
- scroller.skipRouteIDUpdate = true
- scroller.container.scrollTop = scroller.fraction * scroller.container.scrollHeight
+ thisScroller.skipRIDUpdate = true
+ thisScroller.container.scrollTop = thisScroller.fraction * thisScroller.container.scrollHeight
 }
-scroller.scrollBar.style.setProperty("--fraction", scroller.fraction)
+thisScroller.container.style.setProperty("--scroller-translate-y", `-${100 * thisScroller.fraction}%`)
+thisScroller.scrollBar.style.setProperty("--fraction", thisScroller.fraction)

@@ -1,19 +1,20 @@
-scroller.container = Q(scroller.query + ">scroller-")
-scroller.scrollBar = Q(scroller.query + ">scroll-bar")
-scroller.content = Q(scroller.query + ">scroller->scroll-content")
-scroller.thumb = Q(scroller.query + ">scroll-bar>thumb-")
+thisScroller.container = Q(thisScroller.query + ">scroller-")
+thisScroller.scrollBar = Q(thisScroller.query + ">scroll-bar")
+thisScroller.content = Q(thisScroller.query + ">scroller->scroll-content")
+thisScroller.thumb = Q(thisScroller.query + ">scroll-bar>thumb-")
 
-if (!scroller.container || !scroller.scrollBar || !scroller.content || !scroller.thumb)
- throw new ReferenceError(`Could not find necessary scroller elements via query "${scroller.query}". Make sure you have provided the query and used scroller.wrap to wrap the HTML contents of the element with the scroller's container to include the custom scroll bar HTML (from ${scroller.host}).`)
+if (!thisScroller.container || !thisScroller.scrollBar || !thisScroller.content || !thisScroller.thumb)
+ throw error(`query "${thisScroller.query}" didn't select any scroller components - make sure to use scroller.wrap to wrap the HTML contents of the element`)
 
 // Listen for changes.
-scroller.container.addEventListener("scroll", scroller.listener, { passive: true })
-scroller.observer = new ResizeObserver(() => scroller.onresize())
-scroller.observer.observe(scroller.content)
-scroller.observer.observe(scroller.container)
+thisScroller.container.addEventListener("scroll", thisScroller.listener, { passive: true })
+thisScroller.observer = new ResizeObserver(() => thisScroller.onresize())
+thisScroller.observer.observe(thisScroller.content)
+thisScroller.observer.observe(thisScroller.container)
 
 // Set scroll because (client- and server-rendered) HTML can't provide this.
-client.promise.then(() => {
- scroller.container.scrollTop = scroller.fraction * scroller.container.scrollHeight
- scroller.scrollBar.style.setProperty("--fraction", scroller.fraction)
+Client.promise.then(() => {
+ thisScroller.container.style.setProperty("--scroller-translate-y", `-${100 * thisScroller.fraction}%`)
+ thisScroller.scrollBar.style.setProperty("--fraction", thisScroller.fraction)
+ thisScroller.unlock()
 })

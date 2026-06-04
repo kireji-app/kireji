@@ -3,7 +3,7 @@ const noop = event => { event.preventDefault(); event.stopPropagation() }
 noop(POINTER_CONFIG.POINTER_EVENT)
 
 // Don't respond to this pointer event if its the wrong type or not the only one.
-if (pointer.id !== null || POINTER_CONFIG.POINTER_EVENT.pointerType === 'mouse' && POINTER_CONFIG.POINTER_EVENT.button !== 0)
+if (Pointer.id !== null || POINTER_CONFIG.POINTER_EVENT.pointerType === 'mouse' && POINTER_CONFIG.POINTER_EVENT.button !== 0)
  return
 
 const controller = new AbortController()
@@ -19,7 +19,7 @@ const
   noop(pointerEvent)
 
   // Don't respond to this pointer event if its not the active one.
-  if (pointerEvent.pointerId !== pointer.id)
+  if (pointerEvent.pointerId !== Pointer.id)
    return
 
   // Perform custom action.
@@ -32,7 +32,7 @@ const
   noop(pointerEvent)
 
   // Don't drop the pointer event if its the wrong type or not the active one.
-  if (pointerEvent.pointerId !== pointer.id || pointerEvent.pointerType === 'mouse' && pointerEvent.button !== 0)
+  if (pointerEvent.pointerId !== Pointer.id || pointerEvent.pointerType === 'mouse' && pointerEvent.button !== 0)
    return
 
   // Determine if the drop should be handled using a click override.
@@ -41,7 +41,7 @@ const
 
   if (wasClick) {
 
-   if (hasDoubleClick && pointer.doubleClick.confirmed) {
+   if (hasDoubleClick && Pointer.doubleClick.confirmed) {
     POINTER_CONFIG.doubleClick(pointerEvent)
     endDoubleClick()
    } else {
@@ -70,11 +70,11 @@ const
   controller.abort()
 
   // Release the pointer capture.
-  if (POINTER_CONFIG.TARGET_ELEMENT.hasPointerCapture(pointer.id))
-   POINTER_CONFIG.TARGET_ELEMENT.releasePointerCapture(pointer.id)
+  if (POINTER_CONFIG.TARGET_ELEMENT.hasPointerCapture(Pointer.id))
+   POINTER_CONFIG.TARGET_ELEMENT.releasePointerCapture(Pointer.id)
 
   // Reset the pointer id.
-  pointer.id = null
+  Pointer.id = null
 
   // Perform custom action.
   if (typeof POINTER_CONFIG.reset === "function")
@@ -84,21 +84,21 @@ const
   POINTER_CONFIG.TARGET_ELEMENT.classList.remove("down")
  },
  endDoubleClick = () => {
-  clearTimeout(pointer.doubleClick.timeout)
-  pointer.doubleClick.target = null
-  pointer.doubleClick.timeout = null
-  pointer.doubleClick.confirmed = null
+  clearTimeout(Pointer.doubleClick.timeout)
+  Pointer.doubleClick.target = null
+  Pointer.doubleClick.timeout = null
+  Pointer.doubleClick.confirmed = null
  }
 
 // Attach to the follow-up event handlers along the whole document.
 document.addEventListener("pointermove", drag, { capture: true, signal: controller.signal })
 document.addEventListener("pointerup", drop, { capture: true, signal: controller.signal })
 document.addEventListener("pointercancel", reset, { capture: true, signal: controller.signal })
-pointer.id = POINTER_CONFIG.POINTER_EVENT.pointerId
+Pointer.id = POINTER_CONFIG.POINTER_EVENT.pointerId
 
 // Don't allow anything else to start picking up events.
 if (!document.pointerLockElement)
- POINTER_CONFIG.TARGET_ELEMENT.setPointerCapture(pointer.id)
+ POINTER_CONFIG.TARGET_ELEMENT.setPointerCapture(Pointer.id)
 
 // Allow CSS styles to target the element while its down.
 POINTER_CONFIG.TARGET_ELEMENT.classList.add("down")
@@ -111,19 +111,19 @@ if (POINTER_CONFIG.focus === "down")
 if (typeof POINTER_CONFIG.down === "function")
  POINTER_CONFIG.down()
 
-if (pointer.doubleClick.target) {
+if (Pointer.doubleClick.target) {
  // There is a double click waiter in progress.
- if (pointer.doubleClick.target !== POINTER_CONFIG.TARGET_ELEMENT) {
+ if (Pointer.doubleClick.target !== POINTER_CONFIG.TARGET_ELEMENT) {
   // Cancel it because we just interfered with it.
   endDoubleClick()
  } else {
-  pointer.doubleClick.confirmed = true
+  Pointer.doubleClick.confirmed = true
  }
 } else {
  // There is no double click waiter in progress.
  if (typeof POINTER_CONFIG.doubleClick === "function") {
   // This element should start one.
-  pointer.doubleClick.target = POINTER_CONFIG.TARGET_ELEMENT
-  pointer.doubleClick.timeout = setTimeout(endDoubleClick, 500)
+  Pointer.doubleClick.target = POINTER_CONFIG.TARGET_ELEMENT
+  Pointer.doubleClick.timeout = setTimeout(endDoubleClick, 500)
  }
 }

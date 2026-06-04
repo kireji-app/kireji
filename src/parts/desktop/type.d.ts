@@ -1,5 +1,5 @@
 declare interface IDesktop
- extends IPartsApplication {
+ extends IPartsApp {
 
  // Subparts.
  readonly color?: IColor
@@ -9,4 +9,5 @@ declare interface IDesktop
  readonly windows?: IDesktopWindows
 }
 
-declare const desktop: IDesktop
+declare const Desktop: IDesktop
+type Desktop = T

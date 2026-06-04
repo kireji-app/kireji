@@ -1,1 +1,1 @@
-return kirejiIssues.pathname + kirejiIssue.pathname
+return KirejiIssues.pathname + thisKirejiIssue.pathname

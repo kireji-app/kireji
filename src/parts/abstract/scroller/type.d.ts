@@ -1,10 +1,10 @@
 /** Controls a stateful vertically scrolling view with a positional cardinality of 10,000. */
 declare interface IScroller<TOwner>
  extends IPart<TOwner, null>,
- IWebComponent {
+ IWebView {
 
- // Serialized Properties.
- /** A number between 0 and 1 obtained by dividing the scroller's current route ID by it's highest possible route ID (one less than its cardinality). */
+ // Components.
+ /** A number between 0 and 1 obtained by dividing the scroller's current RID by it's highest possible RID (one less than its cardinality). */
  readonly "fraction": number
  /** The stylesheet which tells the scroller's container to move to the right scroller position before hydration.
   * 
@@ -16,12 +16,16 @@ declare interface IScroller<TOwner>
  readonly onresize(): void
  /** The inner event listener which is called by `scroller.listener` to track scrolling. */
  readonly onscroll(): void
- /** Sets the scroller's route to 0n, if it is not already there. */
+ /** Sets the scroller's RID to 0n, if it is not already there. */
  readonly scrollToTop(): void
  /** Used to wrap the given HTML string with the scroller's provided container and custom scrollbar HTML. */
  readonly wrap(INNER_HTML: string): string
+ /** Changes the scroller from a true HTML scroll box to the frozen server-rendered style. */
+ readonly lock(): void
+ /** Changes the scroller from the frozen server-rendered style to a true HTML scroll box. */
+ readonly unlock(): void
 
- // Runtime Properties.
+ // Properties.
  /** The element that will recieve the scroll listening and view updates. */
  readonly container: HTMLElement
  /** The ResizeObserver instance that tracks changes to the relative size between the scroll-content element and the scroller element itself, regardless of whether that value changes due to the outside container changing size or the inside content changing size. */
@@ -32,12 +36,12 @@ declare interface IScroller<TOwner>
  readonly thumb: HTMLElement
  /** The element that tracks the scroll height of the scroller, needed for handling resize events. */
  readonly content: HTMLElement
- /** When true, the event cycle doesn't trigger assignment to the container's scroll and instead reads its position in order to set the scroller's route ID. */
+ /** When true, the event cycle doesn't trigger assignment to the container's scroll and instead reads its position in order to set the scroller's RID. */
  readonly skipDOMUpdate: boolean
- /** When true, the event cycle doesn't read in the container's DOM scroll position and instead sets it based on the scroller's route ID. */
- readonly skipRouteIDUpdate: boolean
- /** The outer event listener which can be added and removed and calls the inner event listener `scroller.onscroll`. */
+ /** When true, the event cycle doesn't read in the container's DOM scroll position and instead sets it based on the scroller's RID. */
+ readonly skipRIDUpdate: boolean
+ /** The outer event listener which can be added and removed and calls the inner event listener `thisScroller.onscroll`. */
  readonly listener(scrollEvent: Event): void
 }
 
-declare const scroller: IScroller<IPartAny>
+declare const thisScroller: IScroller<IPartAny>

@@ -1,14 +1,14 @@
-if (part.dirty) {
+if (thisPart.dirty) {
 
  // Add own view before adding subpart views.
- if (part.justEnabled) {
+ if (thisPart.justEnabled) {
 
-  if (part.isOpen)
-   part.addView()
+  if (thisPart.isOpen)
+   thisPart.addView()
 
-  part.notify("add")
+  thisPart.notify("add")
  }
 
- for (const subpart of part)
+ for (const subpart of thisPart)
   subpart.distributeAddView()
 }

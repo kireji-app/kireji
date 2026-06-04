@@ -1,1 +1,1 @@
-return (menu.closed.enabled ? "" : menu["menu.html"]) + menu["button.html"]
+return (Menu.closed.enabled ? "" : Menu["menu.html"]) + Menu["button.html"]

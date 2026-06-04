@@ -1,0 +1,1 @@
+Currently, when the ecosystem ships to the client, the landing model JSON file is inlined in the archive. The landing hash represents the most optimal possible compression of that landing model as a base-64 string. It can reduce the archive size by a few kilobytes.

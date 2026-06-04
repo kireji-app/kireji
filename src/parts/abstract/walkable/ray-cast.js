@@ -2,11 +2,11 @@
 /** @type {IWalkableRayCastResult} */
 const safeIterationResult = {
  hit: false,
- triIndex: walkable.triIndex,
+ triIndex: thisWalkable.triIndex,
  point: Vector[3](
-  walkable.position.x,
+  thisWalkable.position.x,
   0, // Exclude y coordinate from the ray casting algorithm for now.
-  walkable.position.z
+  thisWalkable.position.z
  ),
  forceVector: FORCE_VECTOR
 }
@@ -62,7 +62,7 @@ if (speed !== 0) {
 
   // Emergency exit the loop.
   if (_.now - start >= 2000) {
-   warn("Walkable ray cast calculation exceeded the maximum allowable processing time of 2 seconds.", { processingTime: _.now - start, iteration, DELTA_TIME, FORCE_VECTOR, speed, safeIterationResult, timeOfNextIntersection, timeBetweenIntersections })
+   warn(error("ray cast calculation exceeded maximum processing time"), { processingTime: _.now - start, iteration, DELTA_TIME, FORCE_VECTOR, speed, safeIterationResult, timeOfNextIntersection, timeBetweenIntersections })
    break castRay
   }
 
@@ -95,7 +95,7 @@ if (speed !== 0) {
   const point = Vector.add(safeIterationResult.point, Vector.multiply(FORCE_VECTOR, timeElapsedDuringThisIteration))
 
   // Check if the point is outside the walkable boundary.
-  const triIndex = walkable.triThatContainsPoint(point)
+  const triIndex = thisWalkable.triThatContainsPoint(point)
 
   // If it is...
   if (triIndex === -1) {
@@ -136,7 +136,7 @@ if (speed !== 0) {
 
      // Get the position of the center of the neighbor.
      const point = Vector.add(Vector.floor(Vector.add(safeIterationResult.point, direction)), 0.5)
-     const triIndex = walkable.triThatContainsPoint(point)
+     const triIndex = thisWalkable.triThatContainsPoint(point)
 
      // If it isn't part of the walkable, exclude it from consideration.
      if (triIndex === -1)
@@ -196,7 +196,7 @@ if (speed !== 0) {
 
      // Construct the point along the way to the neighbor.
      const point = Vector.add(safeIterationResult.point, Vector.multiply(forceVectorToNeighbor, timeElapsedDuringThisIteration))
-     const triIndex = walkable.triThatContainsPoint(point)
+     const triIndex = thisWalkable.triThatContainsPoint(point)
      safeIterationResult.forceVector = forceVectorToNeighbor
 
      if (triIndex === -1) {
@@ -263,7 +263,7 @@ if (speed !== 0) {
 }
 
 // Interpolate the y position of the walkable at the given { x, y } coordinates.
-const triData = walkable.triTable[safeIterationResult.triIndex]
+const triData = thisWalkable.triTable[safeIterationResult.triIndex]
 const flooredZ = Math.floor(safeIterationResult.point.z)
 const row = triData.rows[flooredZ - triData.zRange.min]
 const t = (safeIterationResult.point.x - row.xyRange.min.x) / Number(row.cardinality)

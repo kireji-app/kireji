@@ -1,1 +1,1 @@
-return `/${kirejiIssue.key}`
+return `/${thisKirejiIssue.key}`

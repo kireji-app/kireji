@@ -1,6 +1,6 @@
-pointer.handle({
+Pointer.handle({
  click() {
-  _.gotoApplication("desktop.parts")
+  _.gotoPart("desktop.parts")
  },
  POINTER_EVENT,
  TARGET_ELEMENT,

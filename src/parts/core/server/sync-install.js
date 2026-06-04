@@ -10,7 +10,7 @@ const
  serviceHeader = {
   ETag: _.ETag,
   'Content-Type': 'application/javascript;charset=UTF-8',
-  'Cache-Control': `public, max-age=${production ? 31536000 : 0}, immutable`,
+  'Cache-Control': `public, max-age=${_.command === "debug" ? 0 : 31536000}, immutable`,
   ...securityHeader
  },
  sitemapHeader = {
@@ -34,14 +34,14 @@ const
    let status, head, body, logMessage
    const defaultRoute = `https://${host}/${_.version}/${_.landingHash}/`
 
-   respond: {
+   prepareResponse: {
     if (pathname === `/${_.version}/build.js`) {
 
      if (ifNoneMatch === _.ETag || ifNoneMatch === "W/" + _.ETag) {
       status = 304
       head = { ETag: _.ETag, ...securityHeader }
       logMessage = "Confirming Artifact"
-      break respond
+      break prepareResponse
      }
 
      _.setRoute(defaultRoute)
@@ -49,7 +49,7 @@ const
      head = { ...serviceHeader }
      body = _["build.js"]
      logMessage = "Serving Artifact"
-     break respond
+     break prepareResponse
 
     }
 
@@ -57,34 +57,35 @@ const
      status = 301
      head = { 'Location': `/${_.version}/${_.landingHash}/`, ...securityHeader }
      logMessage = "Normalizing URL"
-     break respond
+     break prepareResponse
     }
 
-    // color.device.light = !prefersDarkMode
+    // Color.device.light = !prefersDarkMode
     _.setRoute(`https://${host}${pathname}`)
-    status = +(host in _.menuApplications ? 200 : _.applications[host].status ?? 200)
-    const customHeaders = _.applications[host].customHeaders ?? {}
+    const part = lookup(host)
+    status = +(part.status ?? 200)
+    const customHeaders = part.customHeaders ?? {}
     head = { ...indexHeader, ...customHeaders }
     body = _['part.html']
     logMessage = "Serving Snapshot"
-    break respond
+    break prepareResponse
    }
 
    return { status, head, body, logMessage }
   },
   decode(segment) {
-   _.setRouteID(decodeSegment(segment))
+   _.setRID(RID.fromHash(segment))
    return _.model
   },
   encode(model) {
-   return encodeSegment(_.modelToRouteID(model))
+   return RID.toHash(_.modelToRID(model))
   }
  }
 
 module.exports = currentExports
 
 if (environment === "node-module") {
- logScope(0, server.title + " Ready - Proxy Module")
+ logScope(0, Server.title + " Ready - Proxy Module")
  return
 }
 
@@ -106,7 +107,7 @@ logScope(1, `\nCreating Deployment Artifact`, log => {
 })
 
 logScope(1, `\nDeployment Artifact Stats`, () => {
- logStringSize(1, _.preHydrationArchive)
+ logStringSize(1, _["build.js"])
 })
 
 const httpServer = require('http').createServer((request, response) => logServerScope(
@@ -119,140 +120,154 @@ const httpServer = require('http').createServer((request, response) => logServer
   const { href, pathname, searchParams } = new URL(`https://${host}${request.url}`)
   const devSuffix = "localhost:" + _.port
   const isLocalRequest = host.endsWith(devSuffix)
+
   if (isLocalRequest)
    host = host.slice(0, -1 - devSuffix.length)
 
-  try {
-   respond: {
-
-    if (pathname === '/-v') {
-     status = 200
-     head = { 'Content-Type': 'text/plain', ...securityHeader }
-     body = _.version
-     logMessage = "Serving Version"
-     break respond
-    }
-
-    if (["/robots.txt", "/ads.txt", "/sitemap.txt", "/browserconfig.xml"].includes(pathname))
-     throw `Config 404:${pathname.slice(1)}`
-
-    if (pathname.startsWith("/.well-known"))
-     throw `Config 404:.well-known folder`
-
-    if (pathname.endsWith(".map"))
-     throw `Config 404:.map file`
-
-    if (isLocalRequest && !(host in _.applications)) {
-     /* This is handled by the reverse proxy when not testing locally. */
-     if (host && host.startsWith("www."))
-      host = host.slice(4)
-
-     if (!(host in _.applications))
-      host = _.defaultApplicationHost ?? Object.getOwnPropertyNames(_.applications)[0]
-
-     status = 302
-     head = { 'Location': `http://${host}.${devSuffix}${pathname}`, ...securityHeader }
-     logMessage = "Setting Application"
-     break respond
-    }
-
-    if (pathname === "/sitemap.xml") {
-     status = 200
-     head = { ...sitemapHeader }
-     body = _.applications[host]["sitemap.xml"]
-     logMessage = "Serving Sitemap"
-     break respond
-    }
-
-    if (pathname === "/humans.txt") {
-     status = 200
-     head = { 'Content-Type': 'text/plain', ...securityHeader }
-     body = server["humans.txt"]
-     logMessage = "Serving Credits!"
-     break respond
-    }
-
-    if (pathname.startsWith("/apple-touch-icon") || pathname.startsWith("/mstile-") || ["/favicon.ico"].includes(pathname)) {
-     status = 200
-     head = { 'Content-Type': 'image/png', ...securityHeader }
-     body = Buffer.from(_.applications[host]["part.png"], 'base64')
-     logMessage = "Serving Icon"
-     break respond
-    }
-
-    const destinationVersion = pathname.match(/^\/(\d+\.\d+\.\d+)/)?.[1]
-
-    if (!destinationVersion) {
-     status = 302
-     _.setRoute(`https://${host}/${_.version}/${_.landingHash}/`)
-     const translatedPathname = pathname === "/" ? encodePathname(_.routeID) : _.translateCanonicalPathname(host, pathname)
-     head = { 'Location': translatedPathname, ...securityHeader }
-     logMessage = "Translating Pathname"
-     break respond
-    }
-
-    /** @type {IVersionedExports} */
-    let destinationExports
-    try {
-     destinationExports = destinationVersion === _.version ? currentExports : require(`../../../.versions/${destinationVersion}.js`)
-    } catch {
-     throw `Bad Version: ${destinationVersion}`
-    }
-
-    const sourceVersion = searchParams.get("from")
-    if (sourceVersion) {
-     if (!/^\d+\.\d+\.\d+$/.test(sourceVersion))
-      throw "Unsupported `from` parameter: " + sourceVersion
-     /** @type {IVersionedExports} */
-     let sourceExports
-     try {
-      sourceExports = require(`../../../.versions/${sourceVersion}.js`)
-     } catch {
-      throw `Bad Version: ${sourceVersion}`
-     }
-     const sourceHash = pathname.split("/")[2]
-     const model = sourceExports.decode(sourceHash)
-     const destinationHash = destinationExports.encode(model)
-     status = 302
-     head = { 'Location': `/${destinationVersion}/${destinationHash}/`, ...securityHeader }
-     logMessage = "Updating Version"
-     break respond
-    }
-
-    ;
-    const payload = destinationExports.proxy(
-     host,
-     pathname,
-     request.headers['if-none-match'],
-     request.headers["sec-ch-prefers-color-scheme"] === 'dark',
-     request.headers['if-modified-since'],
-    )
-
-    status = payload.status
-    head = payload.head
-    body = payload.body
-    logMessage = payload.logMessage
-   }
-  } catch (respondError) {
+  function createErrorPage(reason) {
    try {
-    const payload = _.parts.abstract.error.getErrorResponse("" + respondError, host)
-    status = payload.status
+    ({ status, body, logMessage } = _.parts.abstract.error.getErrorResponse(reason, host))
     head = { ...indexHeader }
-    body = payload.body
-    logMessage = payload.logMessage
    } catch (metaError) {
-    error(metaError)
     status = 500
     head = { ...indexHeader }
     body = "<h1>Server Meta Error</h1><p>A server error occurred. Then, a second error was encountered while trying to generate the server error page.</p>"
     logMessage = "Meta Error"
+    logError(metaError)
    }
-  } finally {
+  }
+
+  function prepareResponse() {
+
+   if (pathname === '/-v') {
+    status = 200
+    head = { 'Content-Type': 'text/plain', ...securityHeader }
+    body = _.version
+    logMessage = "Serving Version"
+    return
+   }
+
+   if (["/robots.txt", "/ads.txt", "/sitemap.txt", "/browserconfig.xml"].includes(pathname))
+    return createErrorPage(`Config 404:${pathname.slice(1)}`)
+
+   if (pathname.startsWith("/.well-known"))
+    return createErrorPage(`Config 404:.well-known folder`)
+
+   if (pathname.endsWith(".map"))
+    return createErrorPage(`Config 404:.map file`)
+
+   if (isLocalRequest && !(_.publicHosts.split(" ").includes(host))) {
+    /* This is handled by the reverse proxy when not testing locally. */
+    if (host && host.startsWith("www."))
+     host = host.slice(4)
+
+    if (!(_.publicHosts.split(" ").includes(host)))
+     host = _.defaultHost
+
+    status = 302
+    head = { 'Location': `http://${host}.${devSuffix}${pathname}`, ...securityHeader }
+    logMessage = "Setting Open Part"
+    return
+   }
+
+   if (pathname === "/sitemap.xml") {
+    status = 200
+    head = { ...sitemapHeader }
+    body = lookup(host)["sitemap.xml"]
+    logMessage = "Serving Sitemap"
+    return
+   }
+
+   if (pathname === "/humans.txt") {
+    status = 200
+    head = { 'Content-Type': 'text/plain', ...securityHeader }
+    body = Server["humans.txt"]
+    logMessage = "Serving Credits!"
+    return
+   }
+
+   if (pathname.startsWith("/apple-touch-icon") || pathname.startsWith("/mstile-") || ["/favicon.ico"].includes(pathname)) {
+    status = 200
+    head = { 'Content-Type': 'image/png', ...securityHeader }
+    body = Buffer.from(lookup(host)["part.png"], 'base64')
+    logMessage = "Serving Icon"
+    return
+   }
+
+   const destinationVersion = pathname.match(/^\/(\d+\.\d+\.\d+)/)?.[1]
+
+   if (!destinationVersion) {
+    status = 302
+    _.setRoute(`https://${host}/${_.version}/${_.landingHash}/`)
+    const translatedPathname = pathname === "/" ? RID.toPath(_.rid) : _.translateCanonicalPathname(host, pathname)
+    head = { 'Location': translatedPathname, ...securityHeader }
+    logMessage = "Translating Pathname"
+    return
+   }
+
+   /** @type {IVersionedExports} */
+   let destinationExports
+   try {
+    destinationExports = destinationVersion === _.version ? currentExports : require(`../../../.versions/${destinationVersion}.js`)
+   } catch {
+    return createErrorPage(`Bad Version: ${destinationVersion}`)
+   }
+
+   const sourceVersion = searchParams.get("from")
+
+   if (sourceVersion) {
+    if (!/^\d+\.\d+\.\d+$/.test(sourceVersion))
+     return createErrorPage("Unsupported `from` parameter: " + sourceVersion)
+    /** @type {IVersionedExports} */
+    let sourceExports
+    try {
+     sourceExports = require(`../../../.versions/${sourceVersion}.js`)
+    } catch {
+     return createErrorPage(`Bad Version: ${sourceVersion}`)
+    }
+
+    const sourceHash = pathname.split("/")[2]
+    const model = sourceExports.decode(sourceHash)
+    const destinationHash = destinationExports.encode(model)
+    status = 302
+    head = { 'Location': `/${destinationVersion}/${destinationHash}/`, ...securityHeader }
+    logMessage = "Updating Version"
+    return
+   }
+
+   ;
+   const payload = destinationExports.proxy(
+    host,
+    pathname,
+    request.headers['if-none-match'],
+    request.headers["sec-ch-prefers-color-scheme"] === 'dark',
+    request.headers['if-modified-since'],
+   )
+
+   status = payload.status
+   head = payload.head
+   body = payload.body
+   logMessage = payload.logMessage
+  }
+
+  function writeResponse() {
    log(logMessage, status, { 200: `✓`, get 302() { return `↪ ${head.Location}` }, get 301() { return `↪ ${head.Location}` }, 304: "♻", 400: "✕", 404: "?", 500: "!", 503: `#`, }[status])
    response.writeHead(status, head)
    response.end(body)
   }
+
+  if (_.command === "debug") {
+   // Allow uncaught errors to crash the server when testing locally.
+   prepareResponse()
+   writeResponse()
+  } else try {
+   prepareResponse()
+  } catch (respondError) {
+   createErrorPage(respondError)
+  } finally {
+   writeResponse()
+  }
  }
 ))
 
-httpServer.listen(+_.port, () => logScope(0, `${server.title} Ready - http://localhost:${_.port}`))
+httpServer.listen(+_.port, () => logScope(0, `${Server.title} Ready - http://localhost:${_.port}`))

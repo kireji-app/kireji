@@ -1,1 +1,1 @@
-Q("#kireji-issue-modal").innerHTML = kirejiIssue["part.html"]
+Q("#kireji-issue-modal").innerHTML = thisKirejiIssue["part.html"]

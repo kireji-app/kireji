@@ -1,4 +1,5 @@
 {
+ "name": "KirejiIssueFiltersOrderBy",
  "extends": "match",
  "order": [
   "title",

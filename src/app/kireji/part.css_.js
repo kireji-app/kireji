@@ -1,1 +1,27 @@
-return kirejiApp["static.css"] + toolBar["part.css"] + sidebar["part.css"] + editor["part.css"]
+return /* css */`
+
+#kireji_app {
+ font: inherit;
+ --tool-bar-width: calc(var(--tab-icon-size) + (1.75 * var(--spacing)));
+ --sidebar-width: var(--tool-bar-width);
+ overscroll-behavior: none;
+}
+
+body.modern {
+ --tab-group-height: calc(var(--tab-line-height) + var(--spacing) / 1.5);
+ --tab-line-height: 26px;
+ --crumbs-height: 26px;
+ --tab-icon-size: 20px;
+}
+
+body.vintage {
+ --tab-group-height: calc(var(--tab-line-height) + 2px);
+ --tab-line-height: 20px;
+ --crumbs-height: 20px;
+ --tab-icon-size: 16px;
+}
+
+` +
+ KirejiToolBar["part.css"] +
+ KirejiSidebar["part.css"] +
+ KirejiEditor["part.css"]

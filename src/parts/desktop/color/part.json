@@ -1,6 +1,7 @@
 {
+ "name": "Color",
  "extends": "match",
- "methods": {
+ "actions": {
   "hex-rgb-from": [
    "HEX"
   ],

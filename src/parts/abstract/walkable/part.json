@@ -1,7 +1,6 @@
 {
  "abstract": true,
- "methods": {
-  "data-get": [],
+ "actions": {
   "point-tri-contains": [
    "TRI_INDEX",
    "POINT"

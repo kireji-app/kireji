@@ -3,7 +3,22 @@ const tabBitDepths = [0n, 0n]
 const tabOffsets = [0n]
 const permutationSizes = [1n]
 const payloadSizes = [1n]
-const subjectCount = BigInt(allSubjects.length)
+const subjects = []
+function collectSubjectCount(subject, domains = []) {
+
+ let count = 1n // The subject itself
+
+ if (typeof subject === "object") {
+  for (const key of Object.keys(subject)) {
+   const newDomains = [...domains, key]
+   subjects.push(newDomains.join("/"))
+   count += collectSubjectCount(subject[key], newDomains)
+  }
+ }
+
+ return count
+}
+const subjectCount = BigInt(collectSubjectCount(_))
 const maxTabCount = 12n
 const LSB = []
 const powerFloor = 2n ** BigInt(subjectCount.toString(2).length - 1)
@@ -42,17 +57,17 @@ for (let tabCount = 1n, permutationSize = 1n, payloadSize = 1n; tabCount <= subj
  tabBitDepths[bitDepth] = tabCount
 }
 
-tabGroup.define({
+define(KirejiTabGroup, {
  cardinality: { value: cardinality },
  payloadCardinality: { value: payloadCardinality },
- permutationRouteID: { value: null, writable: true },
- payloadRouteID: { value: null, writable: true },
+ permutationRID: { value: null, writable: true },
+ payloadRID: { value: null, writable: true },
  activeTabIndex: { value: null, writable: true },
  previewTabIndex: { value: null, writable: true },
  viewedActiveTab: { value: null, writable: true },
  viewedPreviewTab: { value: null, writable: true },
- viewedPermutationRouteID: { value: null, writable: true },
- viewedPayloadRouteID: { value: null, writable: true },
+ viewedPermutationRID: { value: null, writable: true },
+ viewedPayloadRID: { value: null, writable: true },
  viewedOpenTabs: { value: null, writable: true },
  openTabs: { value: [] },
  tabOffsets: { value: tabOffsets },

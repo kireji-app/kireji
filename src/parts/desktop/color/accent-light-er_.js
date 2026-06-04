@@ -1,1 +1,1 @@
-return "#" + color.blendHex(color.accent.slice(1), "4f4f4f", "screen")
+return "#" + Color.blendHex(Color.accent.slice(1), "4f4f4f", "screen")

@@ -1,9 +1,10 @@
-declare interface IKirejiIssueSections
- extends IApplicationSections<IKirejiIssueTrackerApp, IPartAny> {
+declare interface IKirejiIssuesSections
+ extends IAppSections<IKirejiIssueTrackerApp, IPartAny> {
 
  // Subparts.
  readonly issues: IKirejiIssues
  readonly summary: IKirejiIssueSummary
 }
 
-declare const kirejiIssueSections: IKirejiIssueSections
+declare const KirejiIssuesSections: IKirejiIssuesSections
+type KirejiIssuesSections = T

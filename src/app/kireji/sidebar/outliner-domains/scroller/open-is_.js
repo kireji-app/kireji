@@ -1,1 +1,1 @@
-return scroller[".."].isOpen && _.app.kireji.toolBar.arm.key === scroller[".."].key && _.app.kireji.sidebar.open.routeID === 1n
+return thisScroller[".."].isOpen && _.app.kireji.toolBar.arm.key === thisScroller[".."].key && _.app.kireji.sidebar.open.rid === 1n

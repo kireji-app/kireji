@@ -1,10 +1,478 @@
-const menuApplicationsCount = Object.keys(_.menuApplications).length
+const menuItemsCount = Menu.items.length
 const controlLinesCount = 3
 const separatorCount = 1
-return part["static.css"] + `
-task-menu::after {
- content: "${_.application.fancyTitle}";
+return /* css */`
+
+body,
+html {
+ --scrollbar-width: 16px;
+ --bg-checker:
+  linear-gradient(45deg, var(--bg) 25%, transparent 25%, transparent 75%, var(--bg) 75%, var(--bg)) 0 0 / 2px 2px,
+  linear-gradient(45deg, var(--bg) 25%, transparent 25%, transparent 75%, var(--bg) 75%, var(--bg)) 1px 1px / 2px 2px;
 }
+
+wallpaper->* {
+ --deep-inset-dpx:
+  inset var(--d-1px) var(--d-1px) var(--bg-light-est),
+  inset var(--d1px) var(--d1px) var(--bg-dark),
+  inset var(--d-2px) var(--d-2px) var(--bg-light-er),
+  inset var(--d2px) var(--d2px) black;
+ --deep-outset-dpx:
+  inset var(--d-1px) var(--d-1px) black,
+  inset var(--d1px) var(--d1px) var(--bg-light-er),
+  inset var(--d-2px) var(--d-2px) var(--bg-dark),
+  inset var(--d2px) var(--d2px) var(--bg-light-est);
+ --bg-checker-dpx-color: var(--bg);
+ --bg-checker-dpx:
+  linear-gradient(45deg, var(--bg-checker-dpx-color) 25%, transparent 25%, transparent 75%, var(--bg-checker-dpx-color) 75%, var(--bg-checker-dpx-color)) 0 0 / var(--d2px) var(--d2px),
+  linear-gradient(45deg, var(--bg-checker-dpx-color) 25%, transparent 25%, transparent 75%, var(--bg-checker-dpx-color) 75%, var(--bg-checker-dpx-color)) var(--d1px) var(--d1px) / var(--d2px) var(--d2px);
+}
+
+body.dark wallpaper->* {
+ --deep-inset-dpx:
+  inset var(--d-1px) var(--d-1px) var(--bg-light-est),
+  inset var(--d1px) var(--d1px) var(--bg-dark),
+  inset var(--d-2px) var(--d-2px) var(--bg-light-er),
+  inset var(--d2px) var(--d2px) black;
+ --deep-outset-dpx:
+  inset var(--d-1px) var(--d-1px) black,
+  inset var(--d1px) var(--d1px) var(--bg-light),
+  inset var(--d-2px) var(--d-2px) var(--bg-dark),
+  inset var(--d2px) var(--d2px) var(--bg-light-er);
+ --bg-checker-dpx-color: var(--bg);
+ --bg-checker-dpx:
+  linear-gradient(45deg, var(--bg-checker-dpx-color) 25%, transparent 25%, transparent 75%, var(--bg-checker-dpx-color) 75%, var(--bg-checker-dpx-color)) 0 0 / var(--d2px) var(--d2px),
+  linear-gradient(45deg, var(--bg-checker-dpx-color) 25%, transparent 25%, transparent 75%, var(--bg-checker-dpx-color) 75%, var(--bg-checker-dpx-color)) var(--d1px) var(--d1px) / var(--d2px) var(--d2px);
+}
+
+scroll-bar {
+ background: var(--bg-checker), white;
+}
+
+body.dark scroll-bar {
+ background: var(--bg-checker), black;
+}
+
+scroll-bar>:is(.scroll-up, .scroll-down, thumb-) {
+ background-color: var(--bg);
+ box-shadow: var(--deep-outset);
+}
+
+scroll-bar>:is(.scroll-up, .scroll-down).down {
+ box-shadow: var(--deep-inset);
+}
+
+scroller- {
+ margin-right: var(--scrollbar-width);
+ width: calc(100% - var(--scrollbar-width));
+}
+
+scroll-bar>:is(.scroll-up, .scroll-down) {
+ height: var(--scrollbar-width);
+}
+
+scroll-bar>:is(.scroll-up, .scroll-down)::after {
+ content: var(--symbol);
+ position: absolute;
+ width: 100%;
+ height: calc(100% / 60%);
+ top: 0;
+ left: 0;
+ line-height: var(--scrollbar-width);
+ text-align: center;
+ transform: scaleY(60%);
+ transform-origin: center;
+}
+
+scroll-bar>.scroll-up {
+ --symbol: "▲";
+ top: 0;
+}
+
+scroll-bar>.scroll-down {
+ --symbol: "▼";
+ bottom: 0;
+}
+
+scroll-bar>thumb- {
+ --track-height: calc(100% - 2 * var(--scrollbar-width));
+ --thumb-start: var(--scrollbar-width);
+}
+
+.toggle-control .base {
+ background: white;
+ width: 16px;
+ height: 16px;
+ box-shadow: var(--deep-inset);
+}
+
+.toggle-control .base::after {
+ content: "";
+ display: block;
+ width: 16px;
+ height: 16px;
+ line-height: 16px;
+ text-align: center;
+ font-weight: 900;
+ box-shadow: var(--deep-inset);
+ color: black;
+}
+
+.toggle-control[data-state="enabled"] .base::after {
+ content: "✓";
+}
+
+.toggle-control[data-state="partial"] .base::after {
+ content: "–";
+}
+
+#settings>*:focus>.label {
+ display: block;
+ position: relative;
+}
+
+#settings>*:focus>.label::after {
+ border: 1px dotted white;
+ mix-blend-mode: difference;
+ content: "";
+ position: absolute;
+ left: 0;
+ right: 0;
+ top: 0;
+ bottom: 0;
+ pointer-events: none;
+}
+
+.task-link>a,
+.task-link>a:visited {
+ line-height: var(--icon-size);
+ cursor: default;
+ position: relative;
+}
+
+.task-link>a:hover,
+#settings>a:not([disabled]):hover {
+ background: var(--accent);
+ color: var(--bg-mode-est);
+}
+
+.task-link[data-here]>a::after {
+ content: "✓";
+ display: block;
+ width: 16px;
+ height: 16px;
+ line-height: 16px;
+ text-align: center;
+ position: absolute;
+ font-weight: 900;
+ right: 8px;
+ top: 8px;
+}
+
+.task-link>a>.label {
+ font-weight: 300;
+ padding: 0 32px 0 4px;
+}
+
+.part-icon {
+ margin: 2px 6px;
+}
+
+.task {
+ font: var(--default-font-size) var(--system-ui);
+ position: relative;
+ height: 100%;
+ margin: 0;
+ width: 160px;
+ flex-shrink: 1;
+ flex-basis: 160px;
+ display: flex;
+ flex-flow: row nowrap;
+ gap: 3px;
+ border: none;
+ padding: 3px 2px 2px;
+ text-align: left;
+ box-shadow: var(--deep-outset);
+ overflow: hidden;
+}
+
+.task img {
+ flex-shrink: 0;
+}
+
+.task span {
+ white-space: pre;
+ overflow: hidden;
+ text-overflow: ellipsis;
+}
+
 body {
- --sidebar-height: min(calc(((var(--icon-size) + (2px * 2)) * ${menuApplicationsCount}) + (28px * ${controlLinesCount}) + (3px * 2) + ${separatorCount} * ((4px * 2) + 2px)), calc(var(--h) - var(--bottom)));
-}`
+ --bottom: calc(var(--task-bar-height) - 4px);
+ --spacing: 12px;
+ --title-bar-height: 18px;
+ --icon-size: var(--task-bar-height);
+ --deep-inset:
+  inset -1px -1px var(--bg-light-est),
+  inset 1px 1px var(--bg-dark),
+  inset -2px -2px var(--bg-light-er),
+  inset 2px 2px black;
+ --outset:
+  inset -1px -1px black,
+  inset 1px 1px var(--bg-light-est),
+  inset -2px -2px var(--bg-dark);
+ --deep-outset:
+  inset -1px -1px black,
+  inset 1px 1px var(--bg-light-er),
+  inset -2px -2px var(--bg-dark),
+  inset 2px 2px var(--bg-light-est);
+ --default-font-size: 11px;
+ font: var(--default-font-size) var(--system-ui);
+ /*image-rendering: pixelated;*/
+}
+
+body,
+task-bar {
+ --task-bar-height: 28px;
+}
+
+body.dark {
+ --deep-outset:
+  inset -1px -1px black,
+  inset 1px 1px var(--bg-light),
+  inset -2px -2px var(--bg-dark),
+  inset 2px 2px var(--bg-light-er);
+ --outset:
+  inset -1px -1px black,
+  inset 1px 1px var(--bg-light-er),
+  inset -2px -2px var(--bg-dark);
+}
+
+task-menu {
+ height: calc(var(--menu-tween) * var(--sidebar-height));
+ min-width: 164px;
+ left: 2px;
+ bottom: var(--bottom);
+ line-height: 18px;
+ padding: 3px 3px 3px 24px;
+ background: var(--bg);
+ text-align: left;
+ box-shadow: var(--deep-outset);
+}
+
+task-menu::after {
+ pointer-events: none;
+ /* font-smooth: never;
+ -webkit-font-smoothing: none; */
+ display: block;
+ writing-mode: tb-rl;
+ transform: rotate(-180deg);
+ line-height: 21px;
+ font-size: 18px;
+ font-weight: 200;
+ color: var(--accent-un-light-est);
+ padding-top: 4px;
+ position: absolute;
+ left: 3px;
+ top: 3px;
+ height: calc(var(--sidebar-height) - 6px);
+ background:
+  linear-gradient(rgba(0, 200, 255, 0), var(--accent-un-dark) 12.5%, rgba(0, 200, 255, 0) 70.71%),
+  var(--accent-un-dark-est);
+ width: 21px
+}
+
+hr {
+ height: 2px;
+ border-top: 1px solid var(--bg-dark-er);
+ border-bottom: 1px solid var(--bg-light-est);
+ margin: 4px 0;
+}
+
+[disabled],
+[disabled] *,
+a[disabled] {
+ pointer-events: none;
+ color: var(--bg-dark-er);
+ text-shadow: 1px 1px var(--bg-light-est);
+}
+
+body.dark :is([disabled], [disabled] *, a[disabled]) {
+ color: var(--bg-dark-est);
+ text-shadow: 1px 1px var(--bg-light-er);
+}
+
+body.dark hr {
+ border-top: 1px solid black;
+ border-bottom: 1px solid var(--bg-light-er);
+}
+
+.task>.icon {
+ width: 16px;
+ height: 16px;
+}
+
+body:focus-within:not(.menu-pressed)>:not(task-bar:focus-within)>button.task.pressed,
+body:focus-within:not(.menu-pressed)>task-bar>button.task.pressed:focus {
+ font: bold var(--default-font-size) var(--system-ui);
+ padding: 4px 2px 2px;
+ box-shadow: var(--deep-inset);
+ background: var(--bg-checker), white;
+}
+
+tray- {
+ position: relative;
+ display: flex;
+ flex-flow: row nowrap;
+ gap: 3px;
+ height: 100%;
+ margin: 0;
+ padding: 3px 4px 3px;
+ text-align: left;
+ background: var(--bg);
+ box-shadow: inset -1px -1px var(--bg-light-er), inset 1px 1px var(--bg-dark);
+ width: auto;
+}
+
+#clock-tray-item {
+ overflow: hidden;
+}
+
+#clock-tray-item,
+#stats-tray-item {
+ vertical-align: middle;
+ display: inline-block;
+ line-height: 16px;
+}
+
+#stats-tray-item {
+ background-color: var(--fg);
+ color: var(--bg);
+ margin-right: calc(2 * var(--icon-size) / 3);
+ position: relative;
+ text-align: center;
+ width: calc(2 * var(--icon-size) / 3);
+}
+
+#stats-tray-item::after {
+ background-color: var(--fg);
+ content: "FPS";
+ position: absolute;
+ left: calc(2 * var(--icon-size) / 3);
+ width: calc(2 * var(--icon-size) / 3);
+ text-align: center;
+ font-size: 75%;
+}
+
+task-bar {
+ gap: 3px;
+ padding: 4px 2px 2px;
+ background: var(--bg);
+ box-shadow: inset 0 1px var(--bg-light-er), inset 0 2px var(--bg-light);
+}
+
+task-bar>button {
+ width: min-content !important;
+ height: 22px;
+ margin-bottom: 2px;
+ margin-left: 2px;
+ display: flex;
+ flex-flow: row nowrap;
+ gap: 3px;
+ border: none;
+ font: bold var(--default-font-size) / 16px var(--system-ui);
+ padding: 3px 4px 2px;
+ text-align: left;
+ background: var(--bg);
+ box-shadow: var(--deep-outset);
+}
+
+title-bar>.part-icon {
+ width: 16px;
+ height: 16px;
+ margin: 1px 3px 1px 2px;
+}
+
+body.menu-pressed task-bar>button.menu {
+ box-shadow: var(--deep-inset);
+ padding: 4px 4px 2px;
+}
+
+desktop-icon .label {
+ position: relative;
+}
+
+task-bar>button:focus::before {
+ border: 1px dotted white;
+ mix-blend-mode: difference;
+ content: "";
+ position: absolute;
+ margin: 3px;
+ left: 0;
+ right: 0;
+ top: 0;
+ bottom: 0;
+ pointer-events: none;
+}
+
+task-bar>button.menu::after {
+ content: "Menu";
+}
+
+.handle {
+ display: none;
+}
+
+title-bar {
+ background-color: var(--bg-un-mode);
+ color: var(--fg-mode);
+}
+
+
+body:focus-within:not(.menu-pressed):has(>task-bar:not(:focus-within))>title-bar,
+body:focus-within:not(.menu-pressed):has(>task-bar>button.task.pressed:focus)>title-bar {
+ background-color: var(--accent);
+ color: white;
+}
+
+body:focus-within.dark:not(.menu-pressed):has(>task-bar:not(:focus-within))>title-bar,
+body:focus-within.dark:not(.menu-pressed):has(>task-bar>button.task.pressed:focus)>title-bar {
+ color: black;
+}
+
+title-bar>button {
+ width: 16px;
+ height: 14px;
+ margin: 2px;
+ background-color: var(--bg);
+ color: var(--fg);
+ box-shadow: var(--deep-outset);
+ flex-shrink: none;
+ line-height: 14px;
+ font-size: 14px;
+ text-align: center;
+ cursor: default;
+ text-decoration: none;
+}
+
+title-bar>button.down {
+ box-shadow: var(--deep-inset);
+}
+
+title-bar>:is(.hide, .restore) {
+ margin-left: 0;
+ margin-right: 0;
+}
+
+title-bar>.hide {
+ margin-right: 0;
+}
+
+task-menu::after {
+ content: "${_.openTask.fancyTitle}";
+}
+
+body {
+ --sidebar-height: min(calc(((var(--icon-size) + (2px * 2)) * ${menuItemsCount}) + (28px * ${controlLinesCount}) + (3px * 2) + ${separatorCount} * ((4px * 2) + 2px)), calc(var(--h) - var(--bottom)));
+}
+
+`

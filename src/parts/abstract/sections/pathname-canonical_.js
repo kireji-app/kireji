@@ -1,1 +1,1 @@
-return section.canonicalPathname
+return thisSections.arm.canonicalPathname

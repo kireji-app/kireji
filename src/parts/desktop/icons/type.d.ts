@@ -1,7 +1,8 @@
 declare interface IDesktopIcons
- extends IPartMask<IDesktop, IApplicationAny>,
- IWebComponent {
+ extends IPartMask<IDesktop, IAppAny>,
+ IWebView {
 
 }
 
-declare const desktopIcons: IDesktopIcons
+declare const DesktopIcons: IDesktopIcons
+type DesktopIcons = T

@@ -1,12 +1,12 @@
-const markedRouteID = scroller.routeID
-const scrollerLimit = scroller.cardinality - 1n
-const rangeLimit = BigInt(Math.trunc(Number(scrollerLimit) * (1 - scroller.container.clientHeight / scroller.container.scrollHeight)))
+const markedRID = thisScroller.rid
+const scrollerLimit = thisScroller.cardinality - 1n
+const rangeLimit = BigInt(Math.trunc(Number(scrollerLimit) * (1 - thisScroller.container.clientHeight / thisScroller.container.scrollHeight)))
 
-pointer.handle({
+Pointer.handle({
  drag(pointerEvent) {
-  const positionalRouteID = markedRouteID + BigInt(Math.trunc((pointerEvent.clientY - POINTER_EVENT.clientY) / (scroller.scrollBar.clientHeight - (era && era.arm === era.vintage ? 2 * scroller.scrollBar.clientWidth : 0)) * Number(scrollerLimit)))
-  const newRouteID = positionalRouteID < 0n ? 0n : (positionalRouteID > rangeLimit) ? rangeLimit : positionalRouteID
-  if (newRouteID !== scroller.routeID) scroller.setRouteID(newRouteID)
+  const positionalRID = markedRID + BigInt(Math.trunc((pointerEvent.clientY - POINTER_EVENT.clientY) / (thisScroller.scrollBar.clientHeight - (Era.arm === Era.vintage ? 2 * thisScroller.scrollBar.clientWidth : 0)) * Number(scrollerLimit)))
+  const newRID = positionalRID < 0n ? 0n : (positionalRID > rangeLimit) ? rangeLimit : positionalRID
+  if (newRID !== thisScroller.rid) thisScroller.setRID(newRID)
  },
  POINTER_EVENT,
  TARGET_ELEMENT

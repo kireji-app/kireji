@@ -1,4 +1,4 @@
-clip.define({
+define(thisClip, {
  frameRate: { value: 60, writable: true },
  frameTime: { value: 1000 / 60, writable: true },
  endOfPlaybackBehavior: { value: "autoplay", writable: true },

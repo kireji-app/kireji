@@ -1,1 +1,1 @@
-return Object.values(_.applications).filter(application => application !== _.parts.desktop)
+return _.publicHosts.split(" ").filter(host => host !== Desktop.host).map(host => lookup(host))

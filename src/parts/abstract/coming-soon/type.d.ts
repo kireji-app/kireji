@@ -1,11 +1,11 @@
-declare interface IComingSoonApplication<TOwner> extends IErrorApplication<TOwner> {
+declare interface IComingSoonApp<TOwner> extends IErrorApp<TOwner> {
 
- // Serialized Properties.
- /** An optional unix timestamp representing the date when the application is expected to be available. Search engine crawlers may return on this day to retry indexing the page. */
+ // Components.
+ /** An optional unix timestamp representing the date when the app is expected to be available. Search engine crawlers may return on this day to retry indexing the page. */
  readonly "launchTimestamp"?: string | number
 }
 
-declare type IComingSoonApplicationAny =
- IComingSoonApplication<ITopLevelDomain<IComingSoonApplicationAny>>
+declare type IComingSoonAppAny =
+ IComingSoonApp<ITopLevelDomain<IComingSoonAppAny>>
 
-declare const comingSoon: IComingSoonApplicationAny
+declare const thisComingSoonApp: IComingSoonAppAny

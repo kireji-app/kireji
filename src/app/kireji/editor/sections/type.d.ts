@@ -6,7 +6,9 @@ declare interface IKirejiAppEditorSections
  readonly issues: IKirejiAppEditorSection
  readonly state: IKirejiAppEditorSection
  readonly stateSpace: IKirejiAppEditorSection
- readonly properties: IKirejiAppEditorSection
+ readonly childPartList: IKirejiAppEditorSection
+ readonly componentList: IKirejiAppEditorSection
 }
 
-declare const sections: IKirejiAppEditorSections
+declare const KirejiEditorSections: IKirejiAppEditorSections
+type KirejiEditorSections = T

@@ -1,13 +1,13 @@
 let index = 0
 
 if (INITIAL_VALUE === undefined) {
- INITIAL_VALUE = part.subparts[0]
+ INITIAL_VALUE = thisPart.subparts[0]
  index = 1
 }
 
-for (; index < part.subparts.length; index++) {
- const subpart = part.subparts[index]
- INITIAL_VALUE = REDUCE_FUNCTION(INITIAL_VALUE, subpart, subpart.index, part)
+for (; index < thisPart.subparts.length; index++) {
+ const subpart = thisPart.subparts[index]
+ INITIAL_VALUE = REDUCE_FUNCTION(INITIAL_VALUE, subpart, subpart.index, thisPart)
 }
 
 return INITIAL_VALUE

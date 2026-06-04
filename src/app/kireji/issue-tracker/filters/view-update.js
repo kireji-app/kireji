@@ -1,1 +1,1 @@
-Q(".issue-table>scroller->scroll-content").innerHTML = kirejiIssueTracker["issues.html"]
+Q(".issue-table>scroller->scroll-content").innerHTML = KirejiIssueTracker["issues.html"]

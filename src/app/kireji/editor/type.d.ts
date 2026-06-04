@@ -1,15 +1,14 @@
 declare interface IKirejiAppEditor
  extends IMix<IKirejiApp, IKirejiAppEditorPart>,
- IWebComponent {
+ IWebView {
 
  // Subparts.
  readonly tabGroup: IKirejiAppTabGroup
  readonly sections: IKirejiAppEditorSections
  readonly scroller: IScroller<IKirejiAppEditor>
 
- // Serialized Properties.
+ // Components.
  readonly "crumbs.html": string
- readonly "static.css": string
  readonly "summary-view.html": string
  readonly "file-view.html": string
  readonly "background.svg": string
@@ -40,4 +39,5 @@ declare interface IKirejiAppEditorPointerConfig
  readonly dragPreviewElement?: HTMLElement
 }
 
-declare const editor: IKirejiAppEditor
+declare const KirejiEditor: IKirejiAppEditor
+type KirejiEditor = T

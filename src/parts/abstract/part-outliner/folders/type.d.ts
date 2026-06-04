@@ -1,4 +1,4 @@
 declare type IPartOutlinerFolders<TOwner> =
  IPartMask<TOwner, IPartAny>
 
-declare const folders: IPartOutlinerFolders<IPartOutlinerAny>
+declare const thisFolders: IPartOutlinerFolders<IPartOutlinerAny>

@@ -1,1 +1,1 @@
-return desktop.icons["part.html"]
+return Desktop.icons["part.html"]

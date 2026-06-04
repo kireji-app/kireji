@@ -1,9 +1,10 @@
 declare interface IClock
  extends ITrayItem {
 
- // Serialized Properties.
+ // Components.
  /** A locale string of the clock time currently displayed in the taskbar tray. */
  readonly "time": string
 }
 
-declare const clock: IClock
+declare const Clock: IClock
+type Clock = T

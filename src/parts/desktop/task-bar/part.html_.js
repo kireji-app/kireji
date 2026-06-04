@@ -1,3 +1,3 @@
-const includeDesktop = _.includeDesktop === "demo" || (!production && (_.includeDesktop === "full" || _.includeDesktop === "local-only"))
+const includeDesktop = _.includeDesktop === "demo" || (_.command === "debug" && (_.includeDesktop === "full" || _.includeDesktop === "local-only"))
 
-return `<task-bar tabIndex=0>${taskBar.menu["part.html"]}${includeDesktop ? windows.instances.map((window, index) => windows.renderTaskHTML(window, index)).join("") : ""}<flex-spacer></flex-spacer>${includeDesktop ? taskBar.tray["part.html"] : ""}</task-bar>`
+return `<task-bar tabIndex=0>${Menu["part.html"]}${includeDesktop ? Windows.instances.map((window, index) => Windows.renderTaskHTML(window, index)).join("") : ""}<flex-spacer></flex-spacer>${includeDesktop ? Tray["part.html"] : ""}</task-bar>`

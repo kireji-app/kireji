@@ -1,4 +1,5 @@
 {
+ "name": "KirejiIssueFiltersStatus",
  "extends": "mix",
  "order": [
   "to-do",

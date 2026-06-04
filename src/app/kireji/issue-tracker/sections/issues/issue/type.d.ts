@@ -1,8 +1,8 @@
 declare interface IKirejiIssue
  extends IPart<IKirejiIssues, null>,
- IApplicationDetails {
+ IAppDetails {
 
- // Serialized Properties.
+ // Components.
  readonly status: string
  readonly priority: string
  readonly affects: IPartAny[]
@@ -12,4 +12,4 @@ declare interface IKirejiIssue
  readonly niceDate(UNIX_TIMESTAMP: string | number): string
 }
 
-declare const kirejiIssue: IKirejiIssue
+declare const thisKirejiIssue: IKirejiIssue

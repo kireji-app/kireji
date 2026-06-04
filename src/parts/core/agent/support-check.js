@@ -1,1 +1,1 @@
-return nav.userAgent
+return navigator.userAgent

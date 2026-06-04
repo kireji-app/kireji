@@ -1,1 +1,1 @@
-boolean.setRouteID(boolean.model ? 0n : 1n)
+thisBoolean.setRID(thisBoolean.model ? 0n : 1n)

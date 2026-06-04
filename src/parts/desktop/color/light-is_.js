@@ -1,1 +1,1 @@
-return color.arm === color.light // || color.arm === color.device && color.device.isLight
+return Color.arm === Color.light // || Color.arm === Color.device && Color.device.isLight

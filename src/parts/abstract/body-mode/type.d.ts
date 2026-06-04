@@ -1,8 +1,8 @@
 declare interface IBodyMode<TOwner>
  extends IPart<TOwner, null>,
- IWebComponent {
+ IWebView {
 
- // Serialized Properties.
+ // Components.
  /** The class to assign to the body when the mode is active. */
  readonly "class": string
  /** The query for selecting any visible control of the mode. */
@@ -13,4 +13,4 @@ declare interface IBodyMode<TOwner>
 
 declare type IBodyModeAny = IBodyMode<IPartAny>
 
-declare const bodyMode: IBodyModeAny
+declare const thisBodyMode: IBodyModeAny

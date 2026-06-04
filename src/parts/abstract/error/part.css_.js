@@ -1,1 +1,1 @@
-return errorApp.getErrorCSS(errorApp["message.html"])
+return thisErrorApp.getErrorCSS(thisErrorApp["message.html"])

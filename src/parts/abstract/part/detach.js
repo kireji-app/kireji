@@ -1,13 +1,13 @@
-if (part.isAbstract)
- throw new Error(`Cannot detach from abstract part ${part.host}.`)
+if (thisPart.isAbstract)
+ throw error(`can't detach from abstract part`)
 
 if (typeof EVENT_TYPE !== "string")
- throw new Error(`EVENT_TYPE must be a string (while trying to detach from ${part.host}).`)
+ throw error(`EVENT_TYPE must be a string`)
 
-if (!(EVENT_TYPE in part.callbacks))
- throw new Error(`Cannot detach from unknown event type "${EVENT_TYPE}" (while trying to detach from ${part.host}).`)
+if (!(EVENT_TYPE in thisPart.callbacks))
+ throw error(`unknown event type "${EVENT_TYPE}"`)
 
-if (!(_.parts.abstract.part.isPrototypeOf(RECEIVER)))
- throw new Error(`Event receiver must be another part (while trying to detach from ${part.host}:${EVENT_TYPE}).`)
+if (!(Base.isPrototypeOf(RECEIVER)))
+ throw error(`${EVENT_TYPE} receiver must be a part`)
 
-delete part.callbacks[EVENT_TYPE][RECEIVER.host + ":" + CALLBACK_NAME]
+delete thisPart.callbacks[EVENT_TYPE][RECEIVER.host + ":" + CALLBACK_NAME]

@@ -1,3 +1,4 @@
 {
- "extends": "application"
+ "name": "Desktop",
+ "extends": "app"
 }

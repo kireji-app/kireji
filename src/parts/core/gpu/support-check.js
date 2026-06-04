@@ -1,1 +1,1 @@
-return nav.gpu
+return navigator.gpu

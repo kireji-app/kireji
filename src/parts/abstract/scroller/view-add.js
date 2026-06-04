@@ -1,1 +1,1 @@
-scroller.hydrateView()
+thisScroller.hydrateView()

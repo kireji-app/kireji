@@ -1,0 +1,1 @@
+Currently, there are RIDs that point to states that have both an issue tracker filters popup and the issue modal at the same time. These are incompatable, so these RIDs are wasted.

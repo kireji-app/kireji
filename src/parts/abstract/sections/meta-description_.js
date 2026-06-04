@@ -1,1 +1,1 @@
-return section.descriptionMeta
+return thisSections.arm.descriptionMeta

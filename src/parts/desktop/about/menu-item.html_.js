@@ -1,1 +1,1 @@
-return `<a ${_.application === aboutEcosystem ? "disabled" : _.pointAttr()} href=https://${aboutEcosystem.host}>About</a>`
+return `<a ${_.openTask === AboutApp ? "disabled" : _.pointAttr()} href=https://${AboutApp.host}>About</a>`

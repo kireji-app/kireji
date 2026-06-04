@@ -1,3 +1,3 @@
 return [
- desktop.icons.pointAttr()
+ Desktop.icons.pointAttr()
 ]

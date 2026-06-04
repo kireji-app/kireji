@@ -1,9 +1,9 @@
-let imgOwner = part
+let imgOwner = thisPart
 
 while (imgOwner && !imgOwner.filenames.includes(IMAGE_NAME))
  imgOwner = imgOwner.prototype
 
 if (!imgOwner)
- throw new ReferenceError(`can't find image called "${IMAGE_NAME}" on ${part.instancePath} or any of its prototypes.`)
+ throw error(`can't find image "${IMAGE_NAME}"`)
 
 return `var(--${imgOwner.host.replaceAll("-", "_").replaceAll(".", "-")}--${IMAGE_NAME.replaceAll("-", "_").replaceAll(".", "-")})`

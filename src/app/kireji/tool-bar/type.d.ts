@@ -1,6 +1,6 @@
 declare interface IKirejiAppToolBar
  extends IMatch<IKirejiApp, IKirejiAppToolBarItem>,
- IWebComponent {
+ IWebView {
 
  // Subparts.
  readonly hidden: IKirejiAppToolBarItem
@@ -10,6 +10,7 @@ declare interface IKirejiAppToolBar
 
 declare interface IKirejiAppToolBarItem
  extends IPart<IKirejiAppToolBar, null>,
- IWebComponent { }
+ IWebView { }
 
-declare const toolBar: IKirejiAppToolBar
+declare const KirejiToolBar: IKirejiAppToolBar
+type KirejiToolBar = T

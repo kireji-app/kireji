@@ -1,1 +1,1 @@
-return errorApp.getErrorHTML(errorApp.status, errorApp["message.html"])
+return thisErrorApp.getErrorHTML(thisErrorApp.status, thisErrorApp["message.html"])

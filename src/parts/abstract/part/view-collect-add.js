@@ -1,10 +1,10 @@
-if (part.dirty && part.justEnabled) {
+if (thisPart.dirty && thisPart.justEnabled) {
 
  // Add parent view before adding own.
- part[".."]?.collectAddView()
+ thisPart[".."]?.collectAddView()
 
- if (part.isOpen)
-  part.addView()
+ if (thisPart.isOpen)
+  thisPart.addView()
 
- part.notify("add")
+ thisPart.notify("add")
 }

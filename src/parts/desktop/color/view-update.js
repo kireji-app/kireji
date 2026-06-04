@@ -1,1 +1,1 @@
-Q("#color-css").innerHTML = color["part.css"]
+Q("#color-css").innerHTML = Color["part.css"]

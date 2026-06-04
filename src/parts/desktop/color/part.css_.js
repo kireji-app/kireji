@@ -1,67 +1,67 @@
 return `html, body {
  /* All six theme colors without shading. */
 
- --light-fg: ${_.application.lightFgTheme};
- --light-bg: ${_.application.lightBgTheme};
- --light-accent: ${_.application.lightAccentTheme};
- --dark-fg: ${_.application.darkFgTheme};
- --dark-bg: ${_.application.darkBgTheme};
- --dark-accent: ${_.application.darkAccentTheme};
+ --light-fg: ${_.openTask.lightFgTheme};
+ --light-bg: ${_.openTask.lightBgTheme};
+ --light-accent: ${_.openTask.lightAccentTheme};
+ --dark-fg: ${_.openTask.darkFgTheme};
+ --dark-bg: ${_.openTask.darkBgTheme};
+ --dark-accent: ${_.openTask.darkAccentTheme};
 
  /* Absolute shades of each color. */
 
- --accent-light-est: ${color.lightEstAccent};
- --accent-light-er: ${color.lightErAccent};
- --accent-light: ${color.lightAccent};
- --accent: ${color.accent};
- --accent-dark: ${color.darkAccent};
- --accent-dark-er: ${color.darkErAccent};
- --accent-dark-est: ${color.darkEstAccent};
+ --accent-light-est: ${Color.lightEstAccent};
+ --accent-light-er: ${Color.lightErAccent};
+ --accent-light: ${Color.lightAccent};
+ --accent: ${Color.accent};
+ --accent-dark: ${Color.darkAccent};
+ --accent-dark-er: ${Color.darkErAccent};
+ --accent-dark-est: ${Color.darkEstAccent};
 
- --accent-un-light-est: ${color.unLightEstAccent};
- --accent-un-light-er: ${color.unLightErAccent};
- --accent-un-light: ${color.unLightAccent};
- --accent-un: ${color.unAccent};
- --accent-un-dark: ${color.unDarkAccent};
- --accent-un-dark-er: ${color.unDarkErAccent};
- --accent-un-dark-est: ${color.unDarkEstAccent};
+ --accent-un-light-est: ${Color.unLightEstAccent};
+ --accent-un-light-er: ${Color.unLightErAccent};
+ --accent-un-light: ${Color.unLightAccent};
+ --accent-un: ${Color.unAccent};
+ --accent-un-dark: ${Color.unDarkAccent};
+ --accent-un-dark-er: ${Color.unDarkErAccent};
+ --accent-un-dark-est: ${Color.unDarkEstAccent};
 
- --fg-light-est: ${color.lightEstFg};
- --fg-light-er: ${color.lightErFg};
- --fg-light: ${color.lightFg};
- --fg: ${color.fg};
- --fg-dark: ${color.darkFg};
- --fg-dark-er: ${color.darkErFg};
- --fg-dark-est: ${color.darkEstFg};
+ --fg-light-est: ${Color.lightEstFg};
+ --fg-light-er: ${Color.lightErFg};
+ --fg-light: ${Color.lightFg};
+ --fg: ${Color.fg};
+ --fg-dark: ${Color.darkFg};
+ --fg-dark-er: ${Color.darkErFg};
+ --fg-dark-est: ${Color.darkEstFg};
 
- --bg-light-est: ${color.lightEstBg};
- --bg-light-er: ${color.lightErBg};
- --bg-light: ${color.lightBg};
- --bg: ${color.bg};
- --bg-dark: ${color.darkBg};
- --bg-dark-er: ${color.darkErBg};
- --bg-dark-est: ${color.darkEstBg};
+ --bg-light-est: ${Color.lightEstBg};
+ --bg-light-er: ${Color.lightErBg};
+ --bg-light: ${Color.lightBg};
+ --bg: ${Color.bg};
+ --bg-dark: ${Color.darkBg};
+ --bg-dark-er: ${Color.darkErBg};
+ --bg-dark-est: ${Color.darkEstBg};
 
  /* Color-mode relative shades of each color. */
 
- --accent-mode-est: ${color.modeEstAccent};
- --accent-mode-er: ${color.modeErAccent};
- --accent-mode: ${color.modeAccent};
- --accent-un-mode: ${color.unModeAccent};
- --accent-un-mode-er: ${color.unModeErAccent};
- --accent-un-mode-est: ${color.unModeEstAccent};
+ --accent-mode-est: ${Color.modeEstAccent};
+ --accent-mode-er: ${Color.modeErAccent};
+ --accent-mode: ${Color.modeAccent};
+ --accent-un-mode: ${Color.unModeAccent};
+ --accent-un-mode-er: ${Color.unModeErAccent};
+ --accent-un-mode-est: ${Color.unModeEstAccent};
 
- --fg-mode-est: ${color.modeEstFg};
- --fg-mode-er: ${color.modeErFg};
- --fg-mode: ${color.modeFg};
- --fg-un-mode: ${color.unModeFg};
- --fg-un-mode-er: ${color.unModeErFg};
- --fg-un-mode-est: ${color.unModeEstFg};
+ --fg-mode-est: ${Color.modeEstFg};
+ --fg-mode-er: ${Color.modeErFg};
+ --fg-mode: ${Color.modeFg};
+ --fg-un-mode: ${Color.unModeFg};
+ --fg-un-mode-er: ${Color.unModeErFg};
+ --fg-un-mode-est: ${Color.unModeEstFg};
 
- --bg-mode-est: ${color.modeEstBg};
- --bg-mode-er: ${color.modeErBg};
- --bg-mode: ${color.modeBg};
- --bg-un-mode: ${color.unModeBg};
- --bg-un-mode-er: ${color.unModeErBg};
- --bg-un-mode-est: ${color.unModeEstBg};
+ --bg-mode-est: ${Color.modeEstBg};
+ --bg-mode-er: ${Color.modeErBg};
+ --bg-mode: ${Color.modeBg};
+ --bg-un-mode: ${Color.unModeBg};
+ --bg-un-mode-er: ${Color.unModeErBg};
+ --bg-un-mode-est: ${Color.unModeEstBg};
 }`

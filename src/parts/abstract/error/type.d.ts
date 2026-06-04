@@ -1,7 +1,7 @@
-declare interface IErrorApplication<TOwner>
- extends IApplication<TOwner, IPartAny> {
+declare interface IErrorApp<TOwner>
+ extends IApp<TOwner, IPartAny> {
 
- // Serialized Properties.
+ // Components.
  /** The status code for the error response. */
  readonly "status": string
  /** The displayed error message. */
@@ -14,10 +14,10 @@ declare interface IErrorApplication<TOwner>
  readonly getErrorResponse(ERROR_STRING: string, REQUEST_HOST: string): string
 }
 
-declare type IErrorApplicationAny =
- IErrorApplication<ITopLevelDomain<IErrorApplicationAny>>
+declare type IErrorAppAny =
+ IErrorApp<ITopLevelDomain<IErrorAppAny>>
 
-declare const errorApp: IErrorApplicationAny
+declare const thisErrorApp: IErrorAppAny
 
 declare const ERROR_STRING: string
 declare const REQUEST_HOST: string

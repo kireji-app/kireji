@@ -4,7 +4,7 @@ const instanceBitDepths = [0n, 0n]
 const permutationSizes = [1n]
 const payloadCardinality = 2000n ** 4n
 const payloadSizes = [1n]
-const superset = permutation.getSuperset()
+const superset = thisPermutation.getSuperset()
 const supersetSize = BigInt(superset.length)
 const maxInstanceCount = supersetSize
 const LSB = []
@@ -40,7 +40,7 @@ for (let subsetSize = 1n, permutationSize = 1n, payloadSize = 1n; subsetSize <= 
  instanceBitDepths[bitDepth] = subsetSize
 }
 
-permutation.define({
+define(thisPermutation, {
  instanceOffsets: { value: instanceOffsets },
  instanceBitDepths: { value: instanceBitDepths },
  permutationSizes: { value: permutationSizes },
@@ -52,10 +52,10 @@ permutation.define({
 
  cardinality: { value: cardinality },
 
- permutationRouteID: { value: null, writable: true },
- viewedPermutationRouteID: { value: null, writable: true },
+ permutationRID: { value: null, writable: true },
+ viewedPermutationRID: { value: null, writable: true },
 
- payloadRouteID: { value: null, writable: true },
+ payloadRID: { value: null, writable: true },
 
  instances: { value: [] },
  viewedInstances: { value: null, writable: true },

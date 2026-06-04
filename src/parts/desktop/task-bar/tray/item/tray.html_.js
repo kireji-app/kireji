@@ -1,1 +1,1 @@
-return `<button ${trayItem.pointAttr()} title="${trayItem.tooltip}" id=${trayItem.key}-tray-item>${trayItem["button.html"]}</button>`
+return `<button ${thisTrayItem.pointAttr()} title="${thisTrayItem.tooltip}" id=${thisTrayItem.key}-tray-item>${thisTrayItem["button.html"]}</button>`

@@ -1,10 +1,10 @@
 // Hydrate own view before hydrating subpart views.
-if (part.enabled) {
+if (thisPart.enabled) {
 
- if (part.isOpen)
-  part.hydrateView()
+ if (thisPart.isOpen)
+  thisPart.hydrateView()
 
  // Don't distribute hydration to disabled subparts. They will call `addView()` when they enable.
- for (const subpart of part)
+ for (const subpart of thisPart)
   subpart.distributeHydrateView()
 }

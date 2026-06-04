@@ -1,6 +1,6 @@
-pointer.handle({
+Pointer.handle({
  click() {
-  boolean.toggle()
+  thisBoolean.toggle()
  },
  POINTER_EVENT,
  TARGET_ELEMENT

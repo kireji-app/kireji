@@ -29,23 +29,23 @@ if (ERROR_STRING.startsWith("Favicon")) {
  payload.status = 404
  payload.body = `<span>📄</span><span class=thin>${path.length > 18 ? "The requested path" : `"${path}"`}</span><span>was removed or never existed.</span>`
 } else {
- error(ERROR_STRING)
+ logError(ERROR_STRING)
  payload.logMessage = "Server Error"
  payload.status = 500
  payload.body = "<span>An unknown server error occurred.</span>"
 }
 
-const themeBGColor = (_.applications[REQUEST_HOST] ?? _.applications[_.defaultApplicationHost])[`theme-light-bg`];
+const themeBGColor = (lookup(REQUEST_HOST) ?? lookup(_.defaultHost))[`theme-light-bg`];
 payload.body = `<style>html {
   background-color: var(--bg);
   --app-height: 100vh;
   --bg: ${themeBGColor};
-  --bg-un-mode: #${color.blendHex(themeBGColor, "cfcfcf", "multiply")};
+  --bg-un-mode: #${Color.blendHex(themeBGColor, "cfcfcf", "multiply")};
   font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
- }${errorApp.getErrorCSS(payload.body)}
+ }${thisErrorApp.getErrorCSS(payload.body)}
 </style>
 <body class=app-container>
-${errorApp.getErrorHTML(payload.status, payload.body)}
+${thisErrorApp.getErrorHTML(payload.status, payload.body)}
 </body>`
 
 return payload

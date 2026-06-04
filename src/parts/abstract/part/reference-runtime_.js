@@ -1,1 +1,1 @@
-return part[".."].runtimeReference + (part.key.includes("-") || !isNaN(part.key[0]) ? `['${part.key}']` : "." + part.key)
+return thisPart[".."].runtimeReference + (thisPart.key.includes("-") || !isNaN(thisPart.key[0]) ? `['${thisPart.key}']` : "." + thisPart.key)

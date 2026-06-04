@@ -1,2 +1,2 @@
-if (boolean.routeID === 0n)
- boolean.setRouteID(1n)
+if (thisBoolean.rid === 0n)
+ thisBoolean.setRID(1n)

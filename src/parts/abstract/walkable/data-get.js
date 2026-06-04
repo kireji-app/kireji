@@ -1,4 +1,4 @@
-const { points, tris } = walkable.manifest
+const { points, tris } = thisWalkable.manifest
 
 const data = { walkable: [[], []] }
 

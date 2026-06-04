@@ -1,2 +1,2 @@
-permutation.viewedPermutationRouteID = permutation.permutationRouteID
-permutation.viewedInstances = [...permutation.instances]
+thisPermutation.viewedPermutationRID = thisPermutation.permutationRID
+thisPermutation.viewedInstances = [...thisPermutation.instances]

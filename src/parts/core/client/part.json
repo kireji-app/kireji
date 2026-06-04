@@ -1,6 +1,7 @@
 {
+ "name": "Client",
  "extends": "facet",
- "methods": {
+ "actions": {
   "loop-request": [
    "REQUEST_TIME"
   ],

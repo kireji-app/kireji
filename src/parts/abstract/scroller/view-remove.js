@@ -1,7 +1,7 @@
-scroller.thumb = null
-scroller.content = null
-scroller.scrollBar = null
-scroller.container.removeEventListener("scroll", scroller.listener, { passive: true })
-scroller.container = null
-scroller.observer.disconnect()
-scroller.observer = null
+thisScroller.thumb = null
+thisScroller.content = null
+thisScroller.scrollBar = null
+thisScroller.container.removeEventListener("scroll", thisScroller.listener, { passive: true })
+thisScroller.container = null
+thisScroller.observer.disconnect()
+thisScroller.observer = null

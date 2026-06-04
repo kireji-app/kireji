@@ -1,1 +1,1 @@
-return color.isLight ? color.lightErFg : color.darkErFg
+return Color.isLight ? Color.lightErFg : Color.darkErFg

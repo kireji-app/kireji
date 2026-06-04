@@ -1,5 +1,6 @@
 declare interface IKirejiApp
- extends IAppApplication {
+ extends IAppTLDApp,
+ IWebView {
 
  // Subparts.
  readonly toolBar: IKirejiAppToolBar
@@ -8,4 +9,5 @@ declare interface IKirejiApp
  readonly issueTracker: IKirejiIssueTrackerApp
 }
 
-declare const kirejiApp: IKirejiApp
+declare const KirejiApp: IKirejiApp
+type KirejiApp = T

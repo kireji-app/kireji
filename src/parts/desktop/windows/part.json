@@ -1,6 +1,7 @@
 {
+ "name": "Windows",
  "extends": "permutation",
- "methods": {
+ "actions": {
   "point": [
    "POINTER_EVENT",
    "TARGET_ELEMENT",

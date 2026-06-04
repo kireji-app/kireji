@@ -1,1 +1,1 @@
-return kirejiIssueSections["urls.xml"]
+return KirejiIssuesSections["urls.xml"]

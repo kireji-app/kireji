@@ -1,1 +1,1 @@
-menuClip.hydrateView()
+thisMenuClip.hydrateView()

@@ -1,6 +1,7 @@
 {
+ "name": "Pointer",
  "extends": "facet",
- "methods": {
+ "actions": {
   "handle": [
    "POINTER_CONFIG"
   ]

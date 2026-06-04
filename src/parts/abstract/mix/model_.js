@@ -1,6 +1,6 @@
 const model = {}
 
-for (const factor of mix)
+for (const factor of thisMix)
  // if (factor.cardinality !== 1n)
  model[factor.key] = factor.model
 

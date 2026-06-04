@@ -1,3 +1,3 @@
 return {
- instances: permutation.instances.map(instance => permutation.instanceToModel(instance))
+ instances: thisPermutation.instances.map(instance => thisPermutation.instanceToModel(instance))
 }

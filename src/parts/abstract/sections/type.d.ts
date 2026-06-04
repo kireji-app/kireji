@@ -1,13 +1,12 @@
-declare interface IApplicationSections<TOwner, TSection>
+declare interface IAppSections<TOwner, TSection>
  extends IMatch<TOwner, TSection>,
- IApplicationDetails { }
+ IAppDetails { }
 
-declare type IApplicationSectionsAny =
- IApplicationSections<IApplicationAny, IApplicationSubsection<IApplicationSectionsAny>>
+declare type IAppSectionsAny =
+ IAppSections<IAppAny, IAppSubsection<IAppSectionsAny>>
 
-declare interface IApplicationSubsection<TApplicationSections>
- extends IMatch<TApplicationSections, IPart<IApplicationSubsection<TApplicationSections>, IPartAny>>,
- IApplicationDetails { }
+declare interface IAppSubsection<TAppSections>
+ extends IMatch<TAppSections, IPart<IAppSubsection<TAppSections>, IPartAny>>,
+ IAppDetails { }
 
-declare const section: IApplicationSubsection<IApplicationSectionsAny>
-declare const sections: IApplicationSectionsAny
+declare const thisSections: IAppSectionsAny

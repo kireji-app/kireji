@@ -1,7 +1,7 @@
 declare interface IBoolean<IOwner>
  extends IPart<IOwner, null> {
 
- // Serialized Properties.
+ // Components.
  readonly model: boolean
  /** Inverts the current state of the boolean. */
  readonly toggle(): void
@@ -11,4 +11,4 @@ declare interface IBoolean<IOwner>
  readonly set(): void
 }
 
-declare const boolean: IBoolean<IPartAny>
+declare const thisBoolean: IBoolean<IPartAny>

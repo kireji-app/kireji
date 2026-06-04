@@ -1,2 +1,2 @@
-part.dirty = false
-part[".."]?.collectClean()
+thisPart.dirty = false
+thisPart[".."]?.collectClean()

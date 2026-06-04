@@ -1,2 +1,2 @@
-menu.element.remove()
+Menu.element.remove()
 document.body.classList.remove("menu-pressed")

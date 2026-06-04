@@ -1,13 +1,13 @@
 declare interface IAbstract
- extends IErrorApplication<IParts> {
+ extends IErrorApp<IParts> {
 
  // Subparts.
- readonly application: IApplication<IAbstract, null>
+ readonly app: IApp<IAbstract, null>
  readonly bodyMode: IBodyMode<IAbstract>
  readonly boolean: IBoolean<IAbstract>
  readonly clip: IClip<IAbstract, null>
- readonly comingSoon: IComingSoonApplication<IAbstract>
- readonly error: IErrorApplication<IAbstract>
+ readonly comingSoon: IComingSoonApp<IAbstract>
+ readonly error: IErrorApp<IAbstract>
  readonly facet: IFacet<IAbstract, null>
  readonly issue: ITrackedIssue<IAbstract>
  readonly match: IMatch<IAbstract, null>
@@ -18,6 +18,6 @@ declare interface IAbstract
  readonly partOutliner: IPartOutliner<IAbstract>
  readonly permutation: IPermutation<IAbstract, null, null, null>
  readonly scroller: IScroller<IAbstract, null>
- readonly sections: IApplicationSections<IAbstract, null>
+ readonly sections: IAppSections<IAbstract, null>
  readonly tld: ITopLevelDomain<IAbstract, null>
 }

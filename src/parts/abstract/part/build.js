@@ -1,11 +1,11 @@
-part.subparts.sort((() => {
+thisPart.subparts.sort((() => {
 
- if (Array.isArray(part.manifest.order)) {
+ if (Array.isArray(thisPart.manifest.order)) {
   // If there is a custom order defined, just used that.
-  return (a, b) => part.manifest.order.indexOf(a.key) - part.manifest.order.indexOf(b.key)
+  return (a, b) => thisPart.manifest.order.indexOf(a.key) - thisPart.manifest.order.indexOf(b.key)
  }
 
- /* Otherwise, sort ascending by cardinality to optimize Route ID encoding:
+ /* Otherwise, sort ascending by cardinality to optimize RID encoding:
   1. In mix parts, using the largest factor as the most significant digit
      prevents its large cardinality from being a multiplier for other factors.
   2. In match parts, placing larger arms at the end of the address space
@@ -19,14 +19,14 @@ part.subparts.sort((() => {
  }
 })())
 
-part.define({
+define(thisPart, {
  dirty: { value: false, writable: true },
- routeID: { value: -1n, writable: true },
- deltaRouteID: { value: 0n, writable: true },
+ rid: { value: -1n, writable: true },
+ deltaRID: { value: 0n, writable: true },
  enabled: { value: false, writable: true },
  disabled: { value: true, writable: true },
  cardinality: { value: 1n, configurable: true },
- previousRouteID: { value: -1n, writable: true },
+ previousRID: { value: -1n, writable: true },
  wasEnabled: { value: false, writable: true },
  justEnabled: { value: false, writable: true },
  justDisabled: { value: false, writable: true },

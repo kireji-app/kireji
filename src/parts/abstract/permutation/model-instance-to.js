@@ -1,1 +1,1 @@
-throw new ReferenceError(`Permutation Error: part instance does not have a defined "${PROPERTY_ID}" method.`)
+throw error(`can't find action "${componentKey}"`)

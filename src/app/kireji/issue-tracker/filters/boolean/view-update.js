@@ -1,1 +1,1 @@
-Q(`#issue-tracker_kireji_app .toggle-control.${boolean.key}`).setAttribute("data-state", boolean.model ? "enabled" : "disabled")
+Q(`#issue-tracker_kireji_app .toggle-control.${thisBoolean.key}`).setAttribute("data-state", thisBoolean.model ? "enabled" : "disabled")

@@ -1,6 +1,6 @@
 const orders = ["descending", "ascending"]
 
-if (boolean.model)
+if (thisBoolean.model)
  orders.reverse()
 
 Q(".issue-row.header").classList.replace(...orders)

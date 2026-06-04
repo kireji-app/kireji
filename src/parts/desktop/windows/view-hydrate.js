@@ -1,17 +1,17 @@
 base()
 
-if (_.application !== desktop) {
- client.promise.then(() => {
-  const windowIndex = windows.instances.findIndex(window => window.application === _.application)
+if (_.openTask !== Desktop) {
+ Client.promise.then(() => {
+  const windowIndex = Windows.instances.findIndex(window => window.part === _.openTask)
   if (windowIndex === -1) {
-   windows.instances.push({
-    application: _.application,
+   Windows.instances.push({
+    part: _.openTask,
     left: 0,
     top: 0,
     width: 1999,
     height: 1999
    })
-   windows.recomputeRouteID()
+   Windows.recomputeRID()
   }
  })
 }

@@ -1,4 +1,4 @@
-const launchDate = comingSoon.launchTimestamp
+const launchDate = thisComingSoonApp.launchTimestamp
 const oneDay = 24 * 60 * 60
 const oneWeek = oneDay * 7
 const fiveMinutes = 5 * 60

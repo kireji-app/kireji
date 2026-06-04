@@ -1,0 +1,1 @@
+return _.openTask === thisApp

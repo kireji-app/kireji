@@ -1,1 +1,1 @@
-return sections.map(section => section["urls.xml"]).join("")
+return thisSections.map(section => section["urls.xml"]).join("")

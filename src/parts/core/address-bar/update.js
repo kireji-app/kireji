@@ -1,15 +1,17 @@
-if (!facet.supported)
- throw "Can't set address bar right now. " + facet.error
+if (!thisFacet.supported)
+ throw error("can't set address bar in this environment")
 
-if (addressBar.timer)
- clearTimeout(addressBar.timer)
+if (AddressBar.timer)
+ clearTimeout(AddressBar.timer)
 
-addressBar.timer = setTimeout(() => {
- if (_.routeID !== addressBar.routeIDCache) {
-  addressBar.routeIDCache = _.routeID
-  const pathname = encodePathname(_.routeID)
+AddressBar.timer = setTimeout(() => {
+ if (_.rid !== AddressBar.RIDCache) {
+  AddressBar.RIDCache = _.rid
+  const pathname = RID.toPath(_.rid)
   history.replaceState(null, null, pathname)
-  addressBar.throttleStartTime = _.now
-  addressBar.timer = null
+  AddressBar.throttleStartTime = _.now
+  AddressBar.timer = null
  }
-}, addressBar.throttleDuration + addressBar.throttleStartTime - _.now)
+}, AddressBar.throttleDuration + AddressBar.throttleStartTime - _.now)
+
+AddressBar.cardinality

@@ -1,1 +1,1 @@
-return part.subparts.indexOf(...ARGS)
+return thisPart.subparts.indexOf(...ARGS)

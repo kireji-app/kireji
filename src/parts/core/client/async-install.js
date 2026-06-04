@@ -1,9 +1,9 @@
 await Promise.all([
- ...PROMISE_ARRAY.filter(promise => promise !== client.promise),
- worker.takeControlAsync()
+ ...PROMISE_ARRAY.filter(promise => promise !== Client.promise),
+ OfflineServer.takeControlAsync()
 ])
 
-if (!production) {
+if (_.command === "debug") {
 
  // To debug FOUC.
  if (_.haltHydration === "enabled") {
@@ -34,16 +34,14 @@ logScope(0, "Finalizing Hydration", log => {
     && pointerEvent.clientY <= boundingClientRect.bottom
   },
   setUndoPoint() {
-   _.parts.core.addressBar.setUndoPoint()
-  },
-  pointer: _.parts.core.pointer,
-  client: _.parts.core.client
+   AddressBar.setUndoPoint()
+  }
  })
 
  // Handle forward/back button navigation.
  window.addEventListener("pageshow", pageTransitionEvent => {
   log("Setting Initial State")
-  addressBar.useRoute()
+  AddressBar.useRoute()
 
   log("Activating Body")
   document.body.classList.remove("unhydrated")
@@ -52,7 +50,7 @@ logScope(0, "Finalizing Hydration", log => {
  })
  globalThis.addEventListener("popstate", () => {
   log("Setting Initial State")
-  addressBar.useRoute()
+  AddressBar.useRoute()
 
   log("Activating Body")
   document.body.classList.remove("unhydrated")
@@ -61,11 +59,11 @@ logScope(0, "Finalizing Hydration", log => {
  })
 
  // Prevent normal click events to ensure the pointerdown event always takes precedence.
- document.addEventListener("click", client.blockClicks, { capture: true })
+ document.addEventListener("click", Client.blockClicks, { capture: true })
 
  log("Setting Initial State")
  // Propagate the initial state (matched to the snapshot exactly).
- addressBar.useRoute()
+ AddressBar.useRoute()
 
  log("Activating Interaction")
  // Enable HTML event listeners.
@@ -73,9 +71,9 @@ logScope(0, "Finalizing Hydration", log => {
  // Disable pre-hydration presentation.
  document.body.classList.remove("unhydrated")
  // Switch to post-hydration state propagation.
- client.hydrated = true
+ Client.hydrated = true
 
  log("Starting Engine Loop")
  // One-frame lag to capture refresh-rate-specific initial timestamp.
- requestAnimationFrame(now => client.requestLoop(now))
+ requestAnimationFrame(now => Client.requestLoop(now))
 })

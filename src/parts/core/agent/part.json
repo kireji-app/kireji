@@ -1,6 +1,7 @@
 {
+ "name": "Agent",
  "extends": "facet",
- "methods": {
+ "actions": {
   "fullscreen-toggle": [
    "FORCE_STATE"
   ]

@@ -1,15 +1,16 @@
 declare interface ITaskBar
  extends IMix<IDesktop, ITaskbarPart>,
- IWebComponent {
+ IWebView {
 
  // Subparts.
  readonly tray: ITray
  readonly menu: IMenu
 
- // Runtime Properties.
+ // Properties.
  readonly element: HTMLElement
 }
 
 declare type ITaskbarPart = IPart<ITaskBar, IPartAny>
 
-declare const taskBar: ITaskBar
+declare const TaskBar: ITaskBar
+type TaskBar = T

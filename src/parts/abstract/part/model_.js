@@ -1,1 +1,1 @@
-return encodeSegment(part.routeID)
+return RID.toHash(thisPart.rid)

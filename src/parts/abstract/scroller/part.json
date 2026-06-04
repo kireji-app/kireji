@@ -1,9 +1,6 @@
 {
  "abstract": true,
- "methods": {
-  "top-scroll-to": [],
-  "onscroll": [],
-  "onresize": [],
+ "actions": {
   "wrap": [
    "INNER_HTML"
   ],

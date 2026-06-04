@@ -1,11 +1,11 @@
-pointer.handle({
+Pointer.handle({
  click() {
 
   const button = Q("#update-control")
   const label = button.querySelector(".label")
 
-  if (update.version) {
-   location.href = `${location.origin}/${update.version}/${encodeSegment(_.routeID)}/?from=${_.version}`
+  if (Update.version) {
+   location.href = `${location.origin}/${Update.version}/${RID.toHash(_.rid)}/?from=${_.version}`
    return
   }
 
@@ -24,13 +24,13 @@ pointer.handle({
   fetch(`${location.origin}/-v`)
    .then(response => response.text())
    .then(version => {
-    if (update.isNewerVersion(version)) {
-     update.version = version
+    if (Update.isNewerVersion(version)) {
+     Update.version = version
      label.textContent = "Upgrade to " + version
     } else showTemporaryMessage("Already up to date")
    })
    .catch(fetchError => {
-    error(fetchError)
+    logError(fetchError)
     showTemporaryMessage("An Error Occurred")
    })
  },

@@ -1,1 +1,11 @@
-return desktop.icons["part.css"] + desktop["static.css"]
+return Desktop.icons["part.css"] + /* css */`
+
+body:has(#desktop_parts) title-bar {
+ display: none;
+}
+
+body:has(#desktop_parts) {
+ --title-bar-height: 0px;
+}
+
+`

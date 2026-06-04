@@ -1,6 +1,6 @@
 declare interface IEra
  extends IMatch<IDesktop, IBodyMode<IEra>>,
- IWebComponent {
+ IWebView {
 
  // Subparts.
  readonly vintage: IBodyMode<IEra>
@@ -8,4 +8,5 @@ declare interface IEra
 }
 
 /** A toggle between a Windows 98-inspired look-and-feel and a modern web app style. */
-declare const era: IEra
+declare const Era: IEra
+type Era = T

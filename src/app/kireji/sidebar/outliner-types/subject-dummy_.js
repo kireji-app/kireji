@@ -1,1 +1,1 @@
-return { inheritors: [_.parts.abstract.part] }
+return { inheritors: [Base] }

@@ -1,16 +1,16 @@
 const options = {
  autoplay() {
-  if ("next" in clip)
-   clip.next()
+  if ("next" in thisClip)
+   thisClip.next()
   else
-   clip[".."].setRouteID(1n, true)
+   thisClip[".."].setRID(1n, true)
  },
  autoplayInto() {
-  throw '!implemented'
+  throw error('autoPlayInto not implemented yet')
  },
  loop() {
-  clip.setRouteID(1n, true)
+  thisClip.setRID(1n, true)
  }
 }
 
-options[clip.endOfPlaybackBehavior]()
+options[thisClip.endOfPlaybackBehavior]()

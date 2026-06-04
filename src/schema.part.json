@@ -1,9 +1,13 @@
 {
  "$schema": "http://json-schema.org/draft-07/schema#",
  "title": "Kireji Part Config",
- "description": "Schema for part.json files defining component behavior and methods.",
+ "description": "Schema for part.json files defining basic part configuration and action components.",
  "type": "object",
  "properties": {
+  "name": {
+   "description": "A unique PascalCase name that uniquely identifies the part in the global namespace.",
+   "type": "string"
+  },
   "abstract": {
    "description": "Whether or not the part should be considered a subpart of its parent part (abstract = false) or an uninstanceable prototype for other parts (abstract = true).",
    "type": "boolean"
@@ -12,11 +16,11 @@
    "description": "The relative or absolute host name of the part that this part inherits from. The default value is `part`.",
    "type": "string"
   },
-  "methods": {
-   "description": "A map of method names to their expected arguments.",
+  "actions": {
+   "description": "A map of action names to their expected arguments.",
    "type": "object",
    "additionalProperties": {
-    "description": "An array of strings representing the parameter names for this method.",
+    "description": "An array of strings representing the parameter names for this action.",
     "type": "array",
     "items": {
      "type": "string"

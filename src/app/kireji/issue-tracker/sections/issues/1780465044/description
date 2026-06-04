@@ -1,0 +1,1 @@
+When a user decides to add a new action with arguments to an existing framework part, they currently have to create a copy of the entire original manifest. Instead, the framework's version of the manifest should be merged with the user version so that the user can create an overriding manifest with only the property(ies) that the user wants to change.

@@ -1,1 +1,0 @@
-const pointer = this

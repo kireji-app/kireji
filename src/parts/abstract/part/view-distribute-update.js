@@ -1,14 +1,14 @@
-if (part.dirty) {
+if (thisPart.dirty) {
 
  // Update own view before updating subpart views.
- if (part.enabled) {
+ if (thisPart.enabled) {
 
-  if (part.isOpen)
-   part.updateView()
+  if (thisPart.isOpen)
+   thisPart.updateView()
 
-  for (const subpart of part)
+  for (const subpart of thisPart)
    subpart.distributeUpdateView()
 
-  part.notify("update")
+  thisPart.notify("update")
  }
 }

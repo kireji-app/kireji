@@ -1,6 +1,6 @@
-pointer.handle({
+Pointer.handle({
  click() {
-  section.toggle()
+  thisKirejiEditorSection.toggle()
  },
  POINTER_EVENT,
  TARGET_ELEMENT

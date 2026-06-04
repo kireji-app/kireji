@@ -1,10 +1,10 @@
-if (part.dirty && part.justDisabled) {
+if (thisPart.dirty && thisPart.justDisabled) {
 
  // Remove own view before removing parent.
- if (part.isOpen)
-  part.removeView()
+ if (thisPart.isOpen)
+  thisPart.removeView()
 
- part.notify("remove")
+ thisPart.notify("remove")
 
- part[".."]?.collectRemoveView()
+ thisPart[".."]?.collectRemoveView()
 }

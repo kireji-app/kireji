@@ -1,3 +1,4 @@
 {
+ "name": "Clock",
  "extends": "item.."
 }

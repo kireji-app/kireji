@@ -1,6 +1,7 @@
 declare interface IKirejiIssues
- extends IApplicationSections<IKirejiIssueTrackerApp, IKirejiIssue> {
+ extends IAppSections<IKirejiIssueTrackerApp, IKirejiIssue> {
 
 }
 
-declare const kirejiIssues: IKirejiIssues
+declare const KirejiIssues: IKirejiIssues
+type KirejiIssues = T

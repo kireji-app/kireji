@@ -1,7 +1,7 @@
 {
  "name": "kireji",
- "version": "0.15.0",
- "description": "A web framework for stateful, entropy-perfect, multi-origin web applications. Currently in alpha. Expect breaking changes for version 0. Use with caution!",
+ "version": "0.16.0",
+ "description": "A web framework for stateful, entropy-perfect, multi-origin web apps. Currently in alpha. Expect breaking changes for version 0. Use with caution!",
  "files": [
   "src/",
   "bin/",

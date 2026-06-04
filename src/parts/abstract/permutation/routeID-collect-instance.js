@@ -1,1 +1,0 @@
-throw new ReferenceError(`Permutation Error: part instance does not have a defined "${PROPERTY_ID}" method.`)

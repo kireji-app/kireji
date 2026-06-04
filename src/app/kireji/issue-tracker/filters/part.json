@@ -1,6 +1,7 @@
 {
+ "name": "KirejiIssueFilters",
  "extends": "mix",
- "methods": {
+ "actions": {
   "apply": [
    "ISSUES"
   ],

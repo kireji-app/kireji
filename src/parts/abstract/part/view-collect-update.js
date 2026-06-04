@@ -1,13 +1,13 @@
-if (part.dirty) {
+if (thisPart.dirty) {
 
  // Update parent view before updating own.
- part[".."]?.collectUpdateView()
+ thisPart[".."]?.collectUpdateView()
 
- if (part.enabled) {
+ if (thisPart.enabled) {
 
-  if (part.isOpen)
-   part.updateView()
+  if (thisPart.isOpen)
+   thisPart.updateView()
 
-  part.notify("update")
+  thisPart.notify("update")
  }
 }

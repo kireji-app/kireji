@@ -1,6 +1,6 @@
-pointer.handle({
+Pointer.handle({
  click() {
-  color.setRouteID(1n, true)
+  Color.setRID(1n, true)
  },
  POINTER_EVENT,
  TARGET_ELEMENT,

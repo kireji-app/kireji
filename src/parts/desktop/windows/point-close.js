@@ -1,11 +1,11 @@
-pointer.handle({
+Pointer.handle({
  click() {
-  const windowIndex = windows.instances.findIndex(window => window.application === _.application)
+  const windowIndex = Windows.instances.findIndex(window => window.part === _.openTask)
   if (windowIndex !== -1) {
-   windows.instances.splice(windowIndex, 1)
-   windows.recomputeRouteID()
+   Windows.instances.splice(windowIndex, 1)
+   Windows.recomputeRID()
   }
-  _.gotoApplication("desktop.parts")
+  _.gotoPart("desktop.parts")
  },
  POINTER_EVENT,
  TARGET_ELEMENT,

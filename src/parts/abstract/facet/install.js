@@ -1,20 +1,20 @@
 
-logScope(1, facet.title, log => {
- if (facet.supported) {
-  if (facet.isAsync) {
+logScope(1, thisFacet.title, log => {
+ if (thisFacet.supported) {
+  if (thisFacet.isAsync) {
    if (environment !== "client")
-    throw "Async Facets are only supported in the client environment."
-   facet.define({
+    throw error("Async Facets are only supported in the client environment.")
+   define(thisFacet, {
     promise: {
      value: GATE.promise
-      .then(facetArray => facet.installAsync(facetArray))
-      .then(() => log(`${facet.title}: Async facet installed.`))
+      .then(facetArray => thisFacet.installAsync(facetArray))
+      .then(() => log(`${thisFacet.title}: Async facet installed.`))
     }
    })
    log(`Enqueued.`)
   } else {
-   facet.installSync()
+   thisFacet.installSync()
    log(`Installed.`)
   }
- } else log(`Skipped (${facet.error})`)
+ } else log(`Skipped (${thisFacet.error})`)
 })

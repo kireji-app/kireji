@@ -1,11 +1,9 @@
 {
+ "name": "Base",
  "abstract": true,
- "methods": {
-  "build": [],
-  "build-start": [],
-  "symbol-iterator": [],
-  "routeID-set": [
-   "ROUTE_ID",
+ "actions": {
+  "RID-set": [
+   "NEW_RID",
    "DELTA = false",
    "SKIP_RUNTIME_STATE_DISTRIBUTION = false"
   ],
@@ -13,23 +11,20 @@
    "MODEL",
    "SKIP_RUNTIME_STATE_DISTRIBUTION = false"
   ],
-  "model-reset": [],
-  "routeID-collect": [
+  "RID-collect": [
    "SUBPARTS",
    "DEPTH"
   ],
-  "routeID-distribute": [
-   "ROUTE_ID",
+  "RID-distribute": [
+   "NEW_RID",
    "SKIP_RUNTIME_STATE_DISTRIBUTION = false"
   ],
-  "routeID-update": [
-   "ROUTE_ID"
+  "RID-update": [
+   "NEW_RID"
   ],
-  "routeID-model-to": [
+  "RID-model-to": [
    "MODEL"
   ],
-  "clean-distribute": [],
-  "clean-collect": [],
   "filter": [
    "FILTER_FUNCTION"
   ],
@@ -68,14 +63,12 @@
   "image-css-variable-of": [
    "IMAGE_NAME"
   ],
-  "loop-distribute": [],
-  "loop": [],
   "attr-point": [
-   "METHOD_NAME = 'point'",
+   "ACTION_NAME = 'point'",
    "...ARGS"
   ],
   "attr-click": [
-   "METHOD_NAME = 'onclick'",
+   "ACTION_NAME = 'onclick'",
    "...ARGS"
   ],
   "manifest-resolve-owner-of": [

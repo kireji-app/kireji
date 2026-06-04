@@ -9,7 +9,7 @@
    "oneOf": [
     {
      "const": "none",
-     "description": "The color component will never be included."
+     "description": "The color part will never be included."
     },
     {
      "const": "light",
@@ -29,7 +29,7 @@
     },
     {
      "const": "full",
-     "description": "The full color component will always be included."
+     "description": "The full color part will always be included."
     }
    ]
   },
@@ -38,7 +38,7 @@
    "oneOf": [
     {
      "const": "none",
-     "description": "The era component will never be included."
+     "description": "The era part will never be included."
     },
     {
      "const": "vintage",
@@ -58,11 +58,11 @@
     },
     {
      "const": "full",
-     "description": "The full era component will always be included."
+     "description": "The full era part will always be included."
     }
    ]
   },
-  "includeMenuApps": {
+  "includeMenuItems": {
    "description": "Determines whether a list of apps should be included in the menu.",
    "oneOf": [
     {
@@ -76,23 +76,6 @@
     {
      "const": "full",
      "description": "Apps will always appear in the menu."
-    }
-   ]
-  },
-  "includeUpdates": {
-   "description": "Determines whether or not the version updating features should be included in the menu.",
-   "oneOf": [
-    {
-     "const": "none",
-     "description": "Update features will never appear in the menu."
-    },
-    {
-     "const": "local-only",
-     "description": "Update features will only appear in the menu in local builds."
-    },
-    {
-     "const": "full",
-     "description": "Update features will always appear in the menu."
     }
    ]
   },
@@ -159,8 +142,12 @@
    "description": "A number used to control the detail in logs. Only messages with a priority <= this number will be logged.",
    "type": "string"
   },
-  "defaultApplicationHost": {
+  "defaultHost": {
    "description": "The host of the desired default app. The server will redirect to this when testing locally.",
+   "type": "string"
+  },
+  "publicHosts": {
+   "description": "The space-separated list of hosts which are reachable publicly by DNS records.",
    "type": "string"
   },
   "port": {
@@ -175,21 +162,21 @@
    ]
   },
   "haltHydration": {
-   "description": "If enabled, halts the hydration of the application completely. Useful for debugging FOUC.",
+   "description": "If enabled, halts the hydration of the client completely. Useful for debugging FOUC.",
    "enum": [
     "disabled",
     "enabled"
    ]
   },
   "includeWarning": {
-   "description": "If enabled, a warning line appears at the top of all applications regarding alpha status.",
+   "description": "If enabled, a warning line appears at the top of the client at all times regarding alpha status.",
    "enum": [
     "disabled",
     "enabled"
    ]
   },
   "resetLocalState": {
-   "description": "If enabled, applications running locally will reset to their landing hash when the service worker is replaced.",
+   "description": "If enabled, the client will reset to their landing hash whenever the service worker is replaced.",
    "enum": [
     "disabled",
     "enabled"
@@ -197,6 +184,10 @@
   },
   "hangHydration": {
    "description": "A string representing how long the main thread should hang to simulate loading. Useful for debugging FOUC.",
+   "type": "string"
+  },
+  "gitHubRepo": {
+   "description": "The URL to a git repository where the project can be explored. Used by the built-in framework apps for creating external links.",
    "type": "string"
   }
  },

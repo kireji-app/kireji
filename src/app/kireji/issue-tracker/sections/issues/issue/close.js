@@ -1,6 +1,6 @@
-pointer.handle({
+Pointer.handle({
  click() {
-  kirejiIssueSections.setModel("summary")
+  KirejiIssuesSections.setModel("summary")
  },
  POINTER_EVENT,
  TARGET_ELEMENT

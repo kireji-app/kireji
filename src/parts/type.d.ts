@@ -1,5 +1,5 @@
 declare interface IParts
- extends ITopLevelDomain<IPartsApplication> {
+ extends ITopLevelDomain<IPartsApp> {
 
  // Subparts.
  readonly abstract: IAbstract
@@ -8,5 +8,5 @@ declare interface IParts
  readonly user: IUser
 }
 
-declare type IPartsApplication =
- IApplication<IParts, IPart<IPartsApplication, IPartAny>>
+declare type IPartsApp =
+ IApp<IParts, IPart<IPartsApp, IPartAny>>

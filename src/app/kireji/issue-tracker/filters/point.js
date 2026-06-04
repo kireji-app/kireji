@@ -1,25 +1,25 @@
-pointer.handle({
+Pointer.handle({
  click() {
   if (TARGET_ELEMENT.hasAttribute("data-order")) {
-   kirejiIssueFilters.order.descending.toggle()
+   KirejiIssueFilters.order.descending.toggle()
    return
   }
 
   const className = TARGET_ELEMENT.classList.values().find(className => className.startsWith("issue-"))
 
   if (!className)
-   throw "Unexpected item passed to issue filter's pointer handler."
+   throw error("Unexpected item passed to issue filter's pointer handler.")
 
   const key = className.split("-").pop()
 
   if (className.includes("filter")) {
-   if (kirejiIssueFilters.dropdown.model === key)
-    kirejiIssueFilters.dropdown.setModel("none")
+   if (KirejiIssueFilters.dropdown.model === key)
+    KirejiIssueFilters.dropdown.setModel("none")
    else
-    kirejiIssueFilters.dropdown.setModel(key)
+    KirejiIssueFilters.dropdown.setModel(key)
   } else {
-   kirejiIssueFilters.order.descending.clear()
-   kirejiIssueFilters.order.by.setModel(key)
+   KirejiIssueFilters.order.descending.clear()
+   KirejiIssueFilters.order.by.setModel(key)
   }
  },
  TARGET_ELEMENT,

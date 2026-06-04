@@ -1,1 +1,1 @@
-return color.isLight ? _.application.lightAccentTheme : _.application.darkAccentTheme
+return Color.isLight ? _.openTask.lightAccentTheme : _.openTask.darkAccentTheme

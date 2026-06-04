@@ -1,1 +1,1 @@
-return `📦<span class=thin>${comingSoon.title}</span><span>is coming soon.</span>`
+return `📦<span class=thin>${thisComingSoonApp.title}</span><span>is coming soon.</span>`

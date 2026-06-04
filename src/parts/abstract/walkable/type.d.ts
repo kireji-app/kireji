@@ -1,7 +1,7 @@
 declare interface IWalkable<TOwner>
  extends IPart<TOwner, null> {
 
- // Serialized Properties.
+ // Components.
  readonly getData(): IWalkableData
  /** Casts a ray from the current walkable position along the force vector direction for the given delta time and returns a summary of the results. @param FORCE_VECTOR the force vector represent the position the uninterrupted ray will arrive at in one second. @param DELTA_TIME the duration of the time cast in seconds. @param ENABLE_SLIDING whether or not to enable the ray to "wrap" along the walkable boundary instead of stopping cold. */
  readonly castRay(FORCE_VECTOR: IVector3, DELTA_TIME: number, ENABLE_SLIDING: boolean): IWalkableRayCastResult
@@ -10,7 +10,7 @@ declare interface IWalkable<TOwner>
  /** Returns whether or not the given point is in a tri. @returns the index of the tri that contains the point. -1 otherwise. */
  readonly triThatContainsPoint(POINT: IVector3): IWalkableTriIndex
 
- // Runtime Properties.
+ // Properties.
  /** The memoization data of every tri in the walkable, stored by tri index at build-time. */
  readonly triTable: IWalkableTriData[]
  /** The index of the current tri in the walkable. */
@@ -18,7 +18,7 @@ declare interface IWalkable<TOwner>
  /** The current position of the state in the walkable. */
  readonly position: IVector3
  readonly manifest: IWalkableManifest
- /** A cache of the pre-processed geometry data obtained by running the getData method. */
+ /** A cache of the pre-processed geometry data obtained by running the getData action. */
  readonly data: IWalkableData
 }
 
@@ -104,6 +104,6 @@ declare type IWalkableTriIndex =
 declare type IWalkableAny =
  IWalkable<IPartAny>
 
-declare const walkable: IWalkableAny
+declare const thisWalkable: IWalkableAny
 
 declare const TRI: IWalkableTriData

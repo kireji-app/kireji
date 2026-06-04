@@ -1,7 +1,7 @@
-const detailsElement = Q(`#info-${part.key}`)
+const detailsElement = Q(`#info-${thisPart.key}`)
 
 if (detailsElement) {
- if (part.model)
+ if (thisPart.model)
   detailsElement.setAttribute("open", "")
  else
   detailsElement.removeAttribute("open")

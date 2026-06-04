@@ -1,0 +1,1 @@
+return `This is a work-in-progress IDE. Everything is currently read-only. Explore the parts, components, data model and hash function that power the ${_.name} ecosystem.`

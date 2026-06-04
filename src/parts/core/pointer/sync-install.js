@@ -1,4 +1,4 @@
-pointer.define({
+define(Pointer, {
  id: { value: null, writable: true },
  doubleClick: {
   value: {

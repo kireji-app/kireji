@@ -1,7 +1,8 @@
 declare interface IKirejiIssueSummary
- extends IPart<IKirejiIssueSections, null>,
- IApplicationDetails {
+ extends IPart<IKirejiIssuesSections, null>,
+ IAppDetails {
 
 }
 
-declare const kirejiIssueSummary: IKirejiIssueSummary
+declare const KirejiIssueSummary: IKirejiIssueSummary
+type KirejiIssueSummary = T

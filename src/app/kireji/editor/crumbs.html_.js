@@ -1,14 +1,14 @@
 function generateCrumb(part, filename) {
- return `<a ${editor.pointAttr("point", allParts.indexOf(part), ...(filename ? [part.filenames.indexOf(filename)] : []))} href="/">${filename ?? (part === _ ? "ecosystem" : part.key)}</a>`
+ return `<button ${KirejiEditor.pointAttr("point", allParts.indexOf(part), ...(filename ? [part.filenames.indexOf(filename)] : []))}>${filename ?? (part === _ ? _.name : part.key)}</button>`
 }
 
-if (activePart) {
+if (KirejiTabGroup.activePart) {
  const crumbs = []
 
- let part = activePart
+ let part = KirejiTabGroup.activePart
 
- if (activeTab.filename)
-  crumbs.push(generateCrumb(activePart, activeTab.filename))
+ if (KirejiTabGroup.activeTab.filename)
+  crumbs.push(generateCrumb(KirejiTabGroup.activePart, KirejiTabGroup.activeTab.filename))
 
  while (part) {
   crumbs.push(generateCrumb(part))

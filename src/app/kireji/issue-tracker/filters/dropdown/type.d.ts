@@ -1,6 +1,6 @@
 declare interface IKirejiIssueFiltersDropdown
  extends IMatch<IKirejiIssueFilters, IPartAny>,
- IWebComponent {
+ IWebView {
 
  // Subparts
  readonly none: IPart<IKirejiIssueFiltersDropdown, null>
@@ -9,4 +9,5 @@ declare interface IKirejiIssueFiltersDropdown
  readonly status: IPart<IKirejiIssueFiltersDropdown, null>
 }
 
-declare const kirejiIssueFiltersDropdown: IKirejiIssueFiltersDropdown
+declare const KirejiIssueFiltersDropdown: IKirejiIssueFiltersDropdown
+type KirejiIssueFiltersDropdown = T

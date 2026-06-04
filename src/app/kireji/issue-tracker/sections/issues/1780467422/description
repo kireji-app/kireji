@@ -1,0 +1,3 @@
+Storing the issues as individual parts is convenient because the parent part is a match. However, over time, the number of issues may become too large. Every issue bloats the state space of the Kireji editor becasuse the issue part and all of its independent files can be examined separately in the editor.
+
+Implement merging between the project issue table and the framework issue table. 

@@ -1,6 +1,4 @@
 {
- "extends": "mix",
- "methods": {
-  "activeTab-frame": []
- }
+ "name": "KirejiSidebar",
+ "extends": "mix"
 }

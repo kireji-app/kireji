@@ -1,30 +1,30 @@
-if (permutation.instances.length !== permutation.viewedInstances.length || permutation.viewedPermutationRouteID !== permutation.permutationRouteID) {
- const existingInstanceCount = permutation.viewedInstances.length
- const targetInstanceCount = permutation.instances.length
+if (thisPermutation.instances.length !== thisPermutation.viewedInstances.length || thisPermutation.viewedPermutationRID !== thisPermutation.permutationRID) {
+ const existingInstanceCount = thisPermutation.viewedInstances.length
+ const targetInstanceCount = thisPermutation.instances.length
  const maxLength = Math.max(existingInstanceCount, targetInstanceCount)
 
  for (let i = 0; i < maxLength; i++) {
   if (targetInstanceCount <= i) {
-   permutation.removeInstanceView(permutation.viewedInstances[i], i)
+   thisPermutation.removeInstanceView(thisPermutation.viewedInstances[i], i)
    continue
   }
 
-  const newInstance = permutation.instances[i]
-  const existingInstance = permutation.viewedInstances[i]
-  const newSubject = newInstance && permutation.instanceToSubject(newInstance)
-  const existingSubject = existingInstance && permutation.instanceToSubject(existingInstance)
+  const newInstance = thisPermutation.instances[i]
+  const existingInstance = thisPermutation.viewedInstances[i]
+  const newSubject = newInstance && thisPermutation.instanceToSubject(newInstance)
+  const existingSubject = existingInstance && thisPermutation.instanceToSubject(existingInstance)
 
   if (existingSubject === newSubject)
    continue
 
   if (existingInstance) {
-   permutation.replaceInstanceView(permutation.instances[i], i)
+   thisPermutation.replaceInstanceView(thisPermutation.instances[i], i)
    continue
   }
 
-  permutation.addInstanceView(permutation.instances[i], i)
+  thisPermutation.addInstanceView(thisPermutation.instances[i], i)
  }
 
- permutation.viewedPermutationRouteID = permutation.permutationRouteID
- permutation.viewedInstances = [...permutation.instances]
+ thisPermutation.viewedPermutationRID = thisPermutation.permutationRID
+ thisPermutation.viewedInstances = [...thisPermutation.instances]
 }

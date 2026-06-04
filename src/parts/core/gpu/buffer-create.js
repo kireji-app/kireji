@@ -1,9 +1,9 @@
-let size = (TYPED_ARRAY.byteLength + 3) & ~3
+let bufferSize = (TYPED_ARRAY.byteLength + 3) & ~3
 
 if (USAGE == (GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST))
- size = Math.ceil(size / 16) * 16
+ bufferSize = Math.ceil(bufferSize / 16) * 16
 
-const buffer = gpu.device.createBuffer({ size, usage: USAGE, mappedAtCreation: true })
+const buffer = Graphics.device.createBuffer({ size: bufferSize, usage: USAGE, mappedAtCreation: true })
 
 new TYPED_ARRAY.constructor(buffer.getMappedRange()).set(TYPED_ARRAY)
 

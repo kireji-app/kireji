@@ -2,7 +2,7 @@ const {
  order: { by, descending },
  priority,
  status
-} = kirejiIssueFilters.model
+} = KirejiIssueFilters.model
 
 const key = by === "date" ? "key" : by
 

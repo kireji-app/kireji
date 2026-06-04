@@ -1,5 +1,5 @@
 const registrations = await navigator.serviceWorker.getRegistrations()
 
-update.define({
+define(Update, {
  registrations: { value: registrations }
 })

@@ -1,4 +1,4 @@
-const domains = [...part.domains]
+const domains = [...thisPart.domains]
 
 const tld = domains.pop()
 const chars = []

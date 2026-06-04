@@ -1,7 +1,7 @@
 declare interface ITrayItem
  extends IPart<ITray, null> {
 
- // Serialized Properties.
+ // Components.
  /** The tooltip that appears when the user hovers the button on desktop. */
  readonly "tooltip": string
  /** The raw HTML that generates the item's button in the tray. */
@@ -11,9 +11,9 @@ declare interface ITrayItem
  /** The action that the tray item performs when it is clicked. */
  readonly point(POINTER_EVENT: PointerEvent, TARGET_ELEMENT: HTMLElement): void
 
- // Runtime Properties.
+ // Properties.
  /** The runtime HTML element corresponding to the tray item view. */
  readonly element: HTMLElement
 }
 
-declare const trayItem: ITrayItem
+declare const thisTrayItem: ITrayItem

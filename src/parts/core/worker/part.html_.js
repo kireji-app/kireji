@@ -1,1 +1,0 @@
-return `<script defer${environment.startsWith("node") ? `>({${worker.bootstrapAsync}}.value("${_.version}"))` : ` src="/${_.version}/build.js">`}</script>`

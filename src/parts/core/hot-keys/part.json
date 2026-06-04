@@ -1,7 +1,4 @@
 {
- "extends": "facet",
- "methods": {
-  "undo": [],
-  "redo": []
- }
+ "name": "HotKeys",
+ "extends": "facet"
 }

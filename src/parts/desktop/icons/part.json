@@ -1,6 +1,7 @@
 {
+ "name": "DesktopIcons",
  "extends": "part-mask",
- "methods": {
+ "actions": {
   "point": [
    "POINTER_EVENT",
    "TARGET_ELEMENT"

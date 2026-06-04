@@ -1,1 +1,1 @@
-stats.element.textContent = client.fps
+Stats.element.textContent = Client.fps

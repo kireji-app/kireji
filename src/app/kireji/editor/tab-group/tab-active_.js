@@ -1,1 +1,1 @@
-return tabGroup.openTabs.length ? tabGroup.openTabs[tabGroup.activeTabIndex] : null
+return KirejiTabGroup.openTabs.length ? KirejiTabGroup.openTabs[KirejiTabGroup.activeTabIndex] : null

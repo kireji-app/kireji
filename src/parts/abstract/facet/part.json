@@ -1,8 +1,6 @@
 {
  "abstract": true,
- "methods": {
-  "sync-install": [],
-  "support-check": [],
+ "actions": {
   "install": [
    "GATE"
   ],
