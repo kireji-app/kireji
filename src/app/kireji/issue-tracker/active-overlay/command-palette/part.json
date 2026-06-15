@@ -1,0 +1,10 @@
+{
+ "name": "KirejiIssueCommandPalette",
+ "extends": "match",
+ "actions": {
+  "point": [
+   "POINTER_EVENT",
+   "TARGET_ELEMENT"
+  ]
+ }
+}

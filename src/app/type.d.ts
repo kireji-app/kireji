@@ -1,5 +1,5 @@
 declare interface IAppTLD
- extends ITopLevelDomain<IAppTLDApp> {
+ extends IMix<IEcosystem, IAppTLDApp> {
 
  // Subparts.
  readonly kireji: IKirejiApp

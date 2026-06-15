@@ -21,7 +21,7 @@ if (KirejiTabGroup.openTabs.length !== KirejiTabGroup.viewedOpenTabs.length || K
 
   const newTabElement = (() => {
    const offscreen = document.createElement("div")
-   offscreen.innerHTML = KirejiTabGroup.renderTabHTML(newOpenTab.part, newOpenTab.filename, newOpenTab.payload, i)
+   offscreen.innerHTML = KirejiTabGroup.renderTabHTML(newOpenTab.subject, newOpenTab.payload, i)
    return offscreen.querySelector("tab-")
   })()
 
@@ -43,7 +43,7 @@ if (KirejiTabGroup.viewedActiveTab && KirejiTabGroup.viewedActiveTab !== KirejiT
 if (KirejiTabGroup.viewedPreviewTab && KirejiTabGroup.viewedPreviewTab !== previewTab)
  Q(`tab-[data-preview]`)?.removeAttribute("data-preview")
 
-const currentTabLayout = KirejiTabGroup.viewedActiveTab ? (KirejiTabGroup.viewedActiveTab.filename ? "file" : "summary") : "empty"
+const currentTabLayout = KirejiTabGroup.viewedActiveTab?.subject.kind || "empty"
 
 KirejiTabGroup.viewedActiveTab = KirejiTabGroup.activeTab
 KirejiTabGroup.viewedPreviewTab = previewTab
@@ -67,45 +67,43 @@ if (!hasNoTabs) {
   previewTabElement.setAttribute("data-preview", "")
 }
 
-if (currentTabLayout === "summary") {
- if (hasNoTabs) {
-  Q(`editor-view scroll-content`).innerHTML = KirejiEditor["empty-view.html"]
- } else if (!KirejiTabGroup.viewedActiveTab.filename) {
-  for (const section of KirejiEditorSections) {
-   const element = Q(`#info-${section.key}>section`)
-   element.innerHTML = section["part.html"]
-   if (section.key.startsWith("state")) {
-    if (KirejiTabGroup.activePart.isAbstract || section.key === "state" && KirejiTabGroup.activePart.disabled)
-     element.setAttribute("disabled", "")
-    else
-     element.removeAttribute("disabled")
-   }
-  }
- } else {
-  Q(`editor-view scroll-content`).innerHTML = KirejiEditor["file-view.html"]
- }
- Q(`crumbs-`).innerHTML = KirejiEditor["crumbs.html"]
-} else if (currentTabLayout === "file") {
- if (hasNoTabs) {
-  Q(`editor-view scroll-content`).innerHTML = KirejiEditor["empty-view.html"]
- } else if (KirejiTabGroup.viewedActiveTab.filename) {
-  Q('editor-view scroll-content').innerHTML = KirejiEditor["file-view.html"]
- } else {
-  Q(`editor-view scroll-content`).innerHTML = KirejiEditor["summary-view.html"]
- }
- Q(`crumbs-`).innerHTML = KirejiEditor["crumbs.html"]
-} else {
- if (hasNoTabs)
-  throw error(`Unexpected update to empty tab group without adding any new tabs`)
- if (KirejiTabGroup.viewedActiveTab.filename) {
-  Q(`editor-view scroll-content`).innerHTML = KirejiEditor["file-view.html"]
- } else {
-  Q(`editor-view scroll-content`).innerHTML = KirejiEditor["summary-view.html"]
- }
- Q(`crumbs-`).innerHTML = KirejiEditor["crumbs.html"]
-}
-
 Q("#sidebar-view summary[data-active]")?.removeAttribute("data-active")
 
-if (!hasNoTabs)
- Q(`#sidebar-view summary[data-index="${allParts.indexOf(KirejiTabGroup.viewedActiveTab.part)}"]`)?.setAttribute("data-active", "")
+if (hasNoTabs)
+ Q(`editor-view scroll-content`).innerHTML = KirejiEditor["empty-view.html"]
+else {
+ const targetSubject = KirejiTabGroup.viewedActiveTab.subject
+ if (currentTabLayout === "part") {
+  if (targetSubject.kind === "part") {
+   for (const section of KirejiEditorSections) {
+    const element = Q(`#info-${section.key}>section`)
+    element.innerHTML = section["part.html"]
+    if (section.key.startsWith("state")) {
+     if (!targetSubject.isInstance || section.key === "state" && targetSubject.disabled)
+      element.setAttribute("disabled", "")
+     else
+      element.removeAttribute("disabled")
+    }
+   }
+  } else {
+   Q(`editor-view scroll-content`).innerHTML = KirejiEditor["file-view.html"]
+  }
+  Q(`crumbs-`).innerHTML = KirejiEditor["crumbs.html"]
+ } else if (currentTabLayout === "file") {
+  if (hasNoTabs) {
+  } else if (targetSubject.kind === "file") {
+   Q('editor-view scroll-content').innerHTML = KirejiEditor["file-view.html"]
+  } else {
+   Q(`editor-view scroll-content`).innerHTML = KirejiEditor["part-view.html"]
+  }
+  Q(`crumbs-`).innerHTML = KirejiEditor["crumbs.html"]
+ } else {
+  if (targetSubject.kind === "file") {
+   Q(`editor-view scroll-content`).innerHTML = KirejiEditor["file-view.html"]
+  } else {
+   Q(`editor-view scroll-content`).innerHTML = KirejiEditor["part-view.html"]
+  }
+  Q(`crumbs-`).innerHTML = KirejiEditor["crumbs.html"]
+ }
+ Q(`#sidebar-view summary[data-index="${targetSubject.partIndex}"]`)?.setAttribute("data-active", "")
+}

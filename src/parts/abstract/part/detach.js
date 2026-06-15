@@ -1,4 +1,4 @@
-if (thisPart.isAbstract)
+if (!thisPart.isInstance)
  throw error(`can't detach from abstract part`)
 
 if (typeof EVENT_TYPE !== "string")

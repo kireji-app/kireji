@@ -1,0 +1,1 @@
+return thisPartExplorer.subdomains.map(subdomain => thisPartExplorer[subdomain]).filter(part => !part.isClone)

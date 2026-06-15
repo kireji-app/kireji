@@ -5,8 +5,7 @@
   "point": [
    "POINTER_EVENT",
    "TARGET_ELEMENT",
-   "PART_INDEX",
-   "FILE_INDEX",
+   "SUBJECT_INDEX",
    "TAB_PAYLOAD = 0n"
   ],
   "point-close": [

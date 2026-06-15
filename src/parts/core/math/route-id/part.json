@@ -1,0 +1,32 @@
+{
+ "name": "RID",
+ "actions": {
+  "hash-from": [
+   "INPUT_HASH"
+  ],
+  "hash-to": [
+   "INPUT_RID"
+  ],
+  "path-from": [
+   "INPUT_PATH"
+  ],
+  "path-to": [
+   "INPUT_RID"
+  ],
+  "random": [
+   "CARDINALITY"
+  ],
+  "charms-to": [
+   "CARDINALITY",
+   "SHOW_UNIT"
+  ],
+  "bits-to": [
+   "CARDINALITY",
+   "SHOW_UNIT"
+  ],
+  "scientific-to": [
+   "CARDINALITY",
+   "AS_HTML"
+  ]
+ }
+}

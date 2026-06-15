@@ -1,0 +1,1 @@
+return `<section class=issue-table>${thisScroller.wrap(KirejiIssueTracker["issues.html"])}</section>`

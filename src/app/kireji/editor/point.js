@@ -10,7 +10,7 @@ const pointerConfig = {
    KirejiTabGroup.recomputeRID()
   }
 
-  if (TARGET_ELEMENT.closest("part-outliner"))
+  if (TARGET_ELEMENT.closest("outliner-"))
    this.scroller = KirejiSidebar.view.scroller
   else if (TARGET_ELEMENT.closest("editor-view"))
    this.scroller = KirejiEditor.scroller
@@ -59,7 +59,7 @@ const pointerConfig = {
   if (!this.dragPreviewElement) {
    this.dragPreviewElement = this.activeTabIndexOfDraggedItem === -1 ? (() => {
     const offscreen = document.createElement("div")
-    offscreen.innerHTML = KirejiTabGroup.renderTabHTML(allParts[PART_INDEX], isNaN(FILE_INDEX) ? undefined : allParts[PART_INDEX].filenames[FILE_INDEX], 0n, -1)
+    offscreen.innerHTML = KirejiTabGroup.renderTabHTML(allSubjects[SUBJECT_INDEX], 0n, -1)
     return offscreen.querySelector("tab-")
    })() : TARGET_ELEMENT.parentElement.cloneNode(true)
    this.dragPreviewElement.setAttribute("data-drag-preview", "")
@@ -75,8 +75,8 @@ const pointerConfig = {
    draggedItemWasDroppedOntoTabGroup = inRect(pointerEvent, KirejiTabGroup.container.getBoundingClientRect()),
    draggedItemWasDroppedOntoEditor = inRect(pointerEvent, KirejiTabGroup.container.parentElement.getBoundingClientRect()),
    draggedItemIsAlreadyTheActiveTab = this.activeTabIndexOfDraggedItem !== -1,
-   draggedItemFileData = draggedItemIsAlreadyTheActiveTab ? KirejiTabGroup.openTabs[this.activeTabIndexOfDraggedItem] : { part: allParts[PART_INDEX], filename: isNaN(FILE_INDEX) ? undefined : allParts[PART_INDEX].filenames[FILE_INDEX], payload: TAB_PAYLOAD },
-   existingTabIndexOfFileData = draggedItemIsAlreadyTheActiveTab ? this.activeTabIndexOfDraggedItem : KirejiTabGroup.openTabs.findIndex(tab => tab.part === draggedItemFileData.part && tab.filename === draggedItemFileData.filename),
+   draggedItemFileData = draggedItemIsAlreadyTheActiveTab ? KirejiTabGroup.openTabs[this.activeTabIndexOfDraggedItem] : { subject: allSubjects[SUBJECT_INDEX], payload: TAB_PAYLOAD },
+   existingTabIndexOfFileData = draggedItemIsAlreadyTheActiveTab ? this.activeTabIndexOfDraggedItem : KirejiTabGroup.openTabs.findIndex(tab => tab.subject === draggedItemFileData.subject),
    tabAlreadyExistsForFileData = existingTabIndexOfFileData !== -1,
    numberOfTabsOpen = KirejiTabGroup.openTabs.length,
    handleItemClick = droppedOntoEditor => {

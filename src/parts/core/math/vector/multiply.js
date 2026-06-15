@@ -1,0 +1,1 @@
+return Vector.operate(VECTOR_OR_NUMBER_A, VECTOR_OR_NUMBER_B, (a, b) => a * b)

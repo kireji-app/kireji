@@ -1,0 +1,79 @@
+{
+ "name": "Vector",
+ "actions": {
+  "abs": [
+   "VECTOR_OR_NUMBER"
+  ],
+  "add": [
+   "VECTOR_OR_NUMBER_A",
+   "VECTOR_OR_NUMBER_B"
+  ],
+  "ceil": [
+   "VECTOR_OR_NUMBER"
+  ],
+  "copy": [
+   "VECTOR_OR_NUMBER"
+  ],
+  "divide": [
+   "VECTOR_OR_NUMBER_A",
+   "VECTOR_OR_NUMBER_B"
+  ],
+  "dot": [
+   "VECTOR_OR_NUMBER_A",
+   "VECTOR_OR_NUMBER_B"
+  ],
+  "floor": [
+   "VECTOR_OR_NUMBER"
+  ],
+  "hyperellipsoid-angle-in": [
+   "VECTOR_OR_NUMBER_A",
+   "VECTOR_OR_NUMBER_B"
+  ],
+  "hyperellipsoid-for-each-point-in": [
+   "VECTOR_OR_NUMBER",
+   "VECTOR_LOOP_CALLBACK"
+  ],
+  "hyperellipsoid-for-each-point-on": [
+   "VECTOR_OR_NUMBER",
+   "VECTOR_LOOP_CALLBACK"
+  ],
+  "hyperellipsoid-is-in": [
+   "VECTOR_OR_NUMBER_A",
+   "VECTOR_OR_NUMBER_B"
+  ],
+  "hyperrectangle-for-each-point-in": [
+   "VECTOR_OR_NUMBER",
+   "VECTOR_LOOP_CALLBACK"
+  ],
+  "lerp": [
+   "VECTOR_OR_NUMBER_A",
+   "VECTOR_OR_NUMBER_B",
+   "TERM"
+  ],
+  "magnitude": [
+   "VECTOR_OR_NUMBER"
+  ],
+  "multiply": [
+   "VECTOR_OR_NUMBER_A",
+   "VECTOR_OR_NUMBER_B"
+  ],
+  "normalize": [
+   "VECTOR_OR_NUMBER"
+  ],
+  "operate": [
+   "VECTOR_OR_NUMBER",
+   "VECTOR_NUMBER_OR_OPERATION",
+   "VECTOR_OPERATION"
+  ],
+  "round": [
+   "VECTOR_OR_NUMBER"
+  ],
+  "sign": [
+   "VECTOR_OR_NUMBER"
+  ],
+  "subtract": [
+   "VECTOR_OR_NUMBER_A",
+   "VECTOR_OR_NUMBER_B"
+  ]
+ }
+}

@@ -1,1 +1,1 @@
-return [`<msup><mn>10</mn><mn>4</mn></msup>`]
+return [RID.toScientific(thisScroller.cardinality, true)]

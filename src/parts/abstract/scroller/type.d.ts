@@ -42,6 +42,8 @@ declare interface IScroller<TOwner>
  readonly skipRIDUpdate: boolean
  /** The outer event listener which can be added and removed and calls the inner event listener `thisScroller.onscroll`. */
  readonly listener(scrollEvent: Event): void
+ /** The number of steps that can be distinguished in the stored scroller state. This becomes the scroller's cardinality. */
+ readonly precision: bigint
 }
 
 declare const thisScroller: IScroller<IPartAny>

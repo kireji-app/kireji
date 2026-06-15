@@ -3,7 +3,7 @@ declare interface IKirejiIssueTrackerApp
 
  // Subparts.
  readonly scroller: IScroller<IKirejiIssueTrackerApp>
- readonly sections: IKirejiIssuesSections
+ readonly activeOverlay: IKirejiIssuesActiveOverlay
  readonly filters: IKirejiIssueFilters
 
  // Components.

@@ -1,0 +1,15 @@
+declare interface IKirejiIssue
+ extends IScroller<IKirejiIssueModal>,
+ IAppDetails {
+
+ // Components.
+ readonly status: string
+ readonly priority: string
+ readonly affects: IPartAny[]
+ readonly links: IKirejiIssue[]
+ readonly "card.html": string
+ /** Outputs unix timestamps as a human-readable date, for consistent date formats across the notebook. */
+ readonly niceDate(UNIX_TIMESTAMP: string | number): string
+}
+
+declare const thisKirejiIssue: IKirejiIssue

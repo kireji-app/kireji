@@ -1,7 +1,5 @@
-_.transformMetadata()
-Base.countAndSortInheritors()
 Core.installFacets()
-logEntropy(2, ...instances)
+logEntropy(2, ...allParts)
 
 define(_, {
  landingRID: { value: _.modelToRID(_.landingModel) },

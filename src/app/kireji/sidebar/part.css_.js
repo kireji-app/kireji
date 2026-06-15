@@ -216,12 +216,8 @@ body.vintage #kireji_app #sidebar-view-header {
  background-color: var(--bg);
 }
 
-body.vintage.light #kireji_app #sidebar-view {
- background-color: white;
-}
-
-body.vintage.dark #kireji_app #sidebar-view {
- background-color: black;
+body.vintage #kireji_app #sidebar-view {
+ background-color: var(--bg-page);
 }
 
 ` +

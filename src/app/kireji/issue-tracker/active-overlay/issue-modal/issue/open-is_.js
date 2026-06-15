@@ -1,0 +1,1 @@
+return KirejiIssueTracker.isOpen && (KirejiIssueModal.arm === thisKirejiIssue || thisKirejiIssue.container !== null)

@@ -47,7 +47,7 @@ globalThis.onfetch = event => logServerScope(
    }
   } catch (respondError) {
    try {
-    const payload = _.parts.abstract.error.getErrorResponse("" + respondError, host)
+    const payload = Abstract.error.getErrorResponse("" + respondError, host)
 
     status = payload.status
     head = {

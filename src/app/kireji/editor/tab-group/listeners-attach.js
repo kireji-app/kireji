@@ -1,5 +1,5 @@
-if (KirejiTabGroup.activeTab && !KirejiTabGroup.activeTab.filename && !KirejiTabGroup.activePart.isAbstract) {
- KirejiTabGroup.activePart.attach("add", KirejiTabGroup, "listener")
- KirejiTabGroup.activePart.attach("update", KirejiTabGroup, "listener")
- KirejiTabGroup.activePart.attach("remove", KirejiTabGroup, "listener")
+if (KirejiTabGroup.activeTab?.subject.kind === "part" && KirejiTabGroup.activeTab.subject.isInstance) {
+ KirejiTabGroup.activeTab.subject.attach("add", KirejiTabGroup, "listener")
+ KirejiTabGroup.activeTab.subject.attach("update", KirejiTabGroup, "listener")
+ KirejiTabGroup.activeTab.subject.attach("remove", KirejiTabGroup, "listener")
 }

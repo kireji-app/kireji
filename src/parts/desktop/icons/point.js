@@ -69,8 +69,8 @@ Pointer.handle({
 
   DesktopIcons.setRID(0n)
 
-  const iconPart = lookup(DesktopIcons.superset[Number(TARGET_ELEMENT.getAttribute("data-index"))])
-  const targetLocation = (_.command === "debug" ? `http://${iconPart.host}.localhost:${_.port}` : `https://${iconPart.host}`) + RID.toPath(_.rid)
+  const iconNode = DesktopIcons.maskedNodeList[Number(TARGET_ELEMENT.getAttribute("data-index"))]
+  const targetLocation = (_.command === "debug" ? `http://${iconNode.subject.host}.localhost:${_.port}` : `https://${iconNode.subject.host}`) + RID.toPath(_.rid)
   location = targetLocation
  },
  getIntersectionMask() {

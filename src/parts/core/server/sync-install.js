@@ -106,7 +106,7 @@ logScope(1, `\nCreating Deployment Artifact`, log => {
  log("Success.")
 })
 
-logScope(1, `\nDeployment Artifact Stats`, () => {
+logScope(2, `\nDeployment Artifact Stats`, () => {
  logStringSize(1, _["build.js"])
 })
 
@@ -126,7 +126,7 @@ const httpServer = require('http').createServer((request, response) => logServer
 
   function createErrorPage(reason) {
    try {
-    ({ status, body, logMessage } = _.parts.abstract.error.getErrorResponse(reason, host))
+    ({ status, body, logMessage } = Abstract.error.getErrorResponse(reason, host))
     head = { ...indexHeader }
    } catch (metaError) {
     status = 500

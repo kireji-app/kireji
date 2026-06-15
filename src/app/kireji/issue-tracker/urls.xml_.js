@@ -1,1 +1,7 @@
-return KirejiIssuesSections["urls.xml"]
+return `
+ <url>
+  <loc>https://${KirejiIssueTracker.canonicalURL}/</loc>
+  <lastmod>${new Date(KirejiIssueModal.subparts[KirejiIssueModal.length - 1].key * 1000).toISOString()}</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>1.0</priority>
+ </url>`

@@ -1,6 +1,6 @@
 let imgOwner = thisPart
 
-while (imgOwner && !imgOwner.filenames.includes(IMAGE_NAME))
+while (imgOwner && !imgOwner.filenames.includes(IMAGE_NAME) && !imgOwner.filenames.includes(IMAGE_NAME + "_.js"))
  imgOwner = imgOwner.prototype
 
 if (!imgOwner)

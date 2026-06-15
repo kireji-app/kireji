@@ -13,7 +13,8 @@ for (let i = 0n; i < MODEL.openTabs.length; i++) {
   if (filename === undefined || part.filenames.includes(filename)) {
    if (payload === undefined || typeof payload === "number") {
     if (payload === undefined || payload >= 0n && payload < KirejiTabGroup.payloadCardinality) {
-     validTabs.push({ part, filename, payload: payload ?? 0 })
+     const subject = part.components[filename] ?? part
+     validTabs.push({ subject, payload: payload ?? 0 })
      continue
     } else warn(error(`out of range payload ${payload} (tab ${i})`))
    } else warn(error(`unsupported payload type "${typeof payload}" (tab ${i})`))

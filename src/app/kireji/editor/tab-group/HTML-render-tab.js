@@ -1,5 +1,6 @@
-const partIndex = allParts.indexOf(TAB_PART)
-const isFile = !!TAB_FILENAME
-const tabLabel = isFile ? TAB_FILENAME : (TAB_PART === _ ? _.name : TAB_PART.key)
-const tabPartPath = TAB_PART === _ ? "" : TAB_PART[".."] === _ ? (isFile ? TAB_PART.key : "") : (isFile ? `.../${TAB_PART.key}` : `.${TAB_PART[".."].key}${TAB_PART[".."][".."] === _ ? '' : '...'}`)
-return `<tab-${KirejiTabGroup.activeTabIndex === TAB_INDEX ? " data-active" : ""}${KirejiTabGroup.previewTabIndex === TAB_INDEX ? " data-preview" : ""}${` data-payload=${TAB_PAYLOAD}`}><button ${KirejiEditor.pointAttr()} tabIndex=0 class=tab-button><img src="${TAB_PART.placeholderImage("part.png")}"/>${tabLabel}${(TAB_PART === _ || TAB_PART[".."] === _) ? '' : `<span class=tab-path>${tabPartPath}</span>`}</button><button ${KirejiEditor.pointAttr("closePoint")} class=close-tab>✕</button></tab->`
+const tabFile = TAB_SUBJECT.kind === "part" ? null : TAB_SUBJECT
+const tabPart = tabFile?.owner ?? TAB_SUBJECT
+const tabLabel = tabFile?.key ?? tabPart.key
+const tabPartPath = tabPart === _ ? "" : tabPart[".."] === _ ? (tabFile ? tabPart.key : "") : (tabFile ? `.../${tabPart.key}` : `.${tabPart[".."].key}${tabPart[".."][".."] === _ ? '' : '...'}`)
+
+return `<tab-${KirejiTabGroup.activeTabIndex === TAB_INDEX ? " data-active" : ""}${KirejiTabGroup.previewTabIndex === TAB_INDEX ? " data-preview" : ""}${` data-payload=${TAB_PAYLOAD}`}><button ${KirejiEditor.pointAttr()} tabIndex=0 class=tab-button><img src="${tabPart.placeholderImage("part.png")}"/>${tabLabel}${(tabPart === _ || tabPart[".."] === _) ? '' : `<span class=tab-path>${tabPartPath}</span>`}</button><button ${KirejiEditor.pointAttr("closePoint")} class=close-tab>✕</button></tab->`

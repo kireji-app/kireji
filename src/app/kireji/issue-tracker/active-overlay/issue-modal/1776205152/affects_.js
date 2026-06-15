@@ -1,0 +1,4 @@
+return [
+ KirejiTabGroup,
+ Abstract.permutation
+]

@@ -1,0 +1,1 @@
+return ARRAY.reduce((sum, value) => sum + value, 0)

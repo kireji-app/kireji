@@ -1,0 +1,27 @@
+{
+ "abstract": true,
+ "extends": "mix",
+ "actions": {
+  "itemHTML-recursive": [
+   "BITMASK_NODE",
+   "DEPTH",
+   "IS_LAST_OF_TYPE"
+  ],
+  "active-is": [
+   "BITMASK_NODE"
+  ],
+  "point-toggle": [
+   "POINTER_EVENT",
+   "TARGET_ELEMENT",
+   "BITMASK_NODE_INDEX"
+  ],
+  "point": [
+   "POINTER_EVENT",
+   "TARGET_ELEMENT",
+   "BITMASK_NODE_INDEX"
+  ],
+  "label-get": [
+   "BITMASK_NODE"
+  ]
+ }
+}

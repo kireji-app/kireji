@@ -9,15 +9,15 @@
    "type": "string"
   },
   "abstract": {
-   "description": "Whether or not the part should be considered a subpart of its parent part (abstract = false) or an uninstanceable prototype for other parts (abstract = true).",
+   "description": "Whether or not the part should be considered a concrete subpart of its parent part (abstract = false) or a template for other parts (abstract = true). Abstracts of child parts are always abstract and are cloned to become child parts of their parent's inheritor; in that case, this property determins whether or not the clone will remain abstract even when cloned into a concrete parent.",
    "type": "boolean"
   },
   "extends": {
-   "description": "The relative or absolute host name of the part that this part inherits from. The default value is `part`.",
+   "description": "The relative or absolute host name of the part that this part inherits from. The default value is `part`. By adding a single trailing dot, the abstract is searched for directly in this part folder. By adding two, the parent part will be searched, and so on. Visit https://abstract.parts to see the list of built-in abstracts.",
    "type": "string"
   },
   "actions": {
-   "description": "A map of action names to their expected arguments.",
+   "description": "A map of script names (without their .js extension) to the list of arguments that will be passed to the script as global variables when it runs.",
    "type": "object",
    "additionalProperties": {
     "description": "An array of strings representing the parameter names for this action.",

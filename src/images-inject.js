@@ -14,12 +14,14 @@ if (environment.startsWith("node")) {
   (earlies[host.replaceAll("-", ".").replaceAll("_", "-")] ??= new Set()).add(filename.replace("-", ".").replaceAll("_", "-"))
 
  injection = /* html */`<style id="img-css"></style>
-  <style id="early-img-css">${earlyImageSources.map(([owner, filename]) => {
-  if (earlies[owner.host]?.has(filename)) {
-   const varName = `--${owner.host.replaceAll("-", "_").replaceAll(".", "-")}--${filename.replaceAll("-", "_").replaceAll(".", "-")}`
+  <style id="early-img-css">${earlyImageSources.map(file => {
+  const filename = file.key.slice(6)
+  if (earlies[file.owner.host]?.has(filename)) {
+   const varName = `--${file.owner.host.replaceAll("-", "_").replaceAll(".", "-")}--${filename.replaceAll("-", "_").replaceAll(".", "-")}`
    /* Valid for .png, .gif and .jpeg files only */
-   bodyDeclarations.push(`${varName}: url(data:image/${filename.slice(-3)};base64,${owner["early-" + filename]});`)
-   return /* css */`img[src*=";${owner.host}/${filename}"] { background: var(${varName}); background-size: 100%; animation: none }`
+   bodyDeclarations.push(`${varName}: url(data:image/${filename.slice(-3)};base64,${file.owner["early-" + filename]});`)
+   return /* css */`
+ img[src*=";${file.owner.host}/${filename}"] { background: var(${varName}); background-size: 100%; animation: none }`
   }
   return ""
  }).join("") +

@@ -1,4 +1,4 @@
-return `This app allows you to view all of the parts that define the ${_.name} ecosystem. It includes a sidebar pane, a part inspector and a file viewer.
+return `This app allows you to view all of the parts that define the ${_.key} ecosystem. It includes a sidebar pane, a part inspector and a file viewer.
 
 The part inspector lets you see all of the components which are attached to a part, the current state of the part (if any) and its corresponding base 64 hash, and the part's contribution (if any) to the minimal perfect hash function that provides the ecosystem's optimal state compression. These values update in real-time as you interact with the ecosystem.
 

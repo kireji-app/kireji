@@ -1,0 +1,13 @@
+{
+ "abstract": true,
+ "extends": "scroller",
+ "actions": {
+  "close": [
+   "POINTER_EVENT",
+   "TARGET_ELEMENT"
+  ],
+  "date-nice": [
+   "UNIX_TIMESTAMP"
+  ]
+ }
+}

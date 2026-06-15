@@ -30,7 +30,7 @@ if (instanceCount !== thisPermutation.instances.length || thisPermutation.permut
  thisPermutation.payloadRID = payloadRID
 
  // Prepare an empty Fenwick tree for converting availability-based indices to absolute indices.
- thisPermutation.tree = new FenwickTree(BigInt(thisPermutation.superset.length))
+ const fenwick = KMath.createFenwickTree(BigInt(thisPermutation.superset.length))
 
  for (let currentInstanceIndex = 0n; currentInstanceIndex < instanceCount; currentInstanceIndex++) {
 
@@ -40,10 +40,10 @@ if (instanceCount !== thisPermutation.instances.length || thisPermutation.permut
   permutationRID %= permutationFactorOfCurrentInstanceIndex
 
   // Use the Fenwick tree to obtain the true index of the instance's subject in the list of all subjects.
-  const trueIndexOfActiveInstanceSubject = thisPermutation.tree.findNthAvailable(availabilityIndexOfActiveInstanceSubject)
+  const trueIndexOfActiveInstanceSubject = fenwick.indexOfPartialSum(availabilityIndexOfActiveInstanceSubject)
 
   // Consume that index of the Fenwick tree in preparation for the next iteration.
-  thisPermutation.tree.update(trueIndexOfActiveInstanceSubject, -1n)
+  fenwick.remove(trueIndexOfActiveInstanceSubject)
 
   // Use mix-based logic to extract the current instances's data payload.
   const instanceRID = payloadRID % thisPermutation.payloadCardinality

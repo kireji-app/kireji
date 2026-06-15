@@ -1,0 +1,17 @@
+{
+ "name": "FileUtils",
+ "actions": {
+  "adler32": [
+   "BYTES"
+  ],
+  "atoBuffer": [
+   "BASE64"
+  ],
+  "crc32": [
+   "BYTES"
+  ],
+  "uint32BE": [
+   "N"
+  ]
+ }
+}

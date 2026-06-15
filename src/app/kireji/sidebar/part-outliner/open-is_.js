@@ -1,0 +1,1 @@
+return KirejiToolBar.arm.key === thisOutliner.key && KirejiSidebar.open.rid === 1n && thisPart[".."].isOpen

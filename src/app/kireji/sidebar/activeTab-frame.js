@@ -1,22 +1,23 @@
 if (!KirejiSidebar.open.model || KirejiTabGroup.openTabs.length === 0)
  return
 
+const openTabSubject = KirejiTabGroup.activeTab.subject
+const currentNode = KirejiSidebar.view.folderMask.nodesBySubject.get(allParts[openTabSubject.partIndex])
 // Open folders if necessary to expose the active tab element.
-let parentFolder = KirejiSidebar.view.getParent(KirejiTabGroup.openTabs[KirejiTabGroup.activeTabIndex].part)
-let finalRID = KirejiSidebar.view.folders.rid
+let parentNode = currentNode.parentNode
+let finalRID = KirejiSidebar.view.folderMask.rid
 
-while (parentFolder) {
- const folderIndex = KirejiSidebar.view.folders.superset.indexOf(parentFolder)
- finalRID |= 1n << BigInt(folderIndex)
- parentFolder = KirejiSidebar.view.getParent(parentFolder)
+while (parentNode) {
+ finalRID |= 1n << BigInt(parentNode.maskIndex)
+ parentNode = parentNode.parentNode
 }
 
-if (KirejiSidebar.view.folders.rid !== finalRID)
- KirejiSidebar.view.folders.setRID(finalRID)
+if (KirejiSidebar.view.folderMask.rid !== finalRID)
+ KirejiSidebar.view.folderMask.setRID(finalRID)
 
 // Scroll to the tab if necessary.
 const { top: sidebarTop, bottom: sidebarBottom } = KirejiSidebar.view.scroller.container.getBoundingClientRect()
-const item = KirejiSidebar.view.scroller.container.querySelector(`[data-index="${allParts.indexOf(KirejiTabGroup.openTabs[KirejiTabGroup.activeTabIndex].part)}"]`)
+const item = KirejiSidebar.view.scroller.container.querySelector(`[data-index="${openTabSubject.partIndex}"]`)
 const { top, bottom } = item.getBoundingClientRect()
 
 if ((bottom > sidebarBottom) || (top < sidebarTop))

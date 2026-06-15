@@ -1,5 +1,5 @@
 declare interface IAbstract
- extends IErrorApp<IParts> {
+ extends IPartExplorer<IParts, IPartAny> {
 
  // Subparts.
  readonly app: IApp<IAbstract, null>
@@ -14,10 +14,12 @@ declare interface IAbstract
  readonly walkable: IWalkable<IAbstract>
  readonly mix: IMix<IAbstract, null>
  readonly part: IPart<IAbstract, null>
- readonly partMask: IPartMask<IAbstract, null>
- readonly partOutliner: IPartOutliner<IAbstract>
+ readonly bitmask: IBitmask<IAbstract, null>
+ readonly outliner: IOutliner<IAbstract, null>
  readonly permutation: IPermutation<IAbstract, null, null, null>
  readonly scroller: IScroller<IAbstract, null>
  readonly sections: IAppSections<IAbstract, null>
- readonly tld: ITopLevelDomain<IAbstract, null>
 }
+
+declare const Abstract: IAbstract
+type Abstract = T

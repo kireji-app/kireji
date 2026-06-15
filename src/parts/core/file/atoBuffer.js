@@ -1,0 +1,1 @@
+return (Uint8Array.fromBase64?.(BASE64) ?? ([...BASE64 = atob(BASE64)].reduce((A, c, i) => (A[i] = c.charCodeAt(0), A), new Uint8Array(BASE64.length)))).buffer

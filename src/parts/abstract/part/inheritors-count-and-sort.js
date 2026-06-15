@@ -11,4 +11,7 @@ define(thisPart, { totalInheritors: { value: totalInheritors } })
 if (thisPart.inheritors.length > 1)
  thisPart.inheritors.sort((a, b) => (b.totalInheritors - a.totalInheritors) || (a.host > b.host ? 1 : -1))
 
+if (!thisPart.isInstance && totalInheritors === 0 && _.command === "debug")
+ warn(error("unused abstract"))
+
 return totalInheritors

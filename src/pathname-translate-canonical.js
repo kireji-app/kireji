@@ -1,8 +1,8 @@
 if (!/^[-a-z0-9/]*$/.test(PATHNAME))
  throw error("Bad Canonical Path: " + PATHNAME)
 
-const part = lookup(HOST)
-if (typeof part.translateCanonicalPathname === "function")
- return part.translateCanonicalPathname(PATHNAME, HASH)
+const resolvingPart = lookup(HOST)
+if (typeof resolvingPart.translateCanonicalPathname === "function")
+ return resolvingPart.translateCanonicalPathname(PATHNAME, HASH)
 
 throw error("Unknown Canonical Path: " + PATHNAME)

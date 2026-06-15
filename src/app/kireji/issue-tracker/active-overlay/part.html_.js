@@ -1,0 +1,1 @@
+return `<section id=kireji-issue-modal>${thisMatch.arm["part.html"] ?? ""}</section>`

@@ -1,3 +1,4 @@
 {
- "extends": "mix"
+ "name": "Abstract",
+ "extends": "part-explorer"
 }

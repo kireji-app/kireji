@@ -1,0 +1,16 @@
+{
+ "name": "PNG",
+ "actions": {
+  "chunk-make": [
+   "TYPE",
+   "DATA"
+  ],
+  "encode": [
+   "WIDTH",
+   "HEIGHT",
+   "PIXEL_INDICES",
+   "PALETTE",
+   "BIT_DEPTH = 8"
+  ]
+ }
+}

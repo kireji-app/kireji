@@ -1,1 +1,0 @@
-return [/* xml */`<msup><mn>2</mn><mn>${thisPartMask.superset.length}</mn></msup>`]

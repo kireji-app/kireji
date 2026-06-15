@@ -1,0 +1,14 @@
+{
+ "abstract": true,
+ "actions": {
+  "subjects-get-child": [
+   "BITMASK_NODE"
+  ],
+  "model-get-node-from": [
+   "MODEL"
+  ],
+  "node-get-model-from": [
+   "BITMASK_NODE"
+  ]
+ }
+}

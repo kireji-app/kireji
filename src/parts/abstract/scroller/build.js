@@ -1,5 +1,5 @@
 define(thisScroller, {
- cardinality: { value: 10_000n },
+ cardinality: { value: thisScroller.precision },
  content: { value: null, writable: true },
  listener: { value: scrollEvent => thisScroller.onscroll(scrollEvent) },
  container: { value: null, writable: true },

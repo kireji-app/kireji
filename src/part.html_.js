@@ -1,5 +1,5 @@
 const
- title = sanitizeAttr(_.openTask.title ?? "Untitled App"),
+ title = HTML.sanitizeAttr(_.openTask.title ?? "Untitled App"),
  icon = _.openTask.placeholderImage("part.png"),
  classes = [..._.openTask.classes],
  includeDesktop = _.includeDesktop === "demo" || (_.command === "debug" && (_.includeDesktop === "full" || _.includeDesktop === "local-only")),
@@ -19,7 +19,7 @@ return _.injectImages(/* html */`<!DOCTYPE html>
  <head>
   <title>${title}</title>
   <meta name="format-detection" content="telephone=no, email=no, address=no, date=no">
-  <meta name="description" content="${sanitizeAttr(_.openTask.descriptionMeta ?? "This app is coming soon.")}">
+  <meta name="description" content="${HTML.sanitizeAttr(_.openTask.descriptionMeta ?? "This app is coming soon.")}">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0"/>
   <!-- <meta name="theme-color" ... media="(prefers-color-scheme: light)"> -->
   <link class=favicon rel=icon href="${icon}"/>

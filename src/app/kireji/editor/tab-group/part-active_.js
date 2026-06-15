@@ -1,1 +1,0 @@
-return KirejiTabGroup.activeTab?.part ?? null

@@ -1,13 +1,13 @@
-const selectedIcons = new Set(DesktopIcons.chosenParts)
+const selectedNodes = new Set(DesktopIcons.selectedNodes)
 
 for (const alreadySelectedIcon of document.querySelectorAll(`#desktop_parts desktop-icon[data-selected]`)) {
- const iconPart = lookup(DesktopIcons.superset[Number(alreadySelectedIcon.getAttribute("data-index"))])
- if (selectedIcons.has(iconPart))
-  selectedIcons.delete(iconPart)
+ const iconNode = DesktopIcons.maskedNodeList[Number(alreadySelectedIcon.getAttribute("data-index"))]
+ if (selectedNodes.has(iconNode))
+  selectedNodes.delete(iconNode)
  else alreadySelectedIcon.removeAttribute("data-selected")
 }
 
-for (const iconToSelect of selectedIcons) {
- const iconElement = Q(`#desktop_parts desktop-icon[data-index="${DesktopIcons.superset.indexOf(iconToSelect)}"]`)
+for (const nodeToSelect of selectedNodes) {
+ const iconElement = Q(`#desktop_parts desktop-icon[data-index="${nodeToSelect.maskIndex}"]`)
  iconElement.setAttribute("data-selected", "")
 }

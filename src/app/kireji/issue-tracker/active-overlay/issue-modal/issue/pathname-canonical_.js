@@ -1,0 +1,1 @@
+return KirejiIssueModal.pathname + thisKirejiIssue.pathname

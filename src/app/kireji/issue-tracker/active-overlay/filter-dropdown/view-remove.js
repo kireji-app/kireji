@@ -1,0 +1,1 @@
+Q("#issue-filter-dropdown").remove()

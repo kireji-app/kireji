@@ -1,0 +1,1 @@
+The GLTF Game abstract creates a 3D first person game with game levels which are stored using the GLTF file format. Each level is a separate collection of files containing the GLTF file, bin file and textures. The game camera, level switching, player position tracking and collision are all handled by the abstract.

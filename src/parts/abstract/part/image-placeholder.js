@@ -2,7 +2,7 @@ let imageWidth, imageHeight
 
 let imageOwner = thisPart
 
-while (imageOwner && !imageOwner.filenames.includes(IMAGE_NAME))
+while (imageOwner && !imageOwner.filenames.includes(IMAGE_NAME) && !imageOwner.filenames.includes(IMAGE_NAME + "_.js"))
  imageOwner = imageOwner.prototype
 
 if (!imageOwner)

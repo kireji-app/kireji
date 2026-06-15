@@ -1,0 +1,26 @@
+{
+ "name": "KMath",
+ "actions": {
+  "mod": [
+   "NUMBER_A",
+   "NUMBER_B"
+  ],
+  "sum": [
+   "ARRAY"
+  ],
+  "fenwickTree-create": [
+   "SIZE"
+  ],
+  "LSB-create": [
+   "SIZE"
+  ],
+  "constructorOf": [
+   "NUMBER"
+  ],
+  "clamp": [
+   "VALUE_TO_CLAMP",
+   "START_RANGE",
+   "END_RANGE"
+  ]
+ }
+}

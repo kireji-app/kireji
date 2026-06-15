@@ -1,0 +1,1 @@
+AboutApp.container.innerHTML = AboutApp["part.html"]

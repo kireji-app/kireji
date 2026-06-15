@@ -1,0 +1,1 @@
+Build an AST that will allow the Kireji file viewer to parse and syntax highlight source files. It would be even better if some of the symbols of the source files could be clicked through to access the referenced parts and components.

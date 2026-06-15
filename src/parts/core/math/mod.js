@@ -1,0 +1,1 @@
+return ((NUMBER_A % NUMBER_B) + NUMBER_B) % NUMBER_B

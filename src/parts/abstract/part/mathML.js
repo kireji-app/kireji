@@ -1,9 +1,9 @@
 const equationVariable = EQUATION_TYPE === "variable" || EQUATION_TYPE === "both" ? `${recurse(0, "none", false, false)}<mo>=</mo>` : ""
-const equationValue = EQUATION_TYPE === "value" || EQUATION_TYPE === "both" ? `<mo>=</mo>${thisPart.cardinality.toString().length <= 15 ? `<mn>${thisPart.cardinality}</mn>` : `<mrow>${scientific(thisPart.cardinality, true).slice(6, -7)}</mrow>`}` : ""
+const equationValue = EQUATION_TYPE === "value" || EQUATION_TYPE === "both" ? `<mo>=</mo>${thisPart.cardinality.toString().length <= 15 ? `<mn>${thisPart.cardinality}</mn>` : `<mrow>${RID.toScientific(thisPart.cardinality, true).slice(6, -7)}</mrow>`}` : ""
 const expression = (() => {
 
  if (DEPTH <= 0)
-  return `<msub><mi>𝑘</mi><mi>${thisPart.key ?? _.name}</mi></msub>`
+  return `<msub><mi>𝑘</mi><mi>${thisPart.key}</mi></msub>`
 
  const terms = thisPart.subpartMathML(DEPTH - 1, LABELS)
 

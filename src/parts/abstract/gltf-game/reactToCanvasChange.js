@@ -1,0 +1,1 @@
+thisGLTFGame.canvasSizeChanged = true

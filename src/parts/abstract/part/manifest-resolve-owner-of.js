@@ -1,6 +1,8 @@
-let owner = part
+let manifestOwner = thisPart
 
-while (owner && !Object.hasOwn(owner.manifest, PROPERTY_KEY))
- owner = owner.prototype
+warn('!!! running resolveOwnerOfManifest for propert ' + PROPERTY_KEY)
 
-return owner
+while (manifestOwner && !Object.hasOwn(manifestOwner.manifest, PROPERTY_KEY))
+ manifestOwner = manifestOwner.prototype
+
+return manifestOwner

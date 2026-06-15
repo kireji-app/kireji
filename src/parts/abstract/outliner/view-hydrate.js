@@ -1,0 +1,2 @@
+// This creates the hidden outliner items. An alternative approach would be to find the closed details elements and populate them individually.
+Q(`#${thisOutliner.id}>scroller->scroll-content`).innerHTML = thisOutliner.recursiveItemHTML(thisOutliner.folderMask.maskedNodeList[0], 0, true)

@@ -10,8 +10,14 @@ return ISSUES
  .filter(issue => status[issue.status] && priority[issue.priority.toLowerCase()])
  .sort(({ [key]: a }, { [key]: b }) => {
 
-  // Logic: Handle the 'key' (timestamp) as a number
-  if (by === 'date') {
+  /** @type {IMix<IKirejiIssueFilters, IBoolean<IPartAny>>} */
+  const filterPart = KirejiIssueFilters[by]
+
+  if (Array.isArray(filterPart?.manifest.order)) {
+   // If there is a custom order defined, just use that.
+   a = filterPart.manifest.order.indexOf(a)
+   b = filterPart.manifest.order.indexOf(b)
+  } else if (by === 'date') {
    a = parseInt(a, 10)
    b = parseInt(b, 10)
   } else if (by === "title") {

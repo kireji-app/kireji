@@ -2,11 +2,8 @@ declare interface IDesktop
  extends IPartsApp {
 
  // Subparts.
- readonly color?: IColor
- readonly era?: IEra
- readonly taskBar?: ITaskBar
+ readonly about: AboutApp
  readonly icons?: IDesktopIcons
- readonly windows?: IDesktopWindows
 }
 
 declare const Desktop: IDesktop

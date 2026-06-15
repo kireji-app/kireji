@@ -15,7 +15,7 @@ declare interface IErrorApp<TOwner>
 }
 
 declare type IErrorAppAny =
- IErrorApp<ITopLevelDomain<IErrorAppAny>>
+ IErrorApp<IPartAny>
 
 declare const thisErrorApp: IErrorAppAny
 

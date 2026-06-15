@@ -4,86 +4,10 @@ declare function ƒ(_: IEcosystem): void
 /** This is the root part of the ecosystem, considered the ecosystem itself. @remarks When JSON stringified, it should inline all information compiled from the git repo in node by the build process. The serialized version should not include any components or properties that are added during or after the build process. This means that all runtime values should be non-enumerable and defined using the `define()` action. */
 declare const _: IEcosystem
 type _ = T
-/** A collection of utilities for handing BigInt route identifiers (RIDs). */
-declare class RID {
- /** Trades a versioned string pathname for the bigint RID. */
- static fromPath(pathname: string): bigint
- /** Trades a string segment for the bigint RID. */
- static fromHash(pathname: string): bigint
- /** Trades a bigint RID for a versioned string pathname. */
- static toPath(rid: bigint): string
- /** Trades a bigint RID for a string segment. */
- static toHash(rid: bigint): string
- /** Produces a cryptographically random RID between 0 and one less than the given cardinality. */
- static random(cardinality: bigint): bigint
-}
-/** A utility class for handling arbitrary-length vectors. Any object with entirely numeric values can be treated as a vector. */
-declare class Vector {
-
- /** Creates the vector object `{ x, y }`. */
- static 2(x: number = 0, y: number = 0): IVector2
- /** Creates the vector object `{ x: 0, y: 0, z: 0 }`. */
- static 3(x: number = 0, y: number = 0, z: number = 0): IVector3
-
- /** Provides the absolute value (length) of the the given vector. Returns a number. */
- static magnitude<TVector extends IVector>(vector: TVector): number
- /** Normalizes the given vector so that its magnitude is exactly 1. Returns a vector of the same dimension. */
- static normalize<TVector extends IVector>(vector: TVector): TVector
- /** Returns the sign of the given vector. Returns a vector of the same dimension. */
- static sign<TVector extends IVector>(vector: TVector): TVector
- /** Returns a vector of the same dimension with all components floored. */
- static floor<TVector extends IVector>(vector: TVector): TVector
-
- /** Performs the given binary operation on vector a and number b. Returns a vector of the same dimension as vector a. */
- static operate<TVector extends IVector>(a: TVector, b: number, operation: TOperation): TVector
- /** Performs the given binary operation on number a and vector b. Returns a vector of the same dimension as vector b. */
- static operate<TVector extends IVector>(a: number, b: TVector, operation: TOperation): TVector
- /** Performs the given binary operation on vectors a and b. They must have the same dimension. Returns a vector of the same dimension. */
- static operate<TVector extends IVector>(a: TVector, b: TVector, operation: TOperation): TVector
- /** Performs the given binary operation on numbers a and b. Returns a number. */
- static operate(a: number, b: number, operation: TOperation): number
-
- /** Adds vector a to number b. Returns a vector of the same dimension as vector a. */
- static add<TVector extends IVector>(a: TVector, b: number): TVector
- /** Adds number a to vector b. Returns a vector of the same dimension as vector b. */
- static add<TVector extends IVector>(a: number, b: TVector): TVector
- /** Adds vectors a to b. They must have the same dimension. Returns a vector of the same dimension. */
- static add<TVector extends IVector>(a: TVector, b: TVector): TVector
- /** Adds numbers a to b. Returns a number. */
- static add(a: number, b: number): number
-
- /** Subtracts number b from vector a. Returns a vector of the same dimension as vector a. */
- static subtract<TVector extends IVector>(a: TVector, b: number): TVector
- /** Subtracts vector b from number a. Returns a vector of the same dimension as vector b. */
- static subtract<TVector extends IVector>(a: number, b: TVector): TVector
- /** Subtracts vector b from vector a. They must have the same dimension. Returns a vector of the same dimension. */
- static subtract<TVector extends IVector>(a: TVector, b: TVector): TVector
- /** Subtracts number b from number a. Returns a number. */
- static subtract(a: number, b: number): number
-
- /** Multiplies vector a by number b. Returns a vector of the same dimension as vector a. */
- static multiply<TVector extends IVector>(a: TVector, b: number): TVector
- /** Multiplies number a by vector b. Returns a vector of the same dimension as vector b. */
- static multiply<TVector extends IVector>(a: number, b: TVector): TVector
- /** Multiplies vectors a and b. They must have the same dimension. Returns a vector of the same dimension. */
- static multiply<TVector extends IVector>(a: TVector, b: TVector): TVector
- /** Multiplies numbers a and b. Returns a number. */
- static multiply(a: number, b: number): number
-
- /** Returns the dot product of the two vectors. The vectors must have the same dimension. Returns a number. */
- static dot<TVector>(vector1: TVector, vector2: TVector): number
-}
-/** A data type which can be used to performantly rank and unrank permutation indices. The `size` argument must be a BigInt representing the length of the superset from which the permutation will be chosen. */
-declare class FenwickTree {
- readonly size: bigint
- readonly powerFloor: bigint
- constructor(size: bigint): FenwickTree
- update(i: bigint, val: bigint): void
- query(i: bigint): bigint
- findNthAvailable(n: bigint): bigint
-}
 /** A type used for source mapping and packing data from one or more files into a single new file. */
 declare class SourceMappedFile {
+ /** A unicode-safe replacement for `btoa` that allows inlining UTF-8 javascript files in source map datauris. */
+ static utf8ToBase64(BODY: string): string
  copyFrom(ISourceMappedFileCopyDefinition): void
  packAndMap(): string
 }
@@ -98,20 +22,10 @@ declare function logEntropy(verbosity: number, ...parts: IPartAny[]): void
 declare function logStringSize(verbosity: number, string: string): void
 /** A special wrap around logScope which logs server events with a reliable server format. */
 declare function logServerScope(col1, col2, col3, CALLBACK: (log: (...data) => void) => T): T
-declare function toBits(cardinality, unit = true)
-declare function toCharms(cardinality, unit = true)
-/** Performs a `btoa` operation on a base64 encoded string but returns an ArrayBuffer instead of a binary string. */
-declare function atoBuffer(base64: string): ArrayBuffer
 declare function camelCase(words, delimiter = "-")
-declare function titleCase(words, delimiter = "-")
+declare function titleCase(words: string | string[], delimiter = "-")
 /** A function which wraps JSON.stringify using a replacer which can serialize BigInt values. */
 declare function serialize(value: any): void
-/** Returns a string representing the given bigint in scientific notation (a coefficient times 10 to some power). When html is true, the power will be wrapped in a superscript tag. Otherwise, it will use unicode superscript characters. */
-declare function scientific(x: bigint, html: boolean = false): string
-/** Performs the `btoa` method on strings that contain unicode characters. */
-declare function btoaUnicode(text: string): string
-/** Makes the given text html-friendly by escaping special characters using ampersand codes. */
-declare function sanitizeAttr(string: string): string
 /** Extends the definition of the given part by allowing the addition of custom properties.
  * 
  * All properties are added using this action.
@@ -140,33 +54,31 @@ declare const environment: "client" | "offline-server" | "node-main" | "node-mod
 declare const metadata: Map<string, boolean>
 /** The immutable list of every part of the root space, in order of when the were reached during recursive part hydration. */
 declare const allParts: IPartAny[]
-/** The immutable list of runtime instances for the root space, in order of when the were reached during recursive part hydration. */
-declare const instances: IPartAny[]
 /** A host-keyed map of all parts in the ecosystem. */
 declare const partsByHost: Record<string, IPartAny>
 /** The immutable list of every part host and filename combination, in order of when the were reached during recursive part hydration. */
-declare const allSubjects: [host: string, filename?: string]
+declare const allSubjects: Subject[]
 /** The immutable list of every `.png` or `.gif` image in the ecosystem, used by optimization processes that reduce the size of the server-rendered artifact. */
-declare const imageSources: [[part: IPartAny, filename: string]]
-/** A map that provides the index (in the `allSubjects` array) for the given subject. */
-declare const subjectIndices: Map<string, number>
+declare const imageSources: IFileDefinition[]
 /** The immutable list of every highly compressed stand-in for `.png` or `.gif` images in the ecosystem. When defined, these images are used in place of their larger counterparts in the server-rendered page. Only these images are included in the server-rendered page; all other images appear after client-size hydration is complete. */
-declare const earlyImageSources: [[IPartAny, string]]
+declare const earlyImageSources: IFileDefinition[]
 /** Returns the part with the given host, throwing an error if no part exists with that host. */
 declare function lookup(host): IPartAny
 /** Uses the base to resolve the given relative host string to an absolute host name and returns an object with the resulting host, part, and domains array. */
 declare function resolveRelativeHost(host: string, base: string | string[]): { host: string, part: IPartAny, domains: string[] }
 /** Builds the given serialized part instance but first building its prototype chain and then building its children before finally calling the part-specific `build.call(thisArg)` action its entire prototype chain (including itself; starting from the base type) with `thisArg` always being the part itself. If the part is already built, the method returns without doing anything. */
-declare function collectBuild<T>(part: T, domains: string[], isRuntimeInstance: boolean = false): void
+declare function collectDefine<T>(part: T, domains: string[], isRuntimeInstance: boolean = false): void
 /** The part on which the currently running component is actually defined (as opposed to the part on which it was called). */
 declare const componentOwner: IPartAny
 /** The host used to find all of the source code for the part whose code is currently being evaluated. */
 declare const host: string
 /** The component owner's (as opposed to the part on which it was called) component descriptor map which includes this component. */
-declare const components: Record<string, IComponentDefinition>
+declare const components: ComponentDefinitionMap
+declare type ComponentDefinitionMap = Record<string, IComponentDefinition>
+declare type Subject = IPartAny | IFileDefinition
 
 declare interface IEcosystem
- extends IMix<null, ITopLevelDomainAny>,
+ extends IMix<null, IPartAny>,
  IKirejiConfig,
  IWebView {
 
@@ -184,11 +96,13 @@ declare interface IEcosystem
  /** The date that the HEAD commit was added to the branch in git. */
  readonly "modified": string
  /** The name of the parent git repository folder, used to represent the name of the ecosystem itself. */
- readonly "name": string
+ readonly "key": string
  /** The hash of the most recent git commit at build time. */
  readonly "gitSHA": string
  /** The automatically generated semantic version number of the current build. */
  readonly "version": string
+ /** The version of the Kireji framework that was used to create the current build. */
+ readonly "kirejiVersion": string
  /** The automatically generated HTTP identifier for the build. */
  readonly "ETag": string
  /** The current unix timestamp, acquired using the high-precision performance.now() + performance.timeOrigin. */
@@ -221,6 +135,8 @@ declare interface IEcosystem
  readonly validate(): void
  /** Navigates to the given host by setting the current location. An undo point is automatically set by the browser. @remarks Client-only */
  readonly gotoPart(HOST: string): void
+ /** Packs or unpacks (depending on environment) the metadata that describes the source of each file and part (either it came from the framework or the user space). This must be performed after the allSubjects array has been completely populated and each part and file descriptor has an assigned subject index. */
+ readonly transformMetadata(): void
 
  // Properties.
  /** The ecosystem's currently opened part, encoded by the host of the current URL. */
@@ -263,9 +179,9 @@ declare interface IKirejiConfig {
   */
  readonly "includeMenuItems": "none" | "local-only" | "full"
  /** * Determines whether or not the version updating features should be included in the menu.
-  * - `none`: Update features will never appear in the menu.
-  * - `local-only`: Update features will only appear in the menu in local builds.
-  * - `full`: Update features will always appear in the menu.
+  * - `none`: About app will never appear in the menu.
+  * - `local-only`: About app will only appear in the menu in local builds.
+  * - `full`: About app will always appear in the menu.
   * * @remarks Has no effect on builds where the menu is not included.
   */
  readonly "includeKirejiApp": "none" | "full" | "demo"
@@ -318,7 +234,7 @@ declare interface IKirejiConfig {
 }
 
 /** All of the data collected about the source of each component added to the part during hydration. */
-declare const component: IComponentDefinition
+declare const components: ComponentDefinitionMap
 /** The dedicated SourceMappedFile for the object which was created while building the part. */
 declare const sourceFile: SourceMappedFile
 /** The index of build.js in the list of source mapping files for the part's dedicated SourceMappedFile instance. */
@@ -342,25 +258,52 @@ declare interface ISourceMappedFileCopyDefinition {
  /** If provided, takes only the given line from the source file. If both `ln` and `literal` are omitted, the entire file will be copied verbatim from source to output. */
  ln?: number = undefined
 }
-/** Converts a base64-encoded string to an ArrayBuffer. */
-declare function btoaBuffer(BODY: string): string
-/** A unicode-safe replacement for btoa. */
-declare function btoaUnicode(BODY: string): string
 /** Represents metadata for a single file or component of the part. If the component is a getter or action, it parses the components's ID and generates its signature, dynamic constants and body. If the component is a static file, a getter is created automatically. */
 declare interface IComponentDefinition
- extends IRuntimePropertyDefinition {
- /** The type of component. If "file", the component is a value property storing an original source file as a string. If 'alias', the component is a getter that gets a file using a different key. If "getter", the component represents a file or value whose content depends upon the state of the part. If "action", the component represents a method that can be called on the part. */
+ extends IRuntimePropertyDefinition,
+ ISubject {
  readonly kind: "file" | "shadow" | "alias" | "action" | "getter"
  /** The key used to access the component on the part. For files, this is the original filename. For output components, this is generated deterministically from the filename. */
  readonly key: string
  /** If the component is a file, this represents any secondary component that was generated by this file. */
  readonly output?: IComponentDefinition
  /** If the component is not a file this represents the file that was used to generate this component. */
- readonly file?: IComponentDefinition
+ readonly file?: IFileDefinition
+ /** The filename of the file associated with the component. */
+ readonly filename: string
  /** This represents a beautified (space-separated, title case) name of the part generated from its filename.  */
  readonly name: string
  /** If the component is a file, the archival size of the file in bytes (including any escape characters, base64 encoding, and the overhead of its filename). */
  readonly size?: number
+}
+declare interface IFileDefinition
+ extends IComponentDefinition {
+
+ readonly kind: "file"
+ /** The part that owns this file component. */
+ readonly owner: IPartAny
+ /** The index of the file's name in the component owner's `filenames` array. */
+ readonly filenameIndex: number
+ /** The full file contents of the file, exactly as it appeared in the source repository, as a string. */
+ readonly value: string
+}
+
+declare interface ISubject {
+
+ /** The index of the file component in the `allSubjects` array. */
+ readonly subjectIndex: number
+ /** The index of the subject (if part) or the subject owner (if component) in the `allParts` array. */
+ readonly partIndex: number
+ /** The type of subject.
+  * | kind     | represents
+  * | -------- | ------------------------------------------------------------------------------------------
+  * | "part"   | A part.
+  * | "file"   | A component. Defines an original source file string with its filename as the key.
+  * | "shadow" | A component. Defines a property that hides its owner part's prototype.
+  * | "alias"  | A component. Defines an original source file string but with a key other than its filename.
+  * | "getter" | A component. Defines a dynamic value which depends on the state of the part.
+  * | "action" | A component. Defines a method that can be called on the part.*/
+ readonly kind: "part" | "file" | "shadow" | "alias" | "action" | "getter"
 }
 /** The incoming request url string. @remarks Only in _.setRoute(). */
 declare const REQUEST_URL: string
@@ -378,14 +321,8 @@ declare type IRuntimePropertyDefinition<TOwner, TValue> = {
  readonly value?: TValue
  readonly writable?: boolean
  readonly configurable?: boolean
- enumerable: never
+ readonly enumerable: never
 }
-
-declare type TOperation = (a: number, b: number) => number
-
-declare type IVector = Record<string, number>
-declare type IVector2 = { x: number, y: number }
-declare type IVector3 = { x: number, y: number, z: number }
 
 declare type KirejiConfigColor =
  /** The color part will never be included. */
@@ -421,14 +358,6 @@ declare type KirejiConfigMenuItems =
  /** Apps will only appear in the menu in local builds. */
  | "local-only"
  /** Apps will always appear in the menu. */
- | "full"
-
-declare type KirejiConfigUpdates =
- /** Update features will never appear in the menu. */
- | "none"
- /** Update features will only appear in the menu in local builds. */
- | "local-only"
- /** Update features will always appear in the menu. */
  | "full"
 
 declare type KirejiConfigKirejiApp =

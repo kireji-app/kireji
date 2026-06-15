@@ -37,10 +37,7 @@ if (numberOfTabsOpen !== KirejiTabGroup.openTabs.length || KirejiTabGroup.permut
  KirejiTabGroup.payloadRID = payloadRID
 
  // Prepare an empty Fenwick tree for converting availability-based indices to absolute indices.
- KirejiTabGroup.tree = new FenwickTree(BigInt(allSubjects.length))
-
- const indexOfLastOpenTab = numberOfTabsOpen - 1n
- const indexOfLastPossibleTabSubject = BigInt(allSubjects.length) - 1n
+ const fenwick = KMath.createFenwickTree(BigInt(allSubjects.length))
 
  for (let currentTabIndex = 0n; currentTabIndex < numberOfTabsOpen; currentTabIndex++) {
 
@@ -50,20 +47,18 @@ if (numberOfTabsOpen !== KirejiTabGroup.openTabs.length || KirejiTabGroup.permut
   permutationRID %= permutationFactorOfCurrentTabIndex
 
   // Use the Fenwick tree to obtain the true index of the tab subject in the list of all subjects.
-  const trueIndexOfActiveTabSubject = KirejiTabGroup.tree.findNthAvailable(availabilityIndexOfActiveTabSubject)
+  const trueIndexOfActiveTabSubject = fenwick.indexOfPartialSum(availabilityIndexOfActiveTabSubject)
 
   // Consume that index of the Fenwick tree in preparation for the next iteration.
-  KirejiTabGroup.tree.update(trueIndexOfActiveTabSubject, -1n)
+  fenwick.remove(trueIndexOfActiveTabSubject)
 
   // Use mix-based logic to extract the current tab's data payload.
   const payload = payloadRID % KirejiTabGroup.payloadCardinality
   payloadRID /= KirejiTabGroup.payloadCardinality
 
   // Match the subject index with the actual subject.
-  const [host, filename] = allSubjects[Number(trueIndexOfActiveTabSubject)]
   KirejiTabGroup.openTabs[currentTabIndex] = {
-   part: lookup(host),
-   filename,
+   subject: allSubjects[Number(trueIndexOfActiveTabSubject)],
    payload
   }
  }

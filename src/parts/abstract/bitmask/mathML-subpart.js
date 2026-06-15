@@ -1,0 +1,1 @@
+return [/* xml */`<msup><mn>2</mn><mn>${thisBitmask.maskedNodeList.length}</mn></msup>`]

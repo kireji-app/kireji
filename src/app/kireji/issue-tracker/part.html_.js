@@ -1,4 +1,5 @@
-return KirejiIssueFilters["part.html"] + (
- "<section class=issue-table>" + KirejiIssueTracker.scroller.wrap(KirejiIssueTracker["issues.html"]) + "</section>" +
- `<section id=kireji-issue-modal>${KirejiIssuesSections.arm["part.html"] ?? ""}</section>`
+return (
+ KirejiIssueFilters["part.html"] +
+ KirejiIssueTracker.scroller["part.html"] +
+ KirejiIssuesActiveOverlay["part.html"]
 )

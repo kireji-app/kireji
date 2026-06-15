@@ -1,0 +1,28 @@
+{
+ "name": "Color",
+ "extends": "match",
+ "actions": {
+  "hex-blend": [
+   "COLOR_A",
+   "COLOR_B",
+   "MODE=\"screen\""
+  ],
+  "point": [
+   "POINTER_EVENT",
+   "TARGET_ELEMENT"
+  ],
+  "RGB-blend": [
+   "COLOR_A",
+   "COLOR_B",
+   "MODE=\"screen\""
+  ],
+  "RGB-hex-to": [
+   "HEX"
+  ],
+  "RGB-hex-from": [
+   "R",
+   "G",
+   "B"
+  ]
+ }
+}

@@ -1,1 +1,1 @@
-return `data-onclick="${sanitizeAttr(JSON.stringify([thisPart.host, ACTION_NAME, ...ARGS]))}"`
+return `data-onclick="${HTML.sanitizeAttr(JSON.stringify([thisPart.host, ACTION_NAME, ...ARGS]))}"`

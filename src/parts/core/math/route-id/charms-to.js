@@ -1,0 +1,1 @@
+return RID.toHash(BigInt(CARDINALITY) - 1n).length + (SHOW_UNIT ? " charm" + (CARDINALITY !== 1 ? "s" : "") : 0)

@@ -7,8 +7,6 @@ declare interface IKirejiAppTabGroup
  readonly "activeTab": IKirejiAppTabGroupTab
  /** The current preview tab, equal to `KirejiTabGroup.openTabs[KirejiTabGroup.previewTabIndex]` */
  readonly "previewTab": IKirejiAppTabGroupTab
- /** The part corresponding to the active tab, equal to `KirejiTabGroup.openTabs[KirejiTabGroup.activeTabIndex].part` */
- readonly "activePart": IPartAny
  /** Returns the specific permutation ID of the given array of tab models without changing the state of the tab group. */
  readonly getPermutationRID(TABS: IKirejiAppTabGroupTabArray): bigint
  /** Returns the specific payload ID of the given array of tab models without changing the state of the tab group. */
@@ -44,8 +42,6 @@ declare interface IKirejiAppTabGroup
  readonly permutationRID: bigint
  /** A subindex representing the combined per-tab payload data for the k open tabs. */
  readonly payloadRID: bigint
- /** A Fenwick tree that allows performant ranking and unranking of permutation indices. */
- readonly tree: FenwickTree
  readonly openTabs: IKirejiAppTabGroupTabArray
  /** The index of the currently active tab. */
  readonly activeTabIndex: number
@@ -58,8 +54,7 @@ declare interface IKirejiAppTabGroup
 declare type IKirejiAppTabGroupTabArray = IKirejiAppTabGroupTab[]
 
 declare interface IKirejiAppTabGroupTab {
- readonly part: IPartAny
- readonly filename?: string
+ readonly subject: Subject
  readonly payload: bigint
 }
 

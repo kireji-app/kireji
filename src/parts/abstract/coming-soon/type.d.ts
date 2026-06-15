@@ -6,6 +6,6 @@ declare interface IComingSoonApp<TOwner> extends IErrorApp<TOwner> {
 }
 
 declare type IComingSoonAppAny =
- IComingSoonApp<ITopLevelDomain<IComingSoonAppAny>>
+ IComingSoonApp<IPartAny>
 
 declare const thisComingSoonApp: IComingSoonAppAny

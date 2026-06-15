@@ -1,0 +1,1 @@
+return KirejiIssuesActiveOverlay.arm === KirejiIssueModal ? KirejiIssueModal["part.css"] : ""

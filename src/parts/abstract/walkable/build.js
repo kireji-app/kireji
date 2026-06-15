@@ -1,7 +1,7 @@
 define(thisWalkable, {
  triTable: { value: [] },
  triIndex: { value: -1, writable: true },
- position: { value: Vector[3]() },
+ position: { value: Vector.xyz() },
  data: {
   resolve() {
    return thisWalkable.getData()

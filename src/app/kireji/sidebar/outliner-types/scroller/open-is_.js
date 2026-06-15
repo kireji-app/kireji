@@ -1,1 +1,0 @@
-return thisScroller[".."].isOpen && _.app.kireji.toolBar.arm.key === thisScroller[".."].key && _.app.kireji.sidebar.open.rid === 1n

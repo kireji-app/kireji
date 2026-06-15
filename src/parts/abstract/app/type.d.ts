@@ -57,6 +57,6 @@ declare type IAppSubpart =
  IPart<IAppAny, IPartAny>
 
 declare type IAppAny =
- IApp<ITopLevelDomainAny, IAppSubpart>
+ IApp<IMixAny, IAppSubpart>
 
 declare const thisApp: IAppAny

@@ -1,6 +1,9 @@
+/** @type {IPartAny} */
+const activePart = KirejiTabGroup.activeTab.subject
+
 const recordSets = []
 
-let prototype = KirejiTabGroup.activePart.prototype
+let prototype = activePart.prototype
 while (prototype) {
  const records = []
  for (const key in prototype.components) {

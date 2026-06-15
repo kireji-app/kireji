@@ -1,4 +1,22 @@
 {
  "name": "AboutApp",
- "extends": "app"
+ "extends": "app",
+ "actions": {
+  "pie-draw": [
+   "WIDTH",
+   "HEIGHT",
+   "SLICES",
+   "CYLINDER_HEIGHT_FRACTION",
+   "PITCH_FRACTION",
+   "YAW_FRACTION",
+   "WALL_SHADE = 127"
+  ],
+  "point-update": [
+   "POINTER_EVENT",
+   "TARGET_ELEMENT"
+  ],
+  "version-is-newer": [
+   "INCOMING_VERSION"
+  ]
+ }
 }

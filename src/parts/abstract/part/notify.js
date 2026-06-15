@@ -1,4 +1,4 @@
-if (thisPart.isAbstract)
+if (!thisPart.isInstance)
  throw error(`can't notify from abstract part`)
 
 if (typeof EVENT_TYPE !== "string")

@@ -1,4 +1,4 @@
-if (thisPart.isAbstract)
+if (!thisPart.isInstance)
  throw error(`can't set RID of abstract part`)
 
 if (NEW_RID === undefined)

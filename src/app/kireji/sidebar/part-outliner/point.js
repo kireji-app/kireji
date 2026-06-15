@@ -1,0 +1,1 @@
+KirejiEditor.point(POINTER_EVENT, TARGET_ELEMENT, thisOutliner.folderMask.nodeList[BITMASK_NODE_INDEX].subject.subjectIndex)

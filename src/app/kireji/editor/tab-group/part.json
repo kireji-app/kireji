@@ -2,8 +2,7 @@
  "name": "KirejiTabGroup",
  "actions": {
   "HTML-render-tab": [
-   "TAB_PART",
-   "TAB_FILENAME",
+   "TAB_SUBJECT",
    "TAB_PAYLOAD",
    "TAB_INDEX"
   ],

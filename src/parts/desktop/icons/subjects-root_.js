@@ -1,0 +1,1 @@
+return _.publicHosts.split(" ").filter(host => host !== Desktop.host).map(host => lookup(host))

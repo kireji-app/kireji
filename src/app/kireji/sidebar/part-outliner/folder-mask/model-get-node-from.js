@@ -1,0 +1,1 @@
+return thisFolderMask.nodesBySubject.get(lookup(MODEL))

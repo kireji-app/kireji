@@ -1,4 +1,4 @@
 {
  "name": "Core",
- "extends": "mix"
+ "extends": "part-explorer"
 }

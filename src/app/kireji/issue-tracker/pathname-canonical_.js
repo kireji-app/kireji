@@ -1,1 +1,1 @@
-return KirejiIssueTracker.sections.canonicalPathname
+return KirejiIssuesActiveOverlay.canonicalPathname

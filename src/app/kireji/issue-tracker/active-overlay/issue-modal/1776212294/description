@@ -1,0 +1,3 @@
+Add a properties app (perhaps, properties.desktop.parts) which provides all of the desktop settings that the user can control (such as color mode, era, theme colors and picking a desktop wallpaper).
+
+Update: This has been implemented as "about.desktop.parts" and the focus has shifted to ecosystem details and versioning instead of merely properties.

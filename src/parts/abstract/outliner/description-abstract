@@ -1,0 +1,1 @@
+An outliner part creates a simple outliner view where parent items can be independently collapsed and expanded. It comes with a built-in scroller and a specialized bitmask that stores the states of the collapsible items.

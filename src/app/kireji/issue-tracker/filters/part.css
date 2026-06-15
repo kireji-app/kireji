@@ -1,3 +1,175 @@
+#issue-tracker_kireji_app #command-palette {
+ position: relative;
+ /* hide it until it is ready */
+ display: none;
+
+ .field {
+  padding: calc(var(--spacing) / 3);
+  cursor: text;
+  display: flex;
+  flex-flow: row nowrap;
+  background: var(--bg-light-est);
+  line-height: var(--default-font-size);
+  height: calc(var(--default-font-size) + var(--spacing) * 2 / 3);
+
+  .input {
+   padding-left: calc(var(--spacing) / 3);
+  }
+
+  .completion,
+  .placeholder {
+   opacity: 40%;
+  }
+
+  body.modern & {
+   box-shadow: inset 0 0 0 1px var(--border-color);
+   border-radius: calc(var(--spacing) / 2);
+
+   body.dark & {
+    background: var(--bg);
+   }
+  }
+
+  body.vintage & {
+   box-shadow: var(--deep-inset);
+   background: var(--bg-page);
+  }
+ }
+
+ &.open {
+  z-index: 1000;
+  pointer-events: all;
+
+  body.modern & {
+   left: max(calc(100% / 10), (100% - var(--max-width)) / 2);
+   right: max(calc(100% / 10), (100% - var(--max-width)) / 2);
+   top: calc(var(--spacing));
+  }
+
+  .field {
+
+   .input {
+    --cursor-color: var(--fg);
+    --cursor-width: 1px;
+    box-shadow: var(--cursor-width) 0 0 var(--cursor-color);
+    animation: blink-cursor 1s steps(1, end) infinite;
+   }
+
+   &:has(.input:not(:empty)) {
+    .placeholder {
+     display: none;
+    }
+   }
+
+   body.modern & {
+    box-shadow: inset 0 0 0 1px var(--accent);
+   }
+  }
+ }
+
+ :is(.autocomplete, .dropdown) {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  left: 0;
+  padding: 0;
+  margin: 0;
+
+  body.vintage & {
+   background: var(--bg-page);
+  }
+
+  li {
+   display: block;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   white-space: nowrap;
+
+   &.selected {
+    background: var(--accent-mode-est);
+   }
+
+   &:not(.selected):hover {
+    background: var(--bg-light-er);
+
+    body.dark & {
+     background: var(--bg);
+    }
+   }
+
+   body.modern & {
+    border-radius: calc(var(--spacing) / 4);
+    padding: calc(var(--spacing) / 4);
+    cursor: pointer;
+   }
+  }
+
+  body.vintage & {
+   border: 1px solid var(--fg-page);
+  }
+ }
+
+ .autocomplete {
+  top: 100%;
+  flex-flow: row nowrap;
+ }
+
+ .dropdown {
+  top: 200%;
+  flex-flow: column nowrap;
+
+  body.modern & {
+
+   &::before {
+    content: "";
+    position: absolute;
+    background: var(--bg-light-est);
+    top: calc(-.5 * var(--spacing) - var(--default-font-size) * 2 - var(--spacing) * 4 / 3);
+    bottom: calc(-.5 * var(--spacing));
+    left: calc(-.5 * var(--spacing));
+    right: calc(-.5 * var(--spacing));
+    z-index: -10;
+    border-radius: calc(var(--spacing) / 2);
+    box-shadow:
+     inset 0 0 0 1px var(--border-color),
+     0 0 calc(var(--spacing) * 3) #0007;
+   }
+
+   body.dark & {
+    &::before {
+     background: var(--bg-mode);
+    }
+   }
+  }
+ }
+
+ &:not(.open) {
+  :is(.autocomplete, .dropdown, .input, .completion) {
+   display: none;
+  }
+ }
+
+ body.modern & {
+  position: fixed;
+  top: calc((var(--title-bar-height) - var(--default-font-size)) / 2 - var(--spacing) / 3);
+  --max-width: 350px;
+  left: max(160px, (100% - var(--max-width)) / 2);
+  right: max(76px, (100% - var(--max-width)) / 2);
+
+  .match {
+   color: var(--accent);
+   font-weight: 500;
+  }
+ }
+}
+
+@keyframes blink-cursor {
+
+ 50% {
+  --cursor-color: #0000;
+ }
+}
+
 #issue-tracker_kireji_app .header svg {
  display: block;
  fill: none;
@@ -34,12 +206,7 @@ body.vintage #issue-tracker_kireji_app .header>:is(.issue-status, .issue-priorit
 }
 
 body.modern #issue-tracker_kireji_app .header {
- --border-color: var(--bg);
  border-bottom: 1px solid var(--border-color);
-}
-
-body.modern.dark #issue-tracker_kireji_app .header {
- --border-color: var(--bg-un-mode);
 }
 
 body.vintage #issue-tracker_kireji_app .header {
@@ -73,8 +240,8 @@ body.modern #issue-tracker_kireji_app .header>span::before {
  text-align: center;
 }
 
-body.vintage #issue-tracker_kireji_app .header:has(.issue-filter-dropdown-status)>.issue-filter-status,
-body.vintage #issue-tracker_kireji_app .header:has(.issue-filter-dropdown-priority)>.issue-filter-priority,
+body.vintage #issue-tracker_kireji_app .header:has(.issue-filter-status-dropdown)>.issue-filter-status,
+body.vintage #issue-tracker_kireji_app .header:has(.issue-filter-priority-dropdown)>.issue-filter-priority,
 body.vintage #issue-tracker_kireji_app .header>.down {
  box-shadow: inset 0 0 0 1px var(--bg-dark-er);
  background: var(--bg-checker), white;
@@ -90,19 +257,19 @@ body.vintage #issue-tracker_kireji_app .header>.down {
  top: 100%;
 }
 
-body.vintage #issue-tracker_kireji_app .issue-filter-dropdown-status {
+body.vintage #issue-tracker_kireji_app .issue-filter-status-dropdown {
  right: calc(7 * var(--spacing));
 }
 
-body.vintage #issue-tracker_kireji_app .issue-filter-dropdown-priority {
+body.vintage #issue-tracker_kireji_app .issue-filter-priority-dropdown {
  right: 160px;
 }
 
-body.modern #issue-tracker_kireji_app .issue-filter-dropdown-status {
+body.modern #issue-tracker_kireji_app .issue-filter-status-dropdown {
  right: calc(7 * var(--spacing));
 }
 
-body.modern #issue-tracker_kireji_app .issue-filter-dropdown-priority {
+body.modern #issue-tracker_kireji_app .issue-filter-priority-dropdown {
  right: calc(13 * var(--spacing));
 }
 

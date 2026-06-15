@@ -7,15 +7,10 @@ const payloadSizes = [1n]
 const superset = thisPermutation.getSuperset()
 const supersetSize = BigInt(superset.length)
 const maxInstanceCount = supersetSize
-const LSB = []
-const powerFloor = 2n ** BigInt(supersetSize.toString(2).length - 1)
 
 let cardinality = 1n
 
 for (let subsetSize = 1n, permutationSize = 1n, payloadSize = 1n; subsetSize <= supersetSize; subsetSize++) {
-
- // Memoize a prototype LSB array to simplify initialization of Fenwick tree instances.
- LSB[subsetSize - 1n] = subsetSize & -subsetSize
 
  if (subsetSize > maxInstanceCount)
   continue
@@ -59,6 +54,4 @@ define(thisPermutation, {
 
  instances: { value: [] },
  viewedInstances: { value: null, writable: true },
-
- tree: { value: null, writable: true }
 })

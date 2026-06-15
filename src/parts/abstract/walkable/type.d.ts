@@ -4,11 +4,11 @@ declare interface IWalkable<TOwner>
  // Components.
  readonly getData(): IWalkableData
  /** Casts a ray from the current walkable position along the force vector direction for the given delta time and returns a summary of the results. @param FORCE_VECTOR the force vector represent the position the uninterrupted ray will arrive at in one second. @param DELTA_TIME the duration of the time cast in seconds. @param ENABLE_SLIDING whether or not to enable the ray to "wrap" along the walkable boundary instead of stopping cold. */
- readonly castRay(FORCE_VECTOR: IVector3, DELTA_TIME: number, ENABLE_SLIDING: boolean): IWalkableRayCastResult
+ readonly castRay(FORCE_VECTOR: Vector3, DELTA_TIME: number, ENABLE_SLIDING: boolean): IWalkableRayCastResult
  /** Checks if a point (x, y, z) rounds to a valid pixel within the specified tri's memoized row data. */
- readonly triContainsPoint(TRI_INDEX: IWalkableTriIndex, POINT: IVector3): boolean
+ readonly triContainsPoint(TRI_INDEX: IWalkableTriIndex, POINT: Vector3): boolean
  /** Returns whether or not the given point is in a tri. @returns the index of the tri that contains the point. -1 otherwise. */
- readonly triThatContainsPoint(POINT: IVector3): IWalkableTriIndex
+ readonly triThatContainsPoint(POINT: Vector3): IWalkableTriIndex
 
  // Properties.
  /** The memoization data of every tri in the walkable, stored by tri index at build-time. */
@@ -16,7 +16,7 @@ declare interface IWalkable<TOwner>
  /** The index of the current tri in the walkable. */
  readonly triIndex?: IWalkableTriIndex
  /** The current position of the state in the walkable. */
- readonly position: IVector3
+ readonly position: Vector3
  readonly manifest: IWalkableManifest
  /** A cache of the pre-processed geometry data obtained by running the getData action. */
  readonly data: IWalkableData
@@ -28,9 +28,9 @@ declare interface IWalkableRayCastResult {
  /** The tri the ray most recently occupied when it hit the boundary or the index of the boundary where the ray stopped if there is no hit. */
  readonly triIndex: IWalkableTriIndex
  /** The rounded cell position where the cast ray landed. */
- readonly point: IVector3
+ readonly point: Vector3
  /** The force vector used to cast the ray, which might be different from the input if sliding is enabled as it may point along the direction of the most recent sliding iteration. */
- readonly forceVector: IVector3
+ readonly forceVector: Vector3
 }
 
 declare interface IWalkableTriData {

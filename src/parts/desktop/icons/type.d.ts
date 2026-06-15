@@ -1,5 +1,5 @@
 declare interface IDesktopIcons
- extends IPartMask<IDesktop, IAppAny>,
+ extends IBitmask<IDesktop, IAppAny>,
  IWebView {
 
 }

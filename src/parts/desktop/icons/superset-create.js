@@ -1,1 +1,0 @@
-return _.publicHosts.split(" ").filter(host => host !== Desktop.host)

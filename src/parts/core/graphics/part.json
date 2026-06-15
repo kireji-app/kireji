@@ -1,0 +1,16 @@
+{
+ "name": "Graphics",
+ "extends": "facet",
+ "actions": {
+  "buffer-create": [
+   "TYPED_ARRAY",
+   "USAGE = GPUBufferUsage.VERTEX | GPUBufferUsage.COPY_DST"
+  ],
+  "dataURI-encode-PNG": [
+   "WIDTH",
+   "HEIGHT",
+   "PIXEL_INDICES",
+   "PALETTE"
+  ]
+ }
+}

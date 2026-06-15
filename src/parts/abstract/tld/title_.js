@@ -1,1 +1,0 @@
-return "Top-Level Domain " + (thisPart.host === componentOwner.host ? "Prototype" : "(." + thisPart.key + ")")

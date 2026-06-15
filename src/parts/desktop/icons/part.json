@@ -1,6 +1,6 @@
 {
  "name": "DesktopIcons",
- "extends": "part-mask",
+ "extends": "bitmask",
  "actions": {
   "point": [
    "POINTER_EVENT",

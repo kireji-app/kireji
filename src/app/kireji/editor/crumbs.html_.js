@@ -1,18 +1,20 @@
-function generateCrumb(part, filename) {
- return `<button ${KirejiEditor.pointAttr("point", allParts.indexOf(part), ...(filename ? [part.filenames.indexOf(filename)] : []))}>${filename ?? (part === _ ? _.name : part.key)}</button>`
+/** @type {(subject: Subject) => string} */
+function generateCrumb(subject) {
+ const file = subject.kind === "part" ? null : subject
+ const part = subject.kind === "part" ? subject : subject.owner
+ return `<button ${KirejiEditor.pointAttr("point", subject.subjectIndex)}>${subject.key}</button>`
 }
 
-if (KirejiTabGroup.activePart) {
- const crumbs = []
+if (KirejiTabGroup.activeTab) {
+ const { subject } = KirejiTabGroup.activeTab
 
- let part = KirejiTabGroup.activePart
+ const crumbs = [generateCrumb(subject)]
 
- if (KirejiTabGroup.activeTab.filename)
-  crumbs.push(generateCrumb(KirejiTabGroup.activePart, KirejiTabGroup.activeTab.filename))
+ let parentPart = subject.kind === "file" ? subject.owner : subject[".."]
 
- while (part) {
-  crumbs.push(generateCrumb(part))
-  part = part[".."]
+ while (parentPart) {
+  crumbs.push(generateCrumb(parentPart))
+  parentPart = parentPart[".."]
  }
 
  return crumbs.reverse().join(`<span></span>`)

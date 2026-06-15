@@ -1,1 +1,1 @@
-return `<section id=tab-group>${KirejiTabGroup.openTabs.map(({ part: tabPart, filename, payload }, tabIndex) => KirejiTabGroup.renderTabHTML(tabPart, filename, payload, tabIndex)).join("")}</section>`
+return `<section id=tab-group>${KirejiTabGroup.openTabs.map(({ subject, payload }, tabIndex) => KirejiTabGroup.renderTabHTML(subject, payload, tabIndex)).join("")}</section>`

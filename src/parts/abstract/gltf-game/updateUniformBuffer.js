@@ -1,0 +1,1 @@
+Graphics.device.queue.writeBuffer(thisGLTFGame.uniformBuffer, 0, thisGLTFGame.camera.buffer)

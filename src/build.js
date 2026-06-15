@@ -2,186 +2,10 @@
 
 /** @type {(_: IEcosystem) => void} */
 function ƒ(_) {
- class RID {
-  static radix = "123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_0"
-  static toHash(rid) {
-   if (typeof rid !== "bigint")
-    throw new RangeError(`Segment encoder can only encode a bigint type (got ${typeof rid})`)
-   if (rid < 0n)
-    throw new RangeError("Segment encoder can't encode a negative RID.")
-   let charmCount = 0n
-   let charmIndex
-   let reducedRID = rid
-   while (reducedRID > 0n) {
-    charmIndex = 2n ** (charmCount * 6n)
-    if (reducedRID >= charmIndex) {
-     reducedRID -= charmIndex
-     charmCount++
-    } else break
-   }
-   let charmLengthOffset = 0n
-   for (let i = 0n; i < charmCount; i++)
-    charmLengthOffset += 2n ** (i * 6n)
-   const binaryString = (rid - charmLengthOffset).toString(2)
-   const charmRoundedBinaryLength = Number(charmCount) * 6
-   const charmRoundedBinaryString = binaryString.padStart(charmRoundedBinaryLength, "0")
-   let hash = ""
-   for (let i = 0; i < charmRoundedBinaryLength; i += 6)
-    hash += this.radix[parseInt(charmRoundedBinaryString.slice(i, i + 6), 2)]
-   return hash
-  }
-  static fromHash(hash) {
-   let charmRoundedBinaryString = "0b0"
-   let charmLengthOffsetBinaryString = "0b0"
-   for (const character of [...hash]) {
-    const characterValue = RID.radix.indexOf(character)
-    if (characterValue === -1 || characterValue >= 64)
-     throw `Bad Hash Character: ${character}`
-    charmRoundedBinaryString += characterValue.toString(2).padStart(6, 0)
-    charmLengthOffsetBinaryString += "000001"
-   }
-   return BigInt(charmRoundedBinaryString) + BigInt(charmLengthOffsetBinaryString)
-  }
-  static toPath(rid) {
-   return `/${_.version}/${RID.toHash(rid)}/`
-  }
-  static fromPath(pathname) {
-   if (!pathname.endsWith("/"))
-    throw `Pathname missing trailing slash: ${pathname}`
-   const segments = pathname.split("/")
-   if (segments.length > 4)
-    throw `Pathname has too many segments`
-   else if (segments.length < 4)
-    throw `Pathname has too few segments`
-   return RID.fromHash(segments[2])
-  }
-  static random(cardinality) {
-   if (typeof cardinality !== "bigint" || cardinality < 0n)
-    throw new RangeError("Random BigInt error: Cardinality must be a bigint greater than 0.")
-   if (cardinality === 1n)
-    return 0n
-   const bitCount = toBits(cardinality, false)
-   const byteCount = Math.ceil(bitCount / 8)
-   const bytes = new Uint8Array(byteCount)
-   const finalByteMask = (1 << (bitCount % 8 || 8)) - 1
-   while (true) {
-    crypto.getRandomValues(bytes)
-    bytes[byteCount - 1] &= finalByteMask
-    let value = 0n
-    for (const b of bytes)
-     value = (value << 8n) | BigInt(b)
-    if (value < cardinality)
-     return value
-   }
-  }
- }
- class Vector {
-  static 2(x = 0, y = 0) {
-   return { x, y }
-  }
-  static 3(x = 0, y = 0, z = 0) {
-   return { x, y, z }
-  }
-  static magnitude(vector) {
-   return Math.hypot(...Object.values(vector))
-  }
-  static normalize(vector) {
-   const result = { ...vector }
-   const magnitude = this.magnitude(vector)
-   if (magnitude)
-    for (const dimension in vector)
-     result[dimension] = vector[dimension] / magnitude
-   return result
-  }
-  static sign(vector) {
-   const result = {}
-   for (const dimension in vector)
-    result[dimension] = Math.sign(vector[dimension])
-   return result
-  }
-  static floor(vector) {
-   const result = {}
-   for (const dimension in vector)
-    result[dimension] = Math.floor(vector[dimension])
-   return result
-  }
-  static round(vector) {
-   const result = {}
-   for (const dimension in vector)
-    result[dimension] = Math.round(vector[dimension])
-   return result
-  }
-  static operate(value1, value2, operation) {
-   if (typeof value1 === "number" || typeof value2 === "number") {
-    if (typeof value1 === "number" && typeof value2 === "number")
-     return operation(value1, value2)
-    const result = {}
-    const number = typeof value1 === "number" ? value1 : value2
-    const vector = typeof value1 === "object" ? value1 : value2
-    for (const dimension in vector)
-     result[dimension] = operation(vector[dimension], number)
-    return result
-   }
-   const result = {}
-   const dimensions = Object.keys(value1)
-   if (dimensions.some(key => !(key in value2)) || Object.keys(value2).some(key => !(key in value1)))
-    throw new Error(`Vector Operation Error: the two vectors do not have the same keys.`)
-   for (const dimension of dimensions)
-    result[dimension] = operation(value1[dimension], value2[dimension])
-   return result
-  }
-  static add(value1, value2) {
-   return this.operate(value1, value2, (a, b) => a + b)
-  }
-  static subtract(value1, value2) {
-   return this.operate(value1, value2, (a, b) => a - b)
-  }
-  static multiply(value1, value2) {
-   return this.operate(value1, value2, (a, b) => a * b)
-  }
-  static dot(vector1, vector2) {
-   let result = 0
-   const dimensions = Object.keys(vector1)
-   if (dimensions.some(key => !(key in vector2)) || Object.keys(vector2).some(key => !(key in vector1)))
-    throw new Error(`Vector Dot Product Error: the two vectors do not have the same keys.`)
-   for (const dimension of dimensions)
-    result += vector1[dimension] * vector2[dimension]
-   return result
-  }
- }
- class FenwickTree {
-  static LSB = []
-  constructor(size) {
-   const oldSize = BigInt(FenwickTree.LSB.length)
-   for (let newSize = oldSize + 1n; newSize <= size; newSize++)
-    FenwickTree.LSB[newSize - 1n] = newSize & -newSize
-   this.size = size
-   this.tree = FenwickTree.LSB.slice(0, Number(size))
-   this.powerFloor = 2n ** BigInt(size.toString(2).length - 1)
-  }
-  update(i, val) {
-   for (; i < this.size; i += FenwickTree.LSB[i])
-    this.tree[i] += val
-  }
-  query(i) {
-   let sum = 0n
-   for (; i >= 0n; i -= FenwickTree.LSB[i])
-    sum += this.tree[i]
-   return sum
-  }
-  findNthAvailable(n) {
-   let nthAvailable = 0n
-   for (let p = this.powerFloor; p > 0n; p /= 2n) {
-    const i = nthAvailable + p
-    if (i <= this.size && this.tree[i - 1n] <= n) {
-     n -= this.tree[i - 1n]
-     nthAvailable = i
-    }
-   }
-   return nthAvailable
-  }
- }
  class SourceMappedFile {
+  static utf8ToBase64(text) {
+   return btoa(new TextEncoder("utf-8").encode(text).reduce((data, byte) => data + String.fromCharCode(byte), ""))
+  }
   sources = []
   commands = []
   copyFrom(copySourceDefinition) {
@@ -268,7 +92,7 @@ function ƒ(_) {
     return outputContent
    const encoderAbsolutePosition = [0, 0, 0, 0, 0]
    return outputContent + `
-//${"#"} sourceMappingURL=data:application/json;charset=utf-8;base64,${btoaUnicode(serialize({
+//${"#"} sourceMappingURL=data:application/json;charset=utf-8;base64,${SourceMappedFile.utf8ToBase64(serialize({
     version: 3,
     sourceFile: "sourceFile.js",
     sourceRoot: "",
@@ -306,6 +130,8 @@ function ƒ(_) {
    }, null, 1))}`
   }
  }
+
+ // Logging.
  function log(verbosity, ...data) {
   logAny(verbosity, data, "log")
  }
@@ -328,13 +154,27 @@ function ƒ(_) {
   return output
  }
  function logEntropy(verbosity, ...parts) {
-  if (verbosity > _.verbosity) return
-  logAny(verbosity, [
-   parts.reduce((table, part) => (table[part.path] = {
-    "Entropy": toCharms(part.cardinality),
-    "Cardinality": scientific(part.cardinality)
-   }, table), {})
-  ], "table")
+
+  if (verbosity > _.verbosity)
+   return
+
+  const table = {}
+
+  for (let i = 0; i < parts.length; i++) {
+
+   /** @type {IPartAny} */
+   const part = parts[i]
+
+   if (!part.isInstance)
+    return
+
+   table[part.path] = {
+    "Entropy": RID.toCharms(part.cardinality),
+    "Cardinality": RID.toScientific(part.cardinality)
+   }
+  }
+
+  logAny(verbosity, [table], "table")
  }
  function logStringSize(verbosity, string) {
   if (verbosity > _.verbosity) return
@@ -355,16 +195,8 @@ function ƒ(_) {
  function logServerScope(col1, col2, col3, callback) {
   return logScope(0, `\n${("" + col1).padEnd(22, " ")} ${(environment.startsWith("node") ? Math.trunc(process.memoryUsage().rss / 1024 / 1024) + " MiB" : "--").padEnd(8, " ")} ${("" + col2).padStart(24, " ")} ${col3}`, log => callback((col1, col2, col3) => log(`${("" + col1).padEnd(20, " ")} ${(environment.startsWith("node") ? Math.trunc(process.memoryUsage().rss / 1024 / 1024) + " MiB" : "--").padEnd(8, " ")} ${("" + col2).padStart(24, " ")} ${col3}`)))
  }
- function toBits(cardinality, unit = true) {
-  cardinality = BigInt(cardinality) - 1n
-  return (cardinality ? cardinality.toString(2).length : 0) + (unit ? " bit" + (cardinality !== 1 ? "s" : "") : 0)
- }
- function toCharms(cardinality, unit = true) {
-  return RID.toHash(BigInt(cardinality) - 1n).length + (unit ? " charm" + (cardinality !== 1 ? "s" : "") : 0)
- }
- function atoBuffer(base64) {
-  return (Uint8Array.fromBase64?.(base64) ?? ([...base64 = atob(base64)].reduce((A, c, i) => (A[i] = c.charCodeAt(0), A), new Uint8Array(base64.length)))).buffer
- }
+
+ // String utilities.
  function camelCase(words, delimiter = "-") {
   return (typeof words === "string" ? words.split(delimiter) : words).map((word, i) => (i ? word[0].toUpperCase() + word.slice(1) : word)).join("")
  }
@@ -372,21 +204,21 @@ function ƒ(_) {
   return (typeof words === "string" ? words.split(delimiter) : words).map(word => word[0].toUpperCase() + word.slice(1)).join(" ")
  }
  function serialize(value) {
-  return JSON.stringify(value, (k, v) => (typeof v === "bigint" ? v.toString() + "n" : v), 1)
+  return JSON.stringify(value, (k, v) => {
+
+   // Stringify bigint values.
+   if (typeof v === "bigint")
+    return v.toString() + "n"
+
+   // Don't include cloned parts.
+   if (v !== null && typeof v === 'object' && !Array.isArray(v) && v.isClone)
+    return undefined
+
+   return v
+  }, 1)
  }
- function scientific(x, html = false) {
-  x = x.toString(10)
-  const log10 = x.length - 1
-  x = Math.round((x[0] ?? 0) + (x[1] ?? 0) + (x[2] ?? 0) + (x[3] ?? "0") + "." + (x[4] ?? "0")).toString()
-  const factor = `${x.slice(0, 1)}.${x.slice(1)}`
-  return html ? `<math><mn>${factor}</mn><mo>&sdot;</mo><msup><mn>10</mn><mn>${log10}</mn></msup></math>` : `${factor} × 10` + [...log10.toString()].map(n => '⁰¹²³⁴⁵⁶⁷⁸⁹'[n]).join("")
- }
- function btoaUnicode(text) {
-  return btoa(new TextEncoder("utf-8").encode(text).reduce((data, byte) => data + String.fromCharCode(byte), ""))
- }
- function sanitizeAttr(string) {
-  return string.replaceAll(/&/g, '&amp;').replaceAll(/"/g, '&quot;').replaceAll(/'/g, '&#39;').replaceAll(/</g, '&lt;').replaceAll(/>/g, '&gt;')
- }
+
+ // Object building.
  /** @type {(part: IPartAny, definition: IRuntimePropertyDefinitions<IPartAny>) => IPartAny} */
  function define(part, descriptorMap) {
   // Resolve late-bound properties in the order they were added to the descriptor map.
@@ -401,6 +233,7 @@ function ƒ(_) {
    Object.defineProperty(part, propertyKey, propertyDescriptor)
   }
  }
+
  // Initialization
  const environment = (() => {
 
@@ -424,9 +257,10 @@ function ƒ(_) {
    }
 
    define(_, {
-    name: {
+    key: {
      value: __dirname.split(/[\\/]/).filter(Boolean).at(-4),
-     enumerable: true
+     enumerable: true,
+     configurable: true
     },
     branch: {
      value: exec("git rev-parse --abbrev-ref HEAD"),
@@ -438,6 +272,10 @@ function ƒ(_) {
     },
     version: {
      value: (([M, m, p], c) => _.command === "debug" ? +M && c === "major" ? `${++M}.0.0` : c === "minor" || (!+M && c === "major") ? `${M}.${++m}.0` : `${M}.${m}.${++p}` : `${M}.${m}.${p}`)(exec("git log -1 --pretty=%s").toString().match(/^\s*(\d+\.\d+\.\d+)/)[1].split("."), _.change),
+     enumerable: true
+    },
+    kirejiVersion: {
+     value: require('../package.json').version,
      enumerable: true
     },
     modified: {
@@ -474,14 +312,14 @@ function ƒ(_) {
   welcomeMessage: {
    resolve() {
     return `
-     ▌ ▘     ▘▘ ${_.name}
+     ▌ ▘     ▘▘ ${_.key}
  k = ▙▘▌▛▘█▌ ▌▌ ${_.branch}
      ▛▖▌▌ ▙▖ ▌▌ ${_.version}
             ▙▌  `.slice(1)
    }
   }
  })
- logScope(0, `\n${_.welcomeMessage}${environment}`, bootLog => {
+ logScope(0, `\n${_.welcomeMessage}${environment}`, buildLog => {
   switch (_.command) {
    case "debug":
    case "build":
@@ -492,13 +330,13 @@ function ƒ(_) {
     process.exit(1)
     return
    case "version":
-    bootLog(`Version:\n - kireji: ${require('../package.json').version}\n - ${_.name}: ${_.version}\n`)
+    buildLog(`Version:\n - kireji: ${_.kirejiVersion}\n - ${_.key}: ${_.version}\n`)
     process.exit(0)
     return
    default:
     logError(`Unknown argument: ${_.command}\n`)
    case "help":
-    bootLog(`Commands:
+    buildLog(`Commands:
  init    Initializes an empty project.
  example Initializes the example project.
  debug   Builds a local server.
@@ -507,9 +345,9 @@ function ƒ(_) {
     process.exit(+(_.command === "help"))
     return
   }
-  bootLog(`
+  buildLog(`
  ╭┈┈┈┈┈┈┈┈┈┈┈ BOOT BEGINNING ┈┈┈┈┈┈┈┈┈┈┈╮
- ┊ Now booting the Kireji Web Framework ┊
+ ┊ Booting the Kireji Web Framework.    ┊
  ╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈╯`
   )
   if (environment === "node-main") {
@@ -625,26 +463,26 @@ function ƒ(_) {
    const landingModel = JSON.parse(_["landing-model.json"])
    let desktopFeatures = 3
    if (_.includeColor === "none") {
-    delete _.parts.desktop.color
-    delete landingModel.parts.desktop.color
+    delete _.parts.core.color
+    delete landingModel.parts.core.color
     desktopFeatures--
    } else if (_.includeColor === "dark" || (_.includeColor === "debug-light" && _.command !== "debug")) {
-    delete _.parts.desktop.color.light
-    landingModel.parts.desktop.color = "light"
+    delete _.parts.core.color.light
+    landingModel.parts.core.color = "light"
    } else if (_.includeColor === "light" || (_.includeColor === "debug-dark" && _.command !== "debug")) {
-    delete _.parts.desktop.color.dark
-    landingModel.parts.desktop.color = "dark"
+    delete _.parts.core.color.dark
+    landingModel.parts.core.color = "dark"
    }
    if (_.includeEra === "none") {
-    delete _.parts.desktop.era
-    delete landingModel.parts.desktop.era
+    delete _.parts.core.era
+    delete landingModel.parts.core.era
     desktopFeatures--
    } else if (_.includeEra === "vintage" || (_.includeEra === "debug-modern" && _.command !== "debug")) {
-    delete _.parts.desktop.era.modern
-    landingModel.parts.desktop.era = "vintage"
+    delete _.parts.core.era.modern
+    landingModel.parts.core.era = "vintage"
    } else if (_.includeEra === "modern" || (_.includeEra === "debug-vintage" && _.command !== "debug")) {
-    delete _.parts.desktop.era.vintage
-    landingModel.parts.desktop.era = "modern"
+    delete _.parts.core.era.vintage
+    landingModel.parts.core.era = "modern"
    }
    if (_.includeKirejiApp === "none" || (_.includeKirejiApp === "full" && _.command !== "debug")) {
     delete _.app
@@ -653,18 +491,18 @@ function ƒ(_) {
    const removeDesktopFeatures = () => {
     delete _.parts.desktop.icons
     delete landingModel.parts.desktop.icons
-    delete _.parts.desktop.windows
-    delete landingModel.parts.desktop.windows
-    delete _.parts.desktop["task-bar"].tray
+    delete _.parts.core.windows
+    delete landingModel.parts.core.windows
+    delete _.parts.core["task-bar"].tray
    }
    if (_.includeDesktop === "none" || (_.command !== "debug" && _.includeDesktop === "local-only")) {
     removeDesktopFeatures()
-    delete _.parts.desktop["task-bar"]
-    delete landingModel.parts.desktop.taskBar
+    delete _.parts.core["task-bar"]
+    delete landingModel.parts.core["task-bar"]
     desktopFeatures--
    } else if (_.includeDesktop === "menu-only" || (_.command !== "debug" && _.includeDesktop === "full")) {
     removeDesktopFeatures()
-    delete _.parts.desktop["task-bar"].tray
+    delete _.parts.core["task-bar"].tray
    }
    if (!desktopFeatures) {
     delete _.parts.desktop
@@ -683,13 +521,22 @@ function ƒ(_) {
    })
   })
   logScope(1, "\nBuilding Parts", () => {
+
+   /** @type {IPartAny[]} */
    const allParts = []
-   const instances = []
+
+   /** @type {Subject[]} */
    const allSubjects = []
-   const partsByHost = []
+
+   /** @type {Record<string, IPartAny>} */
+   const partsByHost = {}
+
+   /** @type {IFileDefinition[]} */
    const imageSources = []
-   const subjectIndices = new Map()
+
+   /** @type {IFileDefinition[]} */
    const earlyImageSources = []
+
    /** @type {(host: string, base: string | string[]) => { host: string, part: IPartAny, domains: string[] }} */
    function resolveRelativeHost(host, base) {
     if (typeof host !== "string")
@@ -719,6 +566,7 @@ function ƒ(_) {
      }, { part: _, "..": null }),
     }
    }
+
    function lookup(host) {
     return partsByHost[host] ??= host.split(".").reduceRight((part, subdomain, index, domains) => {
      if (!part[subdomain])
@@ -726,12 +574,13 @@ function ƒ(_) {
      return part[subdomain]
     }, _)
    }
+
    /** @type {(componentOwner: IPartAny) => IPartAny} */
-   function collectBuild(componentOwner) {
-    logScope(2, `"${componentOwner.domains.join(".")}"`, () => {
+   function collectDefine(componentOwner) {
+    logScope(2, `define "${componentOwner.domains.join(".")}"`, () => {
      define(componentOwner, {
       key: {
-       value: componentOwner.domains[0]
+       value: componentOwner.domains[0] ?? componentOwner.key
       },
       host: {
        resolve() {
@@ -742,11 +591,26 @@ function ƒ(_) {
         return host
        }
       },
+      kind: {
+       value: "part"
+      },
+      isClone: {
+       resolve() {
+        if (Object.hasOwn(this, "isClone"))
+         return this.isClone
+
+        // Shadow prototype property.
+        return false
+       }
+      },
       manifest: {
        resolve() {
-        /** @type {IPartManifest} */
-        const manifest = JSON.parse(componentOwner["part.json"] ?? "{}")
 
+        // Account for manifest of inherited child part which was created by its parent part.
+        /** @type {IPartManifest} */
+        const manifest = this.manifest ?? JSON.parse(componentOwner["part.json"] ?? "{}")
+
+        // TODO
         // Prevent these properties from being inherited from the prototype manifest.
         manifest.abstract ??= false
         manifest.name ??= null
@@ -782,11 +646,52 @@ function ƒ(_) {
            value: prototypeDomains
           }
          })
-         collectBuild(prototype)
+         collectDefine(prototype)
         }
 
-        if (!prototype.isAbstract)
-         throw new Error(`Hydration Error: parts can only extend abstract parts (${this.host} tried to extend ${prototype.host}).`)
+        if (prototype.isInstance)
+         throw new Error(`Hydration Error: parts can't extend from concrete instances (${this.host} tried to extend ${prototype.host}).`)
+
+        for (const subdomain of prototype.subdomains) {
+
+         const destinationChildPartExisted = this[subdomain] !== undefined
+
+         if (destinationChildPartExisted && typeof this[subdomain] !== "object")
+          throw new Error(`The existing component "${subdomain}" on "${this.host}" conflicts with the name of an inherited subpart from its prototype.`)
+
+         /** @type {IPartAny} */
+         const sourceChildPart = prototype[subdomain]
+
+         /** @type {IPartAny} */
+         const destinationChildPart = this[subdomain] ??= {}
+
+         log(3, "inherit child part " + sourceChildPart.host)
+
+         if (!destinationChildPartExisted)
+          define(destinationChildPart, {
+           isClone: {
+            value: true,
+            configurable: true
+           }
+          })
+
+         define(destinationChildPart, {
+          manifest: {
+           configurable: true,
+           value: JSON.parse(destinationChildPart["part.json"] ?? "{}")
+          }
+         })
+
+         if (destinationChildPart.manifest.abstract !== undefined)
+          throw new Error(`The "abstract" property should not be defined on inherited child parts (found on ${subdomain}.${this.host} which is an inherited child part of ${prototype.host})`)
+
+         destinationChildPart.manifest.abstract = sourceChildPart.manifest.abstract
+
+         if (destinationChildPart.manifest.extends !== undefined)
+          continue // For now, allow this kind of override.
+
+         destinationChildPart.manifest.extends = sourceChildPart.host
+        }
 
         // Inherit from the prototype.
         Object.setPrototypeOf(this, prototype)
@@ -802,33 +707,34 @@ function ƒ(_) {
        value: Object.keys(componentOwner).filter(key => typeof componentOwner[key] === "string")
       },
       subdomains: {
-       value: Object.keys(componentOwner).filter(key => typeof componentOwner[key] === "object")
+       resolve() {
+        return Object.keys(this).filter(key => typeof this[key] === "object")
+       }
+      },
+      isInstance: {
+       resolve() {
+        return !this.manifest.abstract && (this[".."]?.isInstance || this === _)
+       }
       },
       inheritors: {
        value: []
       },
-      isAbstract: {
-       resolve() {
-        return this.manifest.abstract
-       }
-      },
       components: {
        resolve() {
+
+        // Generate the component descriptor map.
+        /** @type {ComponentDefinitionMap} */
         const components = eval((() => {
          // Use IIFE to prevent script and source mapped file from being retained by eval scope.
          const sourceMappedFile = new SourceMappedFile()
          sourceMappedFile.copyFrom({ literal: `@components-open@({ // ${this.host}` })
-         for (const filename of this.filenames) {
-          subjectIndices.set(`${this.host}/${filename}`, allSubjects.push([this.host, filename]) - 1)
-          sourceMappedFile.copyFrom({ literal: `@lock-file@\n "${filename}": { value: this["${filename}"], key: "${filename}", kind: "file", name: "${filename}", filename: "${filename}", enumerable: true, writable: ${environment === "node-main" && this === _ && filename === "compressedMetadata"}, size: ${new TextEncoder().encode(serialize({ [filename]: this[filename] })).length} },` })
+         for (let filenameIndex = 0; filenameIndex < this.filenames.length; filenameIndex++) {
+          const filename = this.filenames[filenameIndex]
+          sourceMappedFile.copyFrom({ literal: `@lock-file@\n "${filename}": { value: this["${filename}"], key: "${filename}", kind: "file", name: "${filename}", filename: "${filename}", subjectIndex: ${allSubjects.length + filenameIndex}, filenameIndex: ${filenameIndex}, enumerable: true, writable: ${environment === "node-main" && this === _ && filename === "compressedMetadata"}, size: ${new TextEncoder().encode(serialize({ [filename]: this[filename] })).length} },` })
           if (this.prototype && !filename.endsWith("_.js") && (filename + "_.js" in this.prototype))
            sourceMappedFile.copyFrom({ literal: `@shadow-dynamic@  "${filename}_.js": { value: undefined, key: "${filename}_.js", kind: "shadow", name: "Shadow ${filename}_.js", filename: "${filename}" },` })
           if (!filename.endsWith(".js")) {
-           if (filename.endsWith(".png") || filename.endsWith(".gif")) {
-            imageSources.push([this, filename])
-            if (filename.startsWith("early-"))
-             earlyImageSources.push([this, filename.slice(6)])
-           } else if (!filename.includes(".") && filename.includes("-")) {
+           if (!filename.includes(".") && filename.includes("-")) {
             const words = filename.split("-")
             words.push(words.shift())
             const key = camelCase(words)
@@ -844,11 +750,6 @@ function ƒ(_) {
            words[0] = key = key.slice(0, -1)
            if (key.includes(".")) {
             words = key.split(".")[0].split("-")
-            if (key.endsWith(".png") || key.endsWith(".gif")) {
-             imageSources.push([this, key])
-             if (key.startsWith("early-"))
-              earlyImageSources.push([this, key.slice(6)])
-            }
            } else if (key.includes("-")) {
             words = key.split("-")
             words.push(words.shift())
@@ -868,8 +769,16 @@ function ƒ(_) {
           sourceMappedFile.copyFrom({ literal: `@action-open@  ${kind === "action" ? `${filename.startsWith("async-") ? "async " : ""}value(${this.manifest.actions[filename.slice(0, -3)]?.join(", ") ?? ""})` : "get()"} {` })
           // BEGIN CODE-GEN
           const utilities = {
-           "@base@": (...args) => (componentOwner.prototype?.components[componentKey].value ?? componentOwner.prototype?.components[componentKey].get).call(thisPart, ...args),
-           "@error@": (msg, cause) => { const e = new Error(`${msg}\n\tat ${thisPart.path}\n\tat ${componentOwner.path}/${components[componentKey].filename}`, cause); e.name = componentOwner.name; return e },
+           "@base@": (...args) => {
+            let owner = componentOwner.prototype
+            while (owner) {
+             if (componentKey in owner.components)
+              return (owner.components[componentKey].value ?? owner?.components[componentKey].get).call(thisPart, ...args)
+             owner = owner.prototype
+            }
+            throw error(`call to base() when there is no base version of the component`)
+           },
+           "@error@": (msg, cause) => { const e = new Error(`${msg}\n\tat ${thisPart.path}\n\tat ${componentOwner.path}/${components[componentKey].filename}`, { cause }); e.name = components[componentKey].name; return e },
            "@recurse@": (...args) => (components[componentKey].value ?? components[componentKey].get).call(thisPart, ...args)
           }
           const utils = new Set(this[filename].match(new RegExp(`(?:${Object.keys(utilities).map(mark => mark.slice(1, -1)).join("|")})(?=\\()`, "g")))
@@ -889,19 +798,81 @@ function ƒ(_) {
          const script = sourceMappedFile.packAndMap()
          return script
         })())
+
+        // Post-process the components.
+        for (const componentKey in components) {
+
+         const component = components[componentKey]
+
+         define(component, {
+          owner: {
+           value: this
+          },
+          partIndex: {
+           get() { return this.owner.partIndex }
+          }
+         })
+
+         if (componentKey.endsWith(".png") || componentKey.endsWith(".gif")) {
+          imageSources.push(component)
+          if (componentKey.startsWith("early-"))
+           earlyImageSources.push(component)
+         }
+
+         // Add the components to the all subjects array.
+         if (this.filenames.includes(componentKey))
+          define(component, {
+           subjectIndex: {
+            value: allSubjects.push(component) - 1
+           }
+          })
+        }
+
+        // Assign the components to the part.
         define(this, components)
+
+
         return components
+       }
+      },
+      partIndex: {
+       resolve() {
+
+        // Don't add to allParts until all children have been added.
+        // This determines the order in which part build processes are called.
+        this.distributeDefine()
+
+        return allParts.push(this) - 1
+       }
+      },
+      subjectIndex: {
+       resolve() {
+        return allSubjects.push(this) - 1
        }
       }
      })
-     componentOwner.distributeBuild()
     })
    }
-   collectBuild(_)
+
+   collectDefine(_)
+   Base.countAndSortInheritors()
+   _.transformMetadata()
+   // All parts are defined and inheritors data is ready.
+
+   for (const part of allParts)
+    if (part.isInstance) logScope(2, part.host, () => {
+     part.callAlongChain("preBuild", false, true)
+     part.callAlongChain("build", true, true)
+    })
+
+   for (const part of allParts)
+    if (part.isInstance) logScope(2, part.host, () => {
+     part.callAlongChain("postBuild", true, true)
+    })
   })
-  bootLog(`
+  buildLog(`
  ╭┈┈┈┈┈┈┈┈┈┈┈ BOOT SUCCEEDED ┈┈┈┈┈┈┈┈┈┈┈╮
- ┊ Booted Successfully                  ┊
+ ┊ Booted Successfully.                 ┊
  ┊                                      ┊
  ┊ End of synchronous script execution. ┊
  ╰┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈╯`
@@ -910,18 +881,18 @@ function ƒ(_) {
 }
 
 ƒ({
- verbosity: "1",
- change: "major",
- hangHydration: "0",
- defaultHost: "desktop.parts",
  port: "3000",
+ change: "major",
  mapping: "disabled",
- resetLocalState: "enabled",
- haltHydration: "disabled",
- includeWarning: "enabled",
- includeColor: "full",
+ verbosity: "1",
  includeEra: "full",
- includeMenuItems: "full",
+ defaultHost: "desktop.parts",
+ includeColor: "full",
+ haltHydration: "disabled",
+ hangHydration: "0",
+ includeDesktop: "full",
+ includeWarning: "enabled",
+ resetLocalState: "enabled",
  includeKirejiApp: "full",
- includeDesktop: "full"
+ includeMenuItems: "full",
 })

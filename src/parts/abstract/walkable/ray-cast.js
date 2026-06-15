@@ -3,7 +3,7 @@
 const safeIterationResult = {
  hit: false,
  triIndex: thisWalkable.triIndex,
- point: Vector[3](
+ point: Vector.xyz(
   thisWalkable.position.x,
   0, // Exclude y coordinate from the ray casting algorithm for now.
   thisWalkable.position.z
@@ -18,7 +18,7 @@ const speed = Vector.magnitude(FORCE_VECTOR)
 if (speed !== 0) {
 
  // Initialize timing data as though the vector doesn't intersect any grid lines.
- const timeOfNextIntersection = Vector[3](Infinity, Infinity, Infinity)
+ const timeOfNextIntersection = Vector.xyz(Infinity, Infinity, Infinity)
  const timeBetweenIntersections = { ...timeOfNextIntersection }
 
  // Set the clock to zero.
@@ -113,7 +113,7 @@ if (speed !== 0) {
      dot: -Infinity,
      point: null,
      triIndex: null,
-     direction: Vector[3](null, null, null)
+     direction: Vector.xyz(null, null, null)
     }
 
     let boundaryAppearsFlat = false
@@ -125,7 +125,7 @@ if (speed !== 0) {
      if (!x && !z)
       continue
 
-     const direction = { x, y: 0, z }
+     const direction = Vector.xyz(x, 0, z)
 
      // Find out how much of the force vector is cancelled out by going to this neighbor.
      const dot = Vector.dot(Vector.normalize(direction), Vector.normalize(FORCE_VECTOR))

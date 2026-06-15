@@ -44,6 +44,11 @@
   "indexOf": [
    "...ARGS"
   ],
+  "chain-call-along": [
+   "ACTION_KEY",
+   "FROM_ROOT = false",
+   "LOG_BEFORE_EACH = false"
+  ],
   "attach": [
    "EVENT_TYPE",
    "RECEIVER",

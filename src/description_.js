@@ -1,4 +1,4 @@
-return `This part represents the root of the ${_.name} ecosystem. Its domain name is the empty string ("", representing the DNS root), and all of its subparts represent top-level domains (TLDs) like ".com" and ".io".
+return `This part represents the root of the ${_.key} ecosystem. Its domain name is the empty string ("", representing the DNS root), and all of its subparts represent top-level domains (TLDs) like ".com" and ".io".
 
 It forms the root of the runtime state space used to compute a two-way minimal perfect hash function (MPHF) across all origins. When serialized, it inlines all metadata and file structure compiled from the repository at build time.
 

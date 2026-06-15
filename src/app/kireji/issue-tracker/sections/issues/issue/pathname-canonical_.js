@@ -1,1 +1,0 @@
-return KirejiIssues.pathname + thisKirejiIssue.pathname

@@ -1,4 +1,4 @@
-/** @type {IScroller<IPartOutliner<IKirejiAppSidebar>>} */
+/** @type {IScroller<IOutliner<IKirejiAppSidebar, IPartAny>>} */
 
 if (thisPart.rid === 0n) {
  KirejiSidebar.view.scroller.removeView()

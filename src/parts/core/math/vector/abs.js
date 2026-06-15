@@ -1,0 +1,1 @@
+return Vector.operate(VECTOR_OR_NUMBER, x => Math.abs(x))

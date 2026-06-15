@@ -1,0 +1,1 @@
+return `/${_.version}/${RID.toHash(INPUT_RID)}/`

@@ -1,0 +1,9 @@
+{
+ "extends": "mix",
+ "fov": 50,
+ "near": 1,
+ "far": 10000,
+ "scope": 3,
+ "pixelRatio": 1,
+ "height": 67
+}

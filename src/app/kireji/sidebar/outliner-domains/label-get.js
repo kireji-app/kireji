@@ -1,1 +1,0 @@
-return SUBJECT === _ ? _.name : SUBJECT.key

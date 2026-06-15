@@ -1,259 +1,204 @@
-return KirejiIssueFilters["part.css"] + /* css */`
-
-body.modern:not(.dark) #issue-tracker_kireji_app {
- background-color: white;
-}
+return (
+ KirejiIssueFilters["part.css"] +
+ KirejiIssuesActiveOverlay["part.css"] +
+ /* css */`
 
 #issue-tracker_kireji_app {
  display: flex;
  flex-flow: column nowrap;
+
+ body.modern & {
+  --border-color: var(--bg-un-mode);
+  background-color: var(--bg-mode-er);
+ }
+
+ body.vintage & {
+  padding: 2px;
+  box-shadow: var(--deep-inset);
+
+
+  :is(.issue-table, .issue-links) {
+   background: var(--bg-page);
+  }
+ }
+
+ &:has(#kireji-issue-modal:not(:empty), #command-palette.open) {
+  pointer-events: none;
+ }
+
+ :is(.issue-status, .issue-priority, .issue-date) {
+  width: var(--column-width);
+  display: inline-block;
+
+  body.modern :not(.header)>& {
+   border-radius: calc(var(--spacing) / 4);
+   font-weight: 600;
+   font-size: calc(var(--spacing) * .7);
+   text-align: center;
+   line-height: inherit;
+  }
+ }
+
+ :is(.issue-status, .issue-date) {
+  white-space: nowrap;
+ }
+
+ .issue-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: pre;
+  
+  body.modern & {
+   font-weight: 500;
+   padding-left: var(--spacing);
+  }
+ }
+
+ :is(.issue-table>scroller->scroll-content, .issue-links) {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+ }
+
+ .issue-row {
+  position: relative;
+  display: flex;
+  text-decoration: none;
+  color: inherit;
+
+  >* {
+   line-height: var(--spacing);
+
+   body.vintage & {
+    padding: 4px;
+   }
+  }
+
+  >span {
+   position: relative;
+  }
+
+  body.modern & {
+   padding: calc(var(--spacing) / 2) 0;
+
+   &:not(.header) {
+    border-radius: calc(var(--spacing) / 4);
+    cursor: pointer;
+
+    &:hover {
+     background: var(--bg-un-mode);
+    }
+   }
+  }
+
+  body.vintage & {
+   
+   &:not(.header):hover {
+    background-color: var(--accent);
+    color: var(--bg-page);
+   }
+  }
+ }
+
+ .issue-date {
+
+  body.vintage & {
+   --column-width: calc(7 * var(--spacing));
+  }
+
+  body.modern & {
+   --column-width: calc(7 * var(--spacing));
+  }
+ }
+
+ .issue-status {
+
+  body.vintage & {
+   --column-width: 76px;
+  }
+
+  body.modern & {
+   --column-width: calc(6 * var(--spacing));
+
+   :not(.header)>& {
+
+    [data-status="to-do"]>& {
+     color: steelblue;
+     background-color: powderblue;
+
+     body.dark & {
+      color: powderblue;
+      background-color: steelblue;
+     }
+    }
+
+    [data-status="doing"]>& {
+     color: brown;
+     background-color: wheat;
+
+     body.dark & {
+      color: wheat;
+      background-color: peru;
+     }
+    }
+
+    [data-status="done"]>& {
+     color: seagreen;
+     background-color: palegreen;
+
+     body.dark & {
+      color: palegreen;
+      background-color: seagreen;
+     }
+    }
+   }
+  }
+ }
+
+ .issue-priority {
+
+  body.vintage & {
+   --column-width: 42px;
+  }
+
+  body.modern & {
+   --column-width: calc(4 * var(--spacing));
+
+
+   [data-priority="A"]>& {
+    color: red;
+   }
+
+   [data-priority="B"]>& {
+    color: orange;
+   }
+
+   [data-priority="C"]>& {
+    color: green;
+   }
+  }
+ }
+
+ .issue-table {
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+  flex: 1;
+
+  body.modern & {
+   background: var(--bg-light-est);
+
+   body.dark & {
+    background: var(--bg-mode);
+   }
+  }
+ }
+
+ body.vintage & .issue-links {
+  padding: 2px;
+  box-shadow: var(--deep-inset);
+ }
 }
 
-body.modern #issue-tracker_kireji_app {
- padding: var(--spacing);
-}
-
-#kireji-issue-modal {
- position: absolute;
- background-color: var(--bg);
- padding: var(--spacing);
- display: flex;
- gap: var(--spacing);
- flex-flow: column nowrap;
-}
-
-body.modern #kireji-issue-modal {
- left: calc(3 * var(--spacing));
- right: calc(3 * var(--spacing));
- top: calc(2 * var(--spacing));
- bottom: calc(2 * var(--spacing));
-}
-
-body.vintage #kireji-issue-modal {
- left: 0;
- right: 0;
- top: 0;
- bottom: 0;
-}
-
-#kireji-issue-modal .exit-button {
- position: absolute;
- right: var(--spacing);
- top: var(--spacing);
- width: var(--spacing);
- height: var(--spacing);
- font-size: var(--spacing);
- line-height: var(--spacing);
- text-align: center;
- cursor: pointer;
- pointer-events: all;
-}
-
-body.modern #kireji-issue-modal {
- border-radius: calc(var(--spacing) / 2);
-}
-
-body.modern:not(.dark) #kireji-issue-modal {
- background-color: white;
-}
-
-body.vintage #kireji-issue-modal {
- background-color: var(--bg);
-}
-
-#issue-tracker_kireji_app:has(#kireji-issue-modal:not(:empty)) {
- pointer-events: none;
- color: var(--fg-mode);
- background-color: var(--bg-un-mode);
-}
-
-#kireji-issue-modal:empty {
- display: none;
-}
-
-#kireji-issue-modal>* {
- margin: 0;
- padding: 0;
-}
-
-#kireji-issue-modal>h1 {
- margin-right: var(--spacing);
- font-size: var(--spacing);
- line-height: var(--spacing);
-}
-
-#kireji-issue-modal .issue-description {
- white-space: pre-wrap;
-}
-
-#issue-tracker_kireji_app .issue-title {
- flex: 1;
- overflow: hidden;
- text-overflow: ellipsis;
- white-space: pre;
-}
-
-body.modern #issue-tracker_kireji_app .issue-title {
- font-weight: 500;
-}
-
-#issue-tracker_kireji_app :is(.issue-table>scroller->scroll-content, .issue-links) {
- display: flex;
- flex-flow: column nowrap;
- width: 100%;
-}
-
-#issue-tracker_kireji_app .issue-row {
- position: relative;
- display: flex;
- text-decoration: none;
- color: inherit;
-}
-
-body.modern #issue-tracker_kireji_app .issue-row {
- padding: calc(var(--spacing) / 2) 0;
-}
-
-body.modern #issue-tracker_kireji_app .issue-row:not(.header) {
- border-radius: calc(var(--spacing) / 3);
- cursor: pointer;
-}
-
-body.modern #issue-tracker_kireji_app .issue-row:not(.header):hover {
- background-color: var(--accent-mode-est);
-}
-
-body.vintage #issue-tracker_kireji_app .issue-row>* {
- padding: 4px;
-}
-
-#issue-tracker_kireji_app .issue-row>* {
- line-height: var(--spacing);
-}
-
-body.vintage #issue-tracker_kireji_app .issue-row:not(.header):hover {
- background-color: var(--accent);
- color: white;
-}
-
-body.vintage.dark #issue-tracker_kireji_app .issue-row:not(.header):hover {
- color: black;
-}
-
-#issue-tracker_kireji_app :is(.issue-status, .issue-priority, .issue-date) {
- width: var(--column-width);
- display: inline-block;
-}
-
-#issue-tracker_kireji_app .issue-row>span {
- position: relative;
-}
-
-body.vintage #issue-tracker_kireji_app .issue-date {
- --column-width: calc(7 * var(--spacing));
-}
-
-body.modern #issue-tracker_kireji_app .issue-date {
- --column-width: calc(7 * var(--spacing));
-}
-
-body.vintage #issue-tracker_kireji_app .issue-status {
- --column-width: 76px;
-}
-
-body.modern #issue-tracker_kireji_app .issue-status {
- --column-width: calc(6 * var(--spacing));
-}
-
-body.vintage #issue-tracker_kireji_app .issue-priority {
- --column-width: 42px;
-}
-
-body.modern #issue-tracker_kireji_app .issue-priority {
- --column-width: calc(4 * var(--spacing));
-}
-
-body.modern #issue-tracker_kireji_app :not(.header)>:is(.issue-status, .issue-priority, .issue-date) {
- border-radius: calc(var(--spacing) / 4);
- font-weight: 600;
- font-size: calc(var(--spacing) * .7);
- text-align: center;
- line-height: inherit;
-}
-
-#issue-tracker_kireji_app :is(.issue-status, .issue-date) {
- white-space: nowrap;
-}
-
-body.modern #issue-tracker_kireji_app :not(.header)>.issue-status {
- color: steelblue;
- background-color: powderblue;
-}
-
-body.modern.dark #issue-tracker_kireji_app :not(.header)>.issue-status {
- color: powderblue;
- background-color: steelblue;
-}
-
-body.modern #issue-tracker_kireji_app :not(.header)[data-status="doing"]>.issue-status {
- color: brown;
- background-color: wheat;
-}
-
-body.modern.dark #issue-tracker_kireji_app :not(.header)[data-status="doing"]>.issue-status {
- color: wheat;
- background-color: peru;
-}
-
-body.modern #issue-tracker_kireji_app :not(.header)[data-status="done"]>.issue-status {
- color: seagreen;
- background-color: palegreen;
-}
-
-body.modern.dark #issue-tracker_kireji_app :not(.header)[data-status="done"]>.issue-status {
- color: palegreen;
- background-color: seagreen;
-}
-
-body.modern #issue-tracker_kireji_app :not(.header)[data-priority="A"]>.issue-priority {
- color: red;
-}
-
-body.modern #issue-tracker_kireji_app :not(.header)[data-priority="B"]>.issue-priority {
- color: orange;
-}
-
-body.modern #issue-tracker_kireji_app :not(.header)[data-priority="C"]>.issue-priority {
- color: green;
-}
-
-#issue-tracker_kireji_app .issue-table {
- min-height: 0;
- position: relative;
- overflow: hidden;
- flex: 1;
-}
-
-#kireji-issue-modal .issue-row {
- pointer-events: all;
-}
-
-body.vintage #issue-tracker_kireji_app {
- padding: 2px;
- box-shadow: var(--deep-inset);
-}
-
-body.vintage #issue-tracker_kireji_app :is(.issue-table, .issue-links) {
- background: white;
-}
-
-body.vintage.dark #issue-tracker_kireji_app :is(.issue-table, .issue-links) {
- background: black;
-}
-
-body.vintage #issue-tracker_kireji_app .issue-links {
- padding: 2px;
- box-shadow: var(--deep-inset);
-}
-
-`
+`)

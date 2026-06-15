@@ -13,10 +13,10 @@ Pointer.handle({
   const key = className.split("-").pop()
 
   if (className.includes("filter")) {
-   if (KirejiIssueFilters.dropdown.model === key)
-    KirejiIssueFilters.dropdown.setModel("none")
+   if (KirejiIssuesActiveOverlay.model === key + "-dropdown")
+    KirejiIssuesActiveOverlay.setModel("command-palette")
    else
-    KirejiIssueFilters.dropdown.setModel(key)
+    KirejiIssuesActiveOverlay.setModel(key + "-dropdown")
   } else {
    KirejiIssueFilters.order.descending.clear()
    KirejiIssueFilters.order.by.setModel(key)

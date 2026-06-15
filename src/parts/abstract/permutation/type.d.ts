@@ -14,7 +14,7 @@ declare interface IPermutation<TOwner, TInstance, TModel, TSubject>
  readonly distributeInstanceRID(SUBJECT_INDEX: bigint, NEW_RID: bigint): TInstance
  /** Takes the given instance and turns it into a payload RID which will then be mixed with the permutation's combined payload RID. */
  readonly collectInstanceRID(SUBJECT_INDEX: bigint, NEW_RID: bigint): TInstance
- /** Takes the given instance and returns its correspoding subject which can then be indexed and ranked to determine the permutation RID. */
+ /** Takes the given instance and returns its corresponding subject which can then be indexed and ranked to determine the permutation RID. */
  readonly instanceToSubject(INSTANCE: TInstance): bigint | number
  /** Returns the full array of subjects from which the permutation will be made. It will then be cached as `permutation.superset`. */
  readonly getSuperset(): TSubject[]
@@ -43,8 +43,6 @@ declare interface IPermutation<TOwner, TInstance, TModel, TSubject>
  readonly instances: TInstance[]
  /** The set of viewed instance objects corresponding to the current `thisPart.viewedPermutationRID`. @remarks Client-only */
  readonly viewedInstances: TInstance[]
- /** A Fenwick tree that allows performant ranking and unranking of permutation indices. */
- readonly tree: FenwickTree
 }
 
 declare type IPermutationAny =

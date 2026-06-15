@@ -1,0 +1,1 @@
+return KirejiTabGroup.activeTab?.subject.partIndex === BITMASK_NODE.subject.partIndex

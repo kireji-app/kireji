@@ -1,5 +1,6 @@
 declare interface IPart<TOwner, TSubpart>
- extends Iterable<TSubpart> {
+ extends Iterable<TSubpart>,
+ ISubject {
 
  // Components.
  [Symbol.iterator](): IterableIterator<TSubpart>
@@ -37,15 +38,17 @@ declare interface IPart<TOwner, TSubpart>
  readonly pointAttr(ACTION_NAME: string = "point", ...ARGS: any[])
  /** Generates the attribute string that sets up an onclick listener that calls `part[ACTION_NAME](event,this,...ARGS)`. Using `pointAttr` with `pointer.handle({ ... })` is the preferred action of reacting to clicks but this event can be used for special cases like requesting a pointerlock, where the browser requires a proper click event. */
  readonly clickAttr(ACTION_NAME: string = "onclick", ...ARGS: any[])
- /** Registers a listener that calls RECEIVER[CALLBACK_NAME](this) after the event of the given type occurs. */
+ /** Registers a listener that calls `RECEIVER[CALLBACK_NAME](this)` after the event of the given type occurs. */
  readonly attach(EVENT_TYPE: string, RECEIVER: IPartAny, CALLBACK_NAME: string): void
- /** Unregisters the listener that calls RECEIVER[CALLBACK_NAME](this) after the event of the given type occurs. */
+ /** Unregisters the listener that calls `RECEIVER[CALLBACK_NAME](this)` after the event of the given type occurs. */
  readonly detach(EVENT_TYPE: string, RECEIVER: IPartAny, CALLBACK_NAME: string): void
  /** Calls receiver[callbackName](this) for every receiver/callback pair registered to the given event type. */
  readonly notify(EVENT_TYPE: string): void
- /** Computes the cardinality of the part from its subparts and defines its runtime properties. */
+ /** Can be used to prepare the part for the build process. */
+ readonly preBuild(): void
+ /** Computes the cardinality of the part from its subparts and defines its primary runtime properties. Unless overridden, the part's `preBuild()` signal will trigger the prototype root (Base) to calls this method automatically for every prototype in a part's chain, from Base outward. */
  readonly build(): void
- /** Finalizes and validates the part after the prototype chain (including the part) has successfully completed its build process. */
+ /** Finalizes and validates the part after the prototype chain (including the part) has successfully run its build action for every part in its prototype chain. Unless overridden, the part's `preBuild()` signal will trigger the prototype root (Base) to call this method automatically for every prototype in a part's chain, from Base outward. */
  readonly postBuild(): void
  /** Calls `loop()` on the part and then propagates the call leafward to all subparts. */
  readonly distributeLoop(): void
@@ -66,8 +69,6 @@ declare interface IPart<TOwner, TSubpart>
  readonly placeholderImage(IMAGE_NAME: string): string
  /** A css variable representing the absolute css name of the given image, traversing the prototype chain if necessary. */
  readonly cssVariableOfImage(IMAGE_NAME: string): string
- /** Collects every build function in the part's prototype chain and then calls them all on the part itself. */
- readonly startBuild(): void
  /** Performs `thisPart.modelToRID()` on MODEL and then performs `thisPart.setRID()` on the resulting RID. */
  readonly setModel(MODEL: any, SKIP_RUNTIME_STATE_DISTRIBUTION: boolean = false)
  /** Sets the RID on the part to match the landing model (or RID 0n, if the part is not mentioned in the landing model). */
@@ -94,7 +95,6 @@ declare interface IPart<TOwner, TSubpart>
   * 
   * This action is called by both collectRID and distributeRID. It does not propagate the RID or update any views. */
  readonly updateRID(NEW_RID: bigint): void
-
  /** Creates all the references the ecosystem needs to react to user interaction that couldn't be established by the server- or offline-server-rendered snapshot. This may also be called by parts that have just been enabled, especially if their `addView()` action relies on introducing the snippet into the DOM that they introduce into the snapshot. */
  readonly hydrateView(): void
  /** Adds view elements and references which the part needs to have across its entire non-negative RID range. It is called whenever the part's RID becomes non-negative and when a snapshot first hydrates. */
@@ -127,6 +127,8 @@ declare interface IPart<TOwner, TSubpart>
  readonly subpartMathML(DEPTH: number, LABELS: boolean): string[]
  /** Counts the number of type inheritors the part has while sorting each inheritor by its own inheritor count. */
  readonly countAndSortInheritors(): number
+ /** Scans prototype chain (including the part itself) looking for *own* actions with the given key. Each owned prototype action is called in sequence on the part itself (not the prototype that owns the action, if the action is owned by a prototype). If `FROM_ROOT` is true, the calls will start at the prototype root and work their way to the part. Otherwise, they will start with the part and work their way to the prototype root. If LOG_BEFORE_EACH is true, ACTION_KEY and the action owner's host are logged before each call. */
+ readonly callAlongChain(ACTION_KEY: string, FROM_ROOT: boolean = false, LOG_BEFORE_EACH: boolean = false): any
 
  // Properties.
  /** The parent part.
@@ -156,11 +158,14 @@ declare interface IPart<TOwner, TSubpart>
  /** The domain name used to identify the part. */
  readonly host: string
  /** A map of the component configurations that were used to add components to the part during hydration. */
- readonly components: Record<string, IComponentDefinition>
+ readonly components: ComponentDefinitionMap
  /** The source file object that compiles to become the property descriptor map for the part's components. */
  readonly sourceFile: SourceMappedFile
- /** Whether or not the part is an abstract part. All parts can be extended, but abstract parts don't participate in the routing function or run a build step. They also can't be listened to. */
- readonly isAbstract: boolean
+ /** If true, the part is a concrete part (called an instance). Only instances participate in the routing function, the running of own build actions, and the view event system. If false, the part is abstract. Only abstract parts can be extended to create other parts. The child part of an abstract part is always abstract. */
+ readonly isInstance: boolean
+ readonly kind: "part"
+ /** True if the part was created as an inherited subpart of its parent part. */
+ readonly isClone: boolean
  /** Whether or not the part just became enabled at the most recent RID change.
   * 
   * Equal to:
@@ -222,10 +227,10 @@ declare interface IWebView {
  * 
  * Alias for `this` to disambiguate it from globalThis in IDEs.*/
 declare const thisPart: IPartAny
-declare const Base = _.parts.abstract.part
+declare const Base = Abstract.part
 type Base = T
-/** The component object describing the currently running action. */
-declare const component: IComponentData
+/** The string key used to find the component object describing the currently running action. */
+declare const componentKey: string
 /** The prototype part action which the currently running action overrides (if one is defined). */
 declare function base(...args): any
 /** The current function, so that it can be called again from within itself. */
