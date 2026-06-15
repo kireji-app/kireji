@@ -142,7 +142,7 @@ function ƒ(_) {
   logAny(0, data, "debug")
  }
  function logAny(verbosity, data, method) {
-  (["error", "warn"].includes(method) || _.command !== "build") && verbosity <= _.verbosity && console[method](...(environment === "offline-server" ? ["offline-server:", ...data] : data))
+  (["error", "warn"].includes(method) || (_.command !== "build" || environment.startsWith("node-"))) && verbosity <= _.verbosity && console[method](...(environment === "offline-server" ? ["offline-server:", ...data] : data))
  }
  function logError(...data) {
   logAny(0, data, "error")
